@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "go",
+  "source": "CooperBench",
+  "repo": "go-chi/chi",
+  "pair_id": "pair_05_go_chi_t26_f2v3",
+  "cooperbench_label": "conflict",
+  "notes": "feat(mux): implement route hit monitoring and metrics vs # Title: feat(mux): add request-based route selection with dynamic routing"
+}

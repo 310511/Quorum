@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "dottxt-ai/outlines",
+  "pair_id": "pair_01_dottxt_ai_outlines_t1655_f9v10",
+  "cooperbench_label": "conflict",
+  "notes": "Add GUID Type for Windows-Style GUID Validation vs feat(types): Add `hash_sha256` type for SHA-256 hash string validation"
+}

@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_14_pallets_jinja_t1621_f1v6",
+  "source_benchmark": "CooperBench",
+  "repo": "pallets_jinja_task",
+  "github": "pallets/jinja",
+  "base_commit": "a2920752fd111c2d52c88eb57487667b3cf0ea7b",
+  "task_id": 1621,
+  "feature_a": {
+    "id": 1,
+    "title": "Add search path fallback mechanism for template loading"
+  },
+  "feature_b": {
+    "id": 6,
+    "title": "Add Template Path Transformation Support"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "src/jinja2/loaders.py",
+    "tests/test_loader.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

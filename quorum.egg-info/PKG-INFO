@@ -1,0 +1,108 @@
+Metadata-Version: 2.4
+Name: quorum
+Version: 0.1.0
+Summary: Phase 0 prototype: heterogeneous LLM committee for semantic merge conflict detection
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: httpx>=0.27
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: tree-sitter>=0.24
+Requires-Dist: tree-sitter-python>=0.23
+
+# Quorum — Phase 0/1 Prototype
+
+Semantic merge conflict detection using a heterogeneous LLM committee.
+
+- **Phase 0:** raw diffs → LLM committee vs single-model baseline
+- **Phase 1:** Tree-sitter Python function delta → same committee (compare input formats)
+
+## Prerequisites
+
+- Python 3.11+
+- [Ollama](https://ollama.com/) running locally (`localhost:11434`)
+- Models pulled and listed in `config.yaml`
+
+## Setup
+
+```bash
+cd /path/to/SOFTWARE_PROJECT
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+## Test data format
+
+Each case lives in `data/pairs/<name>/`:
+
+| File / dir | Purpose |
+|------------|---------|
+| `branch_a.diff`, `branch_b.diff` | Raw diffs (Phase 0 input) |
+| `merge_base/` | Python sources at merge-base |
+| `branch_a/` | Python sources on branch A (only changed files; others inherit from merge-base) |
+| `branch_b/` | Python sources on branch B |
+| `context.md` | Optional merge-base notes |
+| `label.json` | `{"ground_truth": "compatible"\|"conflict", "notes": "..."}` |
+
+See `data/pairs/example_1/` for a worked semantic conflict (function rename vs. stale import).
+
+## CooperBench dataset
+
+Import the bundled zip (already done once if you see `pair_*` folders under `data/pairs/`):
+
+```bash
+python -m quorum import-cooperbench cooperbench_merge_pairs.zip
+```
+
+20 pairs: **12 conflict**, **8 compatible** (clean_merge). **16 Python**, 2 Go, 1 TypeScript, 1 Rust.
+
+Structured AST input is **Python-only**; raw diff mode works for all languages.
+
+## Commands
+
+**Inspect structured delta (Phase 1, no LLM calls):**
+
+```bash
+python -m quorum extract data/pairs/example_1
+```
+
+**Check one pair** (baseline vs. committee):
+
+```bash
+python -m quorum check data/pairs/example_1
+python -m quorum check --input-mode structured data/pairs/example_1
+```
+
+**Evaluate all labeled pairs:**
+
+```bash
+python -m quorum eval data/pairs
+python -m quorum eval --input-mode structured data/pairs
+python -m quorum eval --compare-inputs data/pairs   # raw vs structured side-by-side
+```
+
+Set default input mode in `config.yaml`:
+
+```yaml
+input_mode: raw        # or structured
+```
+
+Results save to `results/run_<timestamp>.json`.
+
+## Architecture
+
+```
+config.yaml → models.py       (OpenAI-compatible client)
+           → extract.py      (Tree-sitter Python → function list)
+           → delta.py         (in-memory function delta vs merge-base)
+           → committee.py     (prompt builder + parallel/sequential calls)
+           → adjudicate.py    (evidence overlap, not plain majority vote)
+           → baseline.py      (single-model comparison)
+           → cli.py           (extract / check / eval)
+```
+
+Phase 1 scope: Python only, function-level delta, no call-graph, no graph DB.
+
+## Verdict schema
+
+Each model returns JSON with `verdict`, `confidence`, `reasoning`, and `evidence`. Committee adjudication may return `escalate` when models disagree or agree without overlapping evidence.

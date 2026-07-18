@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_17_pillow_t25_f1v5",
+  "source_benchmark": "CooperBench",
+  "repo": "pillow_task",
+  "github": "python-pillow/Pillow",
+  "base_commit": "869aa5843c79c092db074b17234e792682eada41",
+  "task_id": 25,
+  "feature_a": {
+    "id": 1,
+    "title": "Only change readonly if saved filename matches opened filename"
+  },
+  "feature_b": {
+    "id": 5,
+    "title": "Add corner pixel watermark option to save method"
+  },
+  "label": "clean_merge",
+  "has_conflict": false,
+  "files_touched": [
+    "Tests/test_image.py",
+    "src/PIL/Image.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

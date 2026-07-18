@@ -1,0 +1,9 @@
+{
+  "ground_truth": "compatible",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "run-llama/llama_index",
+  "pair_id": "pair_10_llama_index_t17244_f3v4",
+  "cooperbench_label": "clean_merge",
+  "notes": "Extract `normalize_image_bytes` Helper for Unified Image Normalization Logic vs Add `force_mimetype` Parameter to `resolve_image` for Explicit MIME Type Overrides"
+}

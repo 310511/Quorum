@@ -1,0 +1,9 @@
+{
+  "ground_truth": "compatible",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "pallets/click",
+  "pair_id": "pair_13_pallets_click_t2956_f3v8",
+  "cooperbench_label": "clean_merge",
+  "notes": "Add batch_size parameter to multiple options for chunked processing vs Add Option Value History Tracking with track_changes Parameter"
+}

@@ -1,0 +1,9 @@
+{
+  "ground_truth": "compatible",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "dottxt-ai/outlines",
+  "pair_id": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+  "cooperbench_label": "clean_merge",
+  "notes": "Add Octal String Type for Matching Octal Number Patterns vs Add GUID Type for Windows-Style GUID Validation"
+}

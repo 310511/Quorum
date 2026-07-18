@@ -1,0 +1,108 @@
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -124,6 +124,16 @@
+             url=str(self.url) if self.url else None,
+             as_base64=as_base64,
+         )
++ 
++    def resolve_image_with_size(self, as_base64: bool = False) -> tuple[BytesIO, int]:
++        """
++        Resolve an image and return (BytesIO, size in bytes).
++        """
++        buf = self.resolve_image(as_base64=as_base64)
++        buf.seek(0, 2)
++        size = buf.tell()
++        buf.seek(0)
++        return buf, size
+ 
+ 
+ class AudioBlock(BaseModel):
+@@ -184,6 +194,16 @@
+             url=str(self.url) if self.url else None,
+             as_base64=as_base64,
+         )
++ 
++    def resolve_audio_with_size(self, as_base64: bool = False) -> tuple[BytesIO, int]:
++        """
++        Resolve audio and return (BytesIO, size in bytes).
++        """
++        buf = self.resolve_audio(as_base64=as_base64)
++        buf.seek(0, 2)
++        size = buf.tell()
++        buf.seek(0)
++        return buf, size
+ 
+ class DocumentBlock(BaseModel):
+     block_type: Literal["document"] = "document"
+@@ -221,6 +241,16 @@
+             url=str(self.url) if self.url else None,
+             as_base64=False,
+         )
++ 
++    def resolve_document_with_size(self) -> tuple[BytesIO, int]:
++        """
++        Resolve document and return (BytesIO, size in bytes).
++        """
++        buf = self.resolve_document()
++        buf.seek(0, 2)
++        size = buf.tell()
++        buf.seek(0)
++        return buf, size
+ 
+     def _get_b64_string(self, data_buffer: BytesIO) -> str:
+         """
+
+--- a/llama-index-core/tests/base/llms/test_types.py
++++ b/llama-index-core/tests/base/llms/test_types.py
+@@ -13,6 +13,7 @@
+     MessageRole,
+     TextBlock,
+     DocumentBlock,
++    AudioBlock
+ )
+ from llama_index.core.bridge.pydantic import BaseModel
+ from llama_index.core.schema import ImageDocument
+@@ -146,6 +147,19 @@
+     assert img.read() == png_1px_b64
+ 
+ 
++def test_image_block_resolve_image_with_size(png_1px: bytes):
++    b = ImageBlock(image=png_1px)
++    buf, size = b.resolve_image_with_size()
++    assert isinstance(buf, BytesIO)
++    assert size == len(png_1px)
++    assert buf.read() == png_1px
++
++    buf, size = b.resolve_image_with_size(as_base64=True)
++    decoded = base64.b64decode(b.image)
++    assert isinstance(buf, BytesIO)
++    assert size == len(base64.b64encode(decoded))
++
++
+ def test_image_block_resolve_image_path(
+     tmp_path: Path, png_1px_b64: bytes, png_1px: bytes
+ ):
+@@ -160,6 +174,23 @@
+     img = b.resolve_image(as_base64=True)
+     assert isinstance(img, BytesIO)
+     assert img.read() == png_1px_b64
++
++
++def test_audio_block_resolve_audio_with_size():
++    audio_data = b"\x00\x01\x02"
++    b = AudioBlock(audio=audio_data)
++    buf, size = b.resolve_audio_with_size()
++    assert isinstance(buf, BytesIO)
++    assert size == len(audio_data)
++    assert buf.read() == audio_data
++
++
++def test_document_block_resolve_document_with_size(mock_pdf_bytes: bytes):
++    b = DocumentBlock(data=mock_pdf_bytes)
++    buf, size = b.resolve_document_with_size()
++    assert isinstance(buf, BytesIO)
++    assert size == len(mock_pdf_bytes)
++    assert buf.read() == base64.b64decode(b.data)
+ 
+ 
+ def test_image_block_resolve_image_url(png_1px_b64: bytes, png_1px: bytes):

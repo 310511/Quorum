@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_15_pallets_jinja_t1559_f2v7",
+  "source_benchmark": "CooperBench",
+  "repo": "pallets_jinja_task",
+  "github": "pallets/jinja",
+  "base_commit": "896a62135bcc151f2997e028c5125bec2cb2431f",
+  "task_id": 1559,
+  "feature_a": {
+    "id": 2,
+    "title": "Add translation domain support to trans tag"
+  },
+  "feature_b": {
+    "id": 7,
+    "title": "feat(i18n): Add fallback language chains for missing translations"
+  },
+  "label": "clean_merge",
+  "has_conflict": false,
+  "files_touched": [
+    "src/jinja2/ext.py",
+    "tests/test_ext.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "run-llama/llama_index",
+  "pair_id": "pair_09_llama_index_t18813_f1v3",
+  "cooperbench_label": "conflict",
+  "notes": "Throw error if resolve methods yield empty bytes vs Add `resolve_*_with_size()` variants to return buffer and byte count"
+}

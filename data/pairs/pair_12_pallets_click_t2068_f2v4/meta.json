@@ -1,0 +1,30 @@
+{
+  "pair_id": "pair_12_pallets_click_t2068_f2v4",
+  "source_benchmark": "CooperBench",
+  "repo": "pallets_click_task",
+  "github": "pallets/click",
+  "base_commit": "d791537317947448a3960662d00acf160eff2602",
+  "task_id": 2068,
+  "feature_a": {
+    "id": 2,
+    "title": "Add Editor Session Timeout to Click's Edit Function"
+  },
+  "feature_b": {
+    "id": 4,
+    "title": "Add Custom Editor Arguments Support to Click's Edit Function"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "src/click/_termui_impl.py",
+    "src/click/termui.py",
+    "tests/test_termui.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

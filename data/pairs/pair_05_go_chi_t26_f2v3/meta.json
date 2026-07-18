@@ -1,0 +1,38 @@
+{
+  "pair_id": "pair_05_go_chi_t26_f2v3",
+  "source_benchmark": "CooperBench",
+  "repo": "go_chi_task",
+  "github": "go-chi/chi",
+  "base_commit": "9436cc85db0d35be06e66b91b4f74bbc0295b07b",
+  "task_id": 26,
+  "feature_a": {
+    "id": 2,
+    "title": "feat(mux): implement route hit monitoring and metrics"
+  },
+  "feature_b": {
+    "id": 3,
+    "title": "# Title: feat(mux): add request-based route selection with dynamic routing"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "context.go",
+    "dynamic_route.go",
+    "dynamic_route_test.go",
+    "metrics.go",
+    "metrics_test.go",
+    "mux.go"
+  ],
+  "files_missing_from_snapshot": [
+    "dynamic_route.go",
+    "dynamic_route_test.go",
+    "metrics.go",
+    "metrics_test.go"
+  ],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

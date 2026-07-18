@@ -1,0 +1,28 @@
+--- a/Tests/test_image_quantize.py
++++ b/Tests/test_image_quantize.py
+@@ -77,6 +77,13 @@
+     assert dither.tobytes() != nodither.tobytes()
+ 
+ 
++def test_colors():
++    im = hopper()
++    colors = 2
++    converted = im.quantize(colors)
++    assert len(converted.palette.palette) == colors * len("RGB")
++
++
+ def test_transparent_colors_equal():
+     im = Image.new("RGBA", (1, 2), (0, 0, 0, 0))
+     px = im.load()
+
+--- a/src/PIL/Image.py
++++ b/src/PIL/Image.py
+@@ -1111,7 +1111,8 @@
+         from . import ImagePalette
+ 
+         mode = im.im.getpalettemode()
+-        im.palette = ImagePalette.ImagePalette(mode, im.im.getpalette(mode, mode))
++        palette = im.im.getpalette(mode, mode)[: colors * len(mode)]
++        im.palette = ImagePalette.ImagePalette(mode, palette)
+ 
+         return im

@@ -1,0 +1,52 @@
+--- a/src/datasets/features/image.py
++++ b/src/datasets/features/image.py
+@@ -84,6 +84,7 @@
+     mode: Optional[str] = None
+     decode: bool = True
+     id: Optional[str] = None
++    max_resolution: Optional[int] = None  # New parameter to clamp image size
+     # Automatically constructed
+     dtype: ClassVar[str] = "PIL.Image.Image"
+     pa_type: ClassVar[Any] = pa.struct({"bytes": pa.binary(), "path": pa.string()})
+@@ -188,6 +189,10 @@
+         image.load()  # to avoid "Too many open files" errors
+         if self.mode and self.mode != image.mode:
+             image = image.convert(self.mode)
++        if self.max_resolution is not None:
++            max_size = (self.max_resolution, self.max_resolution)
++            if image.size[0] > max_size[0] or image.size[1] > max_size[1]:
++                image.thumbnail(max_size, PIL.Image.Resampling.LANCZOS)
+         return image
+ 
+     def flatten(self) -> Union["FeatureType", Dict[str, "FeatureType"]]:
+
+--- a/tests/features/test_image.py
++++ b/tests/features/test_image.py
+@@ -88,6 +88,27 @@
+ 
+     with pytest.raises(RuntimeError):
+         Image(decode=False).decode_example(image_path)
++
++
++@require_pil
++def test_image_decode_with_max_resolution(shared_datadir):
++    import PIL.Image
++
++    image_path = str(shared_datadir / "test_image_rgb.jpg")
++    original_image = Image().decode_example({"path": image_path, "bytes": None})
++    assert original_image.size == (640, 480)
++
++    # Downscale to fit max_resolution
++    image = Image(max_resolution=256)
++    decoded = image.decode_example({"path": image_path, "bytes": None})
++    assert isinstance(decoded, PIL.Image.Image)
++    assert max(decoded.size) == 256
++    assert decoded.size[0] <= 256 and decoded.size[1] <= 256
++
++    # Make sure the aspect ratio is preserved
++    original_aspect_ratio = 640 / 480
++    new_aspect_ratio = decoded.size[0] / decoded.size[1]
++    assert abs(original_aspect_ratio - new_aspect_ratio) < 0.01
+ 
+ 
+ @require_pil

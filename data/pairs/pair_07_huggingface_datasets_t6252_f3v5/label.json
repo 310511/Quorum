@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "huggingface/datasets",
+  "pair_id": "pair_07_huggingface_datasets_t6252_f3v5",
+  "cooperbench_label": "conflict",
+  "notes": "Add Optional Image Size Clamping with Max Resolution Threshold vs Add Option to Normalize Image Pixels to Float32 NumPy Array"
+}

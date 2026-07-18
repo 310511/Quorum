@@ -1,0 +1,251 @@
+--- a/middleware/method_validator.go
++++ b/middleware/method_validator.go
+@@ -0,0 +1,60 @@
++package middleware
++
++import (
++	"net/http"
++	"strings"
++)
++
++// StandardMethods contains the standard HTTP methods as defined in RFC 9110
++var StandardMethods = []string{
++	http.MethodGet,
++	http.MethodHead,
++	http.MethodPost,
++	http.MethodPut,
++	http.MethodPatch,
++	http.MethodDelete,
++	http.MethodConnect,
++	http.MethodOptions,
++	http.MethodTrace,
++}
++
++// MethodValidator returns a middleware that validates the HTTP method
++// against a list of allowed methods. If the method is not in the list,
++// it responds with a 405 Method Not Allowed status.
++func MethodValidator(allowedMethods ...string) func(http.Handler) http.Handler {
++	return func(next http.Handler) http.Handler {
++		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
++			if !isMethodAllowed(r.Method, allowedMethods) {
++				w.Header().Set("Allow", strings.Join(allowedMethods, ", "))
++				http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
++				return
++			}
++			next.ServeHTTP(w, r)
++		})
++	}
++}
++
++// isMethodAllowed checks if a method is in the list of allowed methods
++func isMethodAllowed(method string, allowedMethods []string) bool {
++	// If no methods are specified, allow all standard methods
++	if len(allowedMethods) == 0 {
++		return isStandardMethod(method)
++	}
++
++	for _, m := range allowedMethods {
++		if m == method {
++			return true
++		}
++	}
++	return false
++}
++
++// isStandardMethod checks if a method is one of the standard HTTP methods
++func isStandardMethod(method string) bool {
++	for _, m := range StandardMethods {
++		if m == method {
++			return true
++		}
++	}
++	return false
++}
+
+--- a/middleware/method_validator_test.go
++++ b/middleware/method_validator_test.go
+@@ -0,0 +1,123 @@
++package middleware
++
++import (
++	"net/http"
++	"net/http/httptest"
++	"testing"
++
++	"github.com/go-chi/chi/v5"
++)
++
++func TestMethodValidator(t *testing.T) {
++	r := chi.NewRouter()
++
++	// Set up route with method validation (only GET and POST allowed)
++	r.Group(func(r chi.Router) {
++		r.Use(MethodValidator(http.MethodGet, http.MethodPost))
++
++		r.Get("/resource", func(w http.ResponseWriter, r *http.Request) {
++			w.Write([]byte("get"))
++		})
++
++		r.Post("/resource", func(w http.ResponseWriter, r *http.Request) {
++			w.Write([]byte("post"))
++		})
++
++		r.Put("/resource", func(w http.ResponseWriter, r *http.Request) {
++			w.Write([]byte("put"))
++		})
++	})
++
++	// Test allowed methods
++	ts := httptest.NewServer(r)
++	defer ts.Close()
++
++	t.Run("Allowed GET", func(t *testing.T) {
++		resp, err := http.Get(ts.URL + "/resource")
++		if err != nil {
++			t.Fatal(err)
++		}
++		defer resp.Body.Close()
++
++		if resp.StatusCode != 200 {
++			t.Errorf("Expected 200 status, got %d", resp.StatusCode)
++		}
++	})
++
++	t.Run("Allowed POST", func(t *testing.T) {
++		resp, err := http.Post(ts.URL+"/resource", "text/plain", nil)
++		if err != nil {
++			t.Fatal(err)
++		}
++		defer resp.Body.Close()
++
++		if resp.StatusCode != 200 {
++			t.Errorf("Expected 200 status, got %d", resp.StatusCode)
++		}
++	})
++
++	t.Run("Disallowed PUT", func(t *testing.T) {
++		req, err := http.NewRequest(http.MethodPut, ts.URL+"/resource", nil)
++		if err != nil {
++			t.Fatal(err)
++		}
++
++		resp, err := http.DefaultClient.Do(req)
++		if err != nil {
++			t.Fatal(err)
++		}
++		defer resp.Body.Close()
++
++		if resp.StatusCode != 405 {
++			t.Errorf("Expected 405 status, got %d", resp.StatusCode)
++		}
++
++		allow := resp.Header.Get("Allow")
++		if allow != "GET, POST" {
++			t.Errorf("Expected Allow header 'GET, POST', got '%s'", allow)
++		}
++	})
++}
++
++func TestMethodValidatorWithNoMethods(t *testing.T) {
++	r := chi.NewRouter()
++
++	// Test with no methods specified (should allow standard methods)
++	r.Group(func(r chi.Router) {
++		r.Use(MethodValidator()) // No methods specified, should allow standard methods
++
++		r.Get("/standard", func(w http.ResponseWriter, r *http.Request) {
++			w.Write([]byte("standard-get"))
++		})
++	})
++
++	ts := httptest.NewServer(r)
++	defer ts.Close()
++
++	// Test standard method (should be allowed)
++	resp, err := http.Get(ts.URL + "/standard")
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer resp.Body.Close()
++
++	if resp.StatusCode != 200 {
++		t.Errorf("Expected 200 status for standard method, got %d", resp.StatusCode)
++	}
++
++	// Test non-standard method (should be rejected)
++	req, err := http.NewRequest("CUSTOM", ts.URL+"/standard", nil)
++	if err != nil {
++		t.Fatal(err)
++	}
++
++	resp, err = http.DefaultClient.Do(req)
++	if err != nil {
++		t.Fatal(err)
++	}
++	defer resp.Body.Close()
++
++	if resp.StatusCode != 405 {
++		t.Errorf("Expected 405 status for non-standard method, got %d", resp.StatusCode)
++	}
++}
+
+--- a/mux.go
++++ b/mux.go
+@@ -483,5 +483,19 @@
+ // method not allowed.
+ func methodNotAllowedHandler(w http.ResponseWriter, r *http.Request) {
+ 	w.WriteHeader(405)
+-	w.Write(nil)
+-}
++	w.Write([]byte("Method not allowed"))
++}
++
++// SetMethodNotAllowedResponseWithAllow is a helper function for middleware
++// to set the proper Method Not Allowed response with the Allow header.
++// The methods parameter is a list of allowed HTTP methods for the route.
++func SetMethodNotAllowedResponseWithAllow(w http.ResponseWriter, methods []string) {
++	if len(methods) > 0 {
++		w.Header().Set("Allow", strings.Join(methods, ", "))
++	}
++
++	// Set status code
++	w.WriteHeader(http.StatusMethodNotAllowed)
++
++	// Don't write body (follows HTTP standard that body is optional)
++}
+
+--- a/tree.go
++++ b/tree.go
+@@ -62,6 +62,32 @@
+ 	mALL |= mt
+ }
+ 
++// GetMethodStringFromType returns the string representation of a method type
++func GetMethodStringFromType(mt methodTyp) string {
++	switch mt {
++	case mCONNECT:
++		return http.MethodConnect
++	case mDELETE:
++		return http.MethodDelete
++	case mGET:
++		return http.MethodGet
++	case mHEAD:
++		return http.MethodHead
++	case mOPTIONS:
++		return http.MethodOptions
++	case mPATCH:
++		return http.MethodPatch
++	case mPOST:
++		return http.MethodPost
++	case mPUT:
++		return http.MethodPut
++	case mTRACE:
++		return http.MethodTrace
++	default:
++		return ""
++	}
++}
++
+ type nodeTyp uint8
+ 
+ const (

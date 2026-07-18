@@ -1,0 +1,110 @@
+--- a/crates/typst/src/foundations/str.rs
++++ b/crates/typst/src/foundations/str.rs
+@@ -178,24 +178,42 @@
+ 
+     /// Extracts the first grapheme cluster of the string.
+     /// Fails with an error if the string is empty.
+-    #[func]
+-    pub fn first(&self) -> StrResult<Str> {
+-        self.0
++    ///
++    /// Optionally transforms the returned grapheme to a requested case.
++    #[func]
++    pub fn first(
++        &self,
++        /// Transform the selected grapheme to the given casing.
++        #[named]
++        #[default]
++        case: Option<Str>,
++    ) -> StrResult<Str> {
++        let grapheme = self
++            .0
+             .graphemes(true)
+             .next()
+             .map(Into::into)
+-            .ok_or_else(string_is_empty)
++            .ok_or_else(string_is_empty)?;
++        apply_case(grapheme, case)
+     }
+ 
+     /// Extracts the last grapheme cluster of the string.
+     /// Fails with an error if the string is empty.
+     #[func]
+-    pub fn last(&self) -> StrResult<Str> {
+-        self.0
++    pub fn last(
++        &self,
++        /// Transform the selected grapheme to the given casing.
++        #[named]
++        #[default]
++        case: Option<Str>,
++    ) -> StrResult<Str> {
++        let grapheme = self
++            .0
+             .graphemes(true)
+             .next_back()
+             .map(Into::into)
+-            .ok_or_else(string_is_empty)
++            .ok_or_else(string_is_empty)?;
++        apply_case(grapheme, case)
+     }
+ 
+     /// Extracts the first grapheme cluster after the specified index. Returns
+@@ -604,6 +622,36 @@
+     }
+ }
+ 
++fn apply_case(value: Str, case: Option<Str>) -> StrResult<Str> {
++    match case {
++        None => Ok(value),
++        Some(case) => {
++            let source = value.as_str();
++            let converted = match case.as_str() {
++                "upper" => source.to_uppercase(),
++                "lower" => source.to_lowercase(),
++                "title" => to_title_case(source),
++                other => return Err(eco_format!("unknown case option \"{}\"", other)),
++            };
++            Ok(converted.into())
++        }
++    }
++}
++
++fn to_title_case(s: &str) -> String {
++    let mut chars = s.chars();
++    if let Some(first) = chars.next() {
++        let mut result = String::new();
++        result.extend(first.to_uppercase());
++        for ch in chars {
++            result.extend(ch.to_lowercase());
++        }
++        result
++    } else {
++        String::new()
++    }
++}
++
+ impl Deref for Str {
+     type Target = str;
+ 
+
+--- a/tests/suite/foundations/str.typ
++++ b/tests/suite/foundations/str.typ
+@@ -96,6 +96,17 @@
+ #test("Hello".last(), "o")
+ #test("🏳️‍🌈A🏳️‍⚧️".first(), "🏳️‍🌈")
+ #test("🏳️‍🌈A🏳️‍⚧️".last(), "🏳️‍⚧️")
++
++--- str-case-parameter ---
++#test("hello".first(case: "upper"), "H")
++#test("Hello".first(case: "lower"), "h")
++#test("ß".first(case: "upper"), "SS")
++#test("hé".first(case: "title"), "H")
++#test("Python".last(case: "upper"), "N")
++
++--- str-case-invalid ---
++// Error: 10-42 unknown case option "spongebob"
++#let _ = "hello".first(case: "spongebob")
+ 
+ --- string-first-empty ---
+ // Error: 2-12 string is empty

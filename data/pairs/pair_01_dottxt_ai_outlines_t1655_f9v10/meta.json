@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_01_dottxt_ai_outlines_t1655_f9v10",
+  "source_benchmark": "CooperBench",
+  "repo": "dottxt_ai_outlines_task",
+  "github": "dottxt-ai/outlines",
+  "base_commit": "4dd7802a8a5021f31dac75bc652f88d410a28675",
+  "task_id": 1655,
+  "feature_a": {
+    "id": 9,
+    "title": "Add GUID Type for Windows-Style GUID Validation"
+  },
+  "feature_b": {
+    "id": 10,
+    "title": "feat(types): Add `hash_sha256` type for SHA-256 hash string validation"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "outlines/types/__init__.py",
+    "tests/types/test_custom_types.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

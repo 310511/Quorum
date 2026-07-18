@@ -1,0 +1,9 @@
+{
+  "ground_truth": "compatible",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "pallets/jinja",
+  "pair_id": "pair_15_pallets_jinja_t1559_f2v7",
+  "cooperbench_label": "clean_merge",
+  "notes": "Add translation domain support to trans tag vs feat(i18n): Add fallback language chains for missing translations"
+}

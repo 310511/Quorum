@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "pallets/click",
+  "pair_id": "pair_12_pallets_click_t2068_f2v4",
+  "cooperbench_label": "conflict",
+  "notes": "Add Editor Session Timeout to Click's Edit Function vs Add Custom Editor Arguments Support to Click's Edit Function"
+}

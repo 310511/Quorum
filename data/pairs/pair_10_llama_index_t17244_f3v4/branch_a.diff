@@ -1,0 +1,65 @@
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -75,13 +75,38 @@
+         if not self.image:
+             return self
+ 
++        encoded_image, decoded_for_guessing = self.normalize_image_bytes(self.image)
++
+         if not self.image_mimetype:
+-            guess = filetype.guess(self.image)
++            guess = filetype.guess(decoded_for_guessing)
+             self.image_mimetype = guess.mime if guess else None
+ 
+-        self.image = base64.b64encode(self.image)
+-
++        self.image = encoded_image
+         return self
++ 
++    def normalize_image_bytes(self, image_bytes: bytes) -> tuple[bytes, bytes]:
++        """Normalize image bytes for base64 encoding and MIME type guessing.
++
++        Args:
++            image_bytes (bytes): The image bytes which may already be base64-encoded.
++
++        Returns:
++            Tuple[bytes, bytes]: A tuple where the first element is the base64-encoded image bytes,
++            and the second element is the decoded bytes for MIME type guessing.
++        """
++        try:
++            # Attempt to decode assuming image_bytes is base64 encoded
++            decoded_bytes = base64.b64decode(image_bytes, validate=True)
++            # If decoding succeeds and re-encoding matches, consider it already base64
++            if base64.b64encode(decoded_bytes) == image_bytes:
++                return image_bytes, decoded_bytes
++        except (base64.binascii.Error, ValueError):
++            # Not a valid base64, treat as raw bytes
++            pass
++
++        # If not already encoded, encode it now
++        encoded_image = base64.b64encode(image_bytes)
++        return encoded_image, image_bytes
+ 
+     def resolve_image(self, as_base64: bool = False) -> BytesIO:
+         """Resolve an image such that PIL can read it.
+
+--- a/llama-index-core/tests/base/llms/test_types.py
++++ b/llama-index-core/tests/base/llms/test_types.py
+@@ -155,6 +155,17 @@
+         assert img.read() == png_1px_b64
+ 
+ 
++def test_image_block_to_base64_normalization(png_1px: bytes, png_1px_b64: bytes):
++    b = ImageBlock(image=png_1px)
++    assert b.image == png_1px_b64
++    assert b.image_mimetype in ("image/png", None)  # filetype may or may not detect MIME
++
++    # Now pass already base64 image
++    b2 = ImageBlock(image=png_1px_b64)
++    assert b2.image == png_1px_b64
++    assert b2.image_mimetype in ("image/png", None)
++
++
+ def test_image_block_resolve_error():
+     with pytest.raises(ValueError, match="No image found in the chat message!"):
+         b = ImageBlock()

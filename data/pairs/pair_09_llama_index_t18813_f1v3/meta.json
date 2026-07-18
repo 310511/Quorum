@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_09_llama_index_t18813_f1v3",
+  "source_benchmark": "CooperBench",
+  "repo": "llama_index_task",
+  "github": "run-llama/llama_index",
+  "base_commit": "5eca4973cef04eca5d817d3e1515c8cbe7d1cf9e",
+  "task_id": 18813,
+  "feature_a": {
+    "id": 1,
+    "title": "Throw error if resolve methods yield empty bytes"
+  },
+  "feature_b": {
+    "id": 3,
+    "title": "Add `resolve_*_with_size()` variants to return buffer and byte count"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "llama-index-core/llama_index/core/base/llms/types.py",
+    "llama-index-core/tests/base/llms/test_types.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

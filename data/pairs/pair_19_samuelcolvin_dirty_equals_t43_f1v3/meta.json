@@ -1,0 +1,30 @@
+{
+  "pair_id": "pair_19_samuelcolvin_dirty_equals_t43_f1v3",
+  "source_benchmark": "CooperBench",
+  "repo": "samuelcolvin_dirty_equals_task",
+  "github": "samuelcolvin/dirty-equals",
+  "base_commit": "593bcccf738ab8b724d7cb860881d74344171f5f",
+  "task_id": 43,
+  "feature_a": {
+    "id": 1,
+    "title": "Add IsIP validator for IP address validation"
+  },
+  "feature_b": {
+    "id": 3,
+    "title": "Add IsEmail validator class for email address validation with optional domain filtering"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "dirty_equals/__init__.py",
+    "dirty_equals/_other.py",
+    "tests/test_other.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

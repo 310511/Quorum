@@ -1,0 +1,9 @@
+{
+  "ground_truth": "compatible",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "huggingface/datasets",
+  "pair_id": "pair_08_huggingface_datasets_t6252_f1v3",
+  "cooperbench_label": "clean_merge",
+  "notes": "Add Automatic EXIF Orientation Correction for Images vs Add Optional Image Size Clamping with Max Resolution Threshold"
+}

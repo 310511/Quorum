@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_16_pillow_t290_f1v5",
+  "source_benchmark": "CooperBench",
+  "repo": "pillow_task",
+  "github": "python-pillow/Pillow",
+  "base_commit": "cc927343dadc4d5c53afebba9c41fe02b6d7bbe4",
+  "task_id": 290,
+  "feature_a": {
+    "id": 1,
+    "title": "Limit quantized palette to number of colors"
+  },
+  "feature_b": {
+    "id": 5,
+    "title": "Add brightness adjustment post-quantization"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "Tests/test_image_quantize.py",
+    "src/PIL/Image.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

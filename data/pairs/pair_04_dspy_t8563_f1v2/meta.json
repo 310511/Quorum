@@ -1,0 +1,30 @@
+{
+  "pair_id": "pair_04_dspy_t8563_f1v2",
+  "source_benchmark": "CooperBench",
+  "repo": "dspy_task",
+  "github": "stanfordnlp/dspy",
+  "base_commit": "80412ce96d70fdb64dcf2c63940f511d6f89ca44",
+  "task_id": 8563,
+  "feature_a": {
+    "id": 1,
+    "title": "Add flexible parsing for `dspy.ToolCalls` to handle varied LM output formats"
+  },
+  "feature_b": {
+    "id": 2,
+    "title": "Minimal Python-call syntax parser for `ToolCalls` (safe, keywords-first)"
+  },
+  "label": "clean_merge",
+  "has_conflict": false,
+  "files_touched": [
+    "dspy/adapters/types/tool.py",
+    "tests/adapters/test_chat_adapter.py",
+    "tests/adapters/test_tool.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

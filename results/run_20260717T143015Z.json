@@ -1,0 +1,239 @@
+{
+  "timestamp": "20260717T143015Z",
+  "config_path": "config.yaml",
+  "pairs_dir": "data/pairs",
+  "input_mode": "compare",
+  "summary": {
+    "raw_committee_accuracy": [
+      0,
+      1,
+      1
+    ],
+    "structured_committee_accuracy": [
+      0,
+      1,
+      1
+    ]
+  },
+  "results": {
+    "raw": [
+      {
+        "pair": "example_1",
+        "input_mode": "raw",
+        "ground_truth": "conflict",
+        "baseline_verdict": "compatible",
+        "committee_verdict": "escalate",
+        "baseline": {
+          "model_name": "qwen2.5-coder:3b",
+          "wall_clock_seconds": 11.20023874999606,
+          "result": {
+            "model_name": "qwen2.5-coder:3b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "compatible",
+              "confidence": 0.9,
+              "reasoning": "The changes in both branches do not affect each other's functionality. Branch A renames the function `calculate_total` to `compute_total`, but this change does not impact how `finalize_order` uses it in Branch B, which continues to call `calculate_total`. The logic of calculating the total remains unchanged.",
+              "evidence": [
+                "Branch A changes the function name from `calculate_total` to `compute_total` without affecting its usage in Branch B."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 11.200208834001387,
+            "raw_content": "{\n  \"verdict\": \"compatible\",\n  \"confidence\": 0.9,\n  \"reasoning\": \"The changes in both branches do not affect each other's functionality. Branch A renames the function `calculate_total` to `compute_total`, but this change does not impact how `finalize_order` uses it in Branch B, which continues to call `calculate_total`. The logic of calculating the total remains unchanged.\",\n  \"evidence\": [\"Branch A changes the function name from `calculate_total` to `compute_total` without affecting its usage in Branch B.\"]\n}"
+          }
+        },
+        "committee": {
+          "wall_clock_seconds": 128.1634210830016,
+          "model_results": [
+            {
+              "model_name": "gemma4:e2b",
+              "role": "general-reasoning",
+              "outcome": "ok",
+              "verdict": {
+                "verdict": "conflict",
+                "confidence": 1.0,
+                "reasoning": "Branch A renames the function from calculate_total to compute_total in utils.py. Branch B imports and uses the old function name 'calculate_total' from utils.py in checkout.py. Merging these changes will cause a runtime error because checkout.py will attempt to call a function that no longer exists (calculate_total), leading to a semantic conflict.",
+                "evidence": [
+                  "Branch A renames `calculate_total` to `compute_total` in utils.py",
+                  "Branch B imports and uses `calculate_total` from utils.py in checkout.py"
+                ]
+              },
+              "error": null,
+              "elapsed_seconds": 110.80994566599838,
+              "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 1.0,\n  \"reasoning\": \"Branch A renames the function from calculate_total to compute_total in utils.py. Branch B imports and uses the old function name 'calculate_total' from utils.py in checkout.py. Merging these changes will cause a runtime error because checkout.py will attempt to call a function that no longer exists (calculate_total), leading to a semantic conflict.\",\n  \"evidence\": [\n    \"Branch A renames `calculate_total` to `compute_total` in utils.py\",\n    \"Branch B imports and uses `calculate_total` from utils.py in checkout.py\"\n  ]\n}"
+            },
+            {
+              "model_name": "qwen2.5-coder:3b",
+              "role": "coder",
+              "outcome": "ok",
+              "verdict": {
+                "verdict": "compatible",
+                "confidence": 0.9,
+                "reasoning": "The changes in both branches do not affect each other's functionality. Branch A renames the function `calculate_total` to `compute_total`, but this change does not impact how it is used in Branch B, which still calls `calculate_total`. The only difference is that Branch B now imports `calculate_total` from `utils.py`, ensuring that both branches use the same implementation of the function.",
+                "evidence": [
+                  "Branch A renames `calculate_total` to `compute_total`",
+                  "Branch B uses `calculate_total` without modification"
+                ]
+              },
+              "error": null,
+              "elapsed_seconds": 17.353222457997617,
+              "raw_content": "{\n  \"verdict\": \"compatible\",\n  \"confidence\": 0.9,\n  \"reasoning\": \"The changes in both branches do not affect each other's functionality. Branch A renames the function `calculate_total` to `compute_total`, but this change does not impact how it is used in Branch B, which still calls `calculate_total`. The only difference is that Branch B now imports `calculate_total` from `utils.py`, ensuring that both branches use the same implementation of the function.\",\n  \"evidence\": [\"Branch A renames `calculate_total` to `compute_total`\", \"Branch B uses `calculate_total` without modification\"]\n}"
+            }
+          ]
+        },
+        "adjudication": {
+          "final_verdict": "escalate",
+          "agreeing_models": [
+            "gemma4:e2b",
+            "qwen2.5-coder:3b"
+          ],
+          "dissenting_models": [],
+          "failed_models": [],
+          "evidence_overlap_score": 0.0,
+          "shared_evidence": [],
+          "explanation": "Models split evenly between 'compatible' and 'conflict'; escalating rather than forcing a majority vote.",
+          "model_summaries": [
+            {
+              "model": "gemma4:e2b",
+              "role": "general-reasoning",
+              "outcome": "ok",
+              "elapsed_seconds": 110.81,
+              "verdict": "conflict",
+              "confidence": 1.0,
+              "reasoning": "Branch A renames the function from calculate_total to compute_total in utils.py. Branch B imports and uses the old function name 'calculate_total' from utils.py in checkout.py. Merging these changes will cause a runtime error because checkout.py will attempt to call a function that no longer exists (calculate_total), leading to a semantic conflict.",
+              "evidence": [
+                "Branch A renames `calculate_total` to `compute_total` in utils.py",
+                "Branch B imports and uses `calculate_total` from utils.py in checkout.py"
+              ]
+            },
+            {
+              "model": "qwen2.5-coder:3b",
+              "role": "coder",
+              "outcome": "ok",
+              "elapsed_seconds": 17.35,
+              "verdict": "compatible",
+              "confidence": 0.9,
+              "reasoning": "The changes in both branches do not affect each other's functionality. Branch A renames the function `calculate_total` to `compute_total`, but this change does not impact how it is used in Branch B, which still calls `calculate_total`. The only difference is that Branch B now imports `calculate_total` from `utils.py`, ensuring that both branches use the same implementation of the function.",
+              "evidence": [
+                "Branch A renames `calculate_total` to `compute_total`",
+                "Branch B uses `calculate_total` without modification"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "structured": [
+      {
+        "pair": "example_1",
+        "input_mode": "structured",
+        "ground_truth": "conflict",
+        "baseline_verdict": "conflict",
+        "committee_verdict": "escalate",
+        "baseline": {
+          "model_name": "qwen2.5-coder:3b",
+          "wall_clock_seconds": 17.52665100000013,
+          "result": {
+            "model_name": "qwen2.5-coder:3b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.9,
+              "reasoning": "The branches contain conflicting changes to the `calculate_total` function in `utils.py`. Branch A renames this function to `compute_total`, while Branch B modifies it by adding a new parameter `cart` to the signature of `finalize_order` in `checkout.py`. These changes are incompatible because they affect different functions and their usage patterns. The merge would result in a logical error where `calculate_total` is no longer available for use, as its name has changed, and `finalize_order` now requires an argument that was not present before.",
+              "evidence": [
+                "Branch A: removed `calculate_total` with signature `def calculate_total(items):`",
+                "Branch B: added `finalize_order(cart)` in `checkout.py`"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 17.526573124996503,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.9,\n  \"reasoning\": \"The branches contain conflicting changes to the `calculate_total` function in `utils.py`. Branch A renames this function to `compute_total`, while Branch B modifies it by adding a new parameter `cart` to the signature of `finalize_order` in `checkout.py`. These changes are incompatible because they affect different functions and their usage patterns. The merge would result in a logical error where `calculate_total` is no longer available for use, as its name has changed, and `finalize_order` now requires an argument that was not present before.\",\n  \"evidence\": [\n    \"Branch A: removed `calculate_total` with signature `def calculate_total(items):`\",\n    \"Branch B: added `finalize_order(cart)` in `checkout.py`\"\n  ]\n}"
+          }
+        },
+        "committee": {
+          "wall_clock_seconds": 215.2055159579977,
+          "model_results": [
+            {
+              "model_name": "gemma4:e2b",
+              "role": "general-reasoning",
+              "outcome": "ok",
+              "verdict": {
+                "verdict": "compatible",
+                "confidence": 1.0,
+                "reasoning": "Branch A removes the function 'calculate_total' from utils.py and adds 'compute_total'. Branch B modifies 'finalize_order' in checkout.py. These changes affect entirely different functions and files (utils.py vs checkout.py) and do not interact with each other or the merge-base context in a way that creates semantic conflicts. The removal of 'calculate_total' by A is fine if no code relies on it elsewhere, and B's change to 'finalize_order' is independent.",
+                "evidence": [
+                  "Branch A removes function 'calculate_total' from utils.py (utils.py:3)",
+                  "Branch A adds function 'compute_total' to utils.py",
+                  "Branch B modifies function 'finalize_order' in checkout.py"
+                ]
+              },
+              "error": null,
+              "elapsed_seconds": 196.89638412500062,
+              "raw_content": "{\n  \"verdict\": \"compatible\",\n  \"confidence\": 1.0,\n  \"reasoning\": \"Branch A removes the function 'calculate_total' from utils.py and adds 'compute_total'. Branch B modifies 'finalize_order' in checkout.py. These changes affect entirely different functions and files (utils.py vs checkout.py) and do not interact with each other or the merge-base context in a way that creates semantic conflicts. The removal of 'calculate_total' by A is fine if no code relies on it elsewhere, and B's change to 'finalize_order' is independent.\",\n  \"evidence\": [\n    \"Branch A removes function 'calculate_total' from utils.py (utils.py:3)\",\n    \"Branch A adds function 'compute_total' to utils.py\",\n    \"Branch B modifies function 'finalize_order' in checkout.py\"\n  ]\n}"
+            },
+            {
+              "model_name": "qwen2.5-coder:3b",
+              "role": "coder",
+              "outcome": "ok",
+              "verdict": {
+                "verdict": "conflict",
+                "confidence": 0.9,
+                "reasoning": "The merge would introduce a logical conflict because Branch A renames the `calculate_total` function to `compute_total`, while Branch B still calls `calculate_total`. This change breaks the existing usage of `calculate_total` in Branch B, which is not compatible with the new name.",
+                "evidence": [
+                  "Branch A changes `calculate_total` to `compute_total`",
+                  "Branch B references `calculate_total`"
+                ]
+              },
+              "error": null,
+              "elapsed_seconds": 18.308602417004295,
+              "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.9,\n  \"reasoning\": \"The merge would introduce a logical conflict because Branch A renames the `calculate_total` function to `compute_total`, while Branch B still calls `calculate_total`. This change breaks the existing usage of `calculate_total` in Branch B, which is not compatible with the new name.\",\n  \"evidence\": [\"Branch A changes `calculate_total` to `compute_total`\", \"Branch B references `calculate_total`\"]\n}"
+            }
+          ]
+        },
+        "adjudication": {
+          "final_verdict": "escalate",
+          "agreeing_models": [
+            "gemma4:e2b",
+            "qwen2.5-coder:3b"
+          ],
+          "dissenting_models": [],
+          "failed_models": [],
+          "evidence_overlap_score": 0.0,
+          "shared_evidence": [],
+          "explanation": "Models split evenly between 'compatible' and 'conflict'; escalating rather than forcing a majority vote.",
+          "model_summaries": [
+            {
+              "model": "gemma4:e2b",
+              "role": "general-reasoning",
+              "outcome": "ok",
+              "elapsed_seconds": 196.9,
+              "verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "Branch A removes the function 'calculate_total' from utils.py and adds 'compute_total'. Branch B modifies 'finalize_order' in checkout.py. These changes affect entirely different functions and files (utils.py vs checkout.py) and do not interact with each other or the merge-base context in a way that creates semantic conflicts. The removal of 'calculate_total' by A is fine if no code relies on it elsewhere, and B's change to 'finalize_order' is independent.",
+              "evidence": [
+                "Branch A removes function 'calculate_total' from utils.py (utils.py:3)",
+                "Branch A adds function 'compute_total' to utils.py",
+                "Branch B modifies function 'finalize_order' in checkout.py"
+              ]
+            },
+            {
+              "model": "qwen2.5-coder:3b",
+              "role": "coder",
+              "outcome": "ok",
+              "elapsed_seconds": 18.31,
+              "verdict": "conflict",
+              "confidence": 0.9,
+              "reasoning": "The merge would introduce a logical conflict because Branch A renames the `calculate_total` function to `compute_total`, while Branch B still calls `calculate_total`. This change breaks the existing usage of `calculate_total` in Branch B, which is not compatible with the new name.",
+              "evidence": [
+                "Branch A changes `calculate_total` to `compute_total`",
+                "Branch B references `calculate_total`"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "pallets/jinja",
+  "pair_id": "pair_14_pallets_jinja_t1621_f1v6",
+  "cooperbench_label": "conflict",
+  "notes": "Add search path fallback mechanism for template loading vs Add Template Path Transformation Support"
+}

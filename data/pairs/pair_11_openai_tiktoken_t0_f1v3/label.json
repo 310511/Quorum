@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "openai/tiktoken",
+  "pair_id": "pair_11_openai_tiktoken_t0_f1v3",
+  "cooperbench_label": "conflict",
+  "notes": "Add Token Count Limit to Encode Function vs Add Token Frequency Analysis"
+}

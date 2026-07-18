@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "typescript",
+  "source": "CooperBench",
+  "repo": "react-hook-form/react-hook-form",
+  "pair_id": "pair_18_react_hook_form_t85_f1v3",
+  "cooperbench_label": "conflict",
+  "notes": "Fix async defaultValues in React.StrictMode is called only once vs Add Callback for Initial Default Values Resolution"
+}

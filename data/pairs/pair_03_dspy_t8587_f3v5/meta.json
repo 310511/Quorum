@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_03_dspy_t8587_f3v5",
+  "source_benchmark": "CooperBench",
+  "repo": "dspy_task",
+  "github": "stanfordnlp/dspy",
+  "base_commit": "80412ce96d70fdb64dcf2c63940f511d6f89ca44",
+  "task_id": 8587,
+  "feature_a": {
+    "id": 3,
+    "title": "Stream Chunk Count & Size Metrics"
+  },
+  "feature_b": {
+    "id": 5,
+    "title": "StreamListener Debug Mode (Trace Logging)"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "dspy/streaming/streaming_listener.py",
+    "tests/streaming/test_streaming.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

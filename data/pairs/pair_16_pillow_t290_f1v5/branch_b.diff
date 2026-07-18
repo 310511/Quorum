@@ -1,0 +1,205 @@
+--- a/Tests/test_image_quantize.py
++++ b/Tests/test_image_quantize.py
+@@ -85,3 +85,75 @@
+     converted = im.quantize()
+     converted_px = converted.load()
+     assert converted_px[0, 0] == converted_px[0, 1]
++
++import numpy as np
++
++def test_lightness_factor_quantize() -> None:
++    """Test that lightness_factor properly adjusts brightness after quantization."""
++    image = hopper()
++ 
++    # Standard quantization
++    standard = image.quantize(64)
++    standard_rgb = standard.convert("RGB")
++ 
++    # Lightened quantization (10% brighter)
++    lightened = image.quantize(64, lightness_factor=1.1)
++    lightened_rgb = lightened.convert("RGB")
++ 
++    # Darkened quantization (10% darker)
++    darkened = image.quantize(64, lightness_factor=0.9)
++    darkened_rgb = darkened.convert("RGB")
++ 
++    # Calculate average brightness of each result
++    standard_array = np.array(standard_rgb)
++    lightened_array = np.array(lightened_rgb)
++    darkened_array = np.array(darkened_rgb)
++ 
++    standard_brightness = np.mean(standard_array)
++    lightened_brightness = np.mean(lightened_array)
++    darkened_brightness = np.mean(darkened_array)
++ 
++    # Lightened should be brighter than standard
++    assert lightened_brightness > standard_brightness
++ 
++    # Darkened should be darker than standard
++    assert darkened_brightness < standard_brightness
++ 
++    # Check that the brightness change is approximately correct (accounting for clamping)
++    # Should be roughly 10% different, but with some margin for clamping effects
++    expected_light_increase = standard_brightness * 0.1
++    actual_light_increase = lightened_brightness - standard_brightness
++    assert actual_light_increase > 0
++    assert abs(actual_light_increase - expected_light_increase) / expected_light_increase < 0.5
++ 
++    expected_dark_decrease = standard_brightness * 0.1
++    actual_dark_decrease = standard_brightness - darkened_brightness
++    assert actual_dark_decrease > 0
++    assert abs(actual_dark_decrease - expected_dark_decrease) / expected_dark_decrease < 0.5
++
++
++def test_lightness_factor_extreme_values() -> None:
++    """Test extreme values of lightness_factor."""
++    image = hopper()
++ 
++    # Very bright (but values should still be clamped to 255)
++    very_bright = image.quantize(64, lightness_factor=2.0)
++ 
++    # Very dark (but values should still be non-negative)
++    very_dark = image.quantize(64, lightness_factor=0.1)
++ 
++    # Check that no values exceed valid ranges
++    palette = very_bright.getpalette()
++    assert palette is not None
++    assert all(0 <= v <= 255 for v in palette)
++ 
++    palette = very_dark.getpalette()
++    assert palette is not None
++    assert all(0 <= v <= 255 for v in palette)
++ 
++    # Test invalid lightness factor
++    with pytest.raises(ValueError):
++        image.quantize(64, lightness_factor=-0.5)
++ 
++    with pytest.raises(ValueError):
++        image.quantize(64, lightness_factor=0)
+--- a/src/PIL/Image.py
++++ b/src/PIL/Image.py
+@@ -1048,34 +1048,76 @@
+                 new_im.info["transparency"] = trns
+         return new_im
+ 
+-    def quantize(self, colors=256, method=None, kmeans=0, palette=None, dither=1):
++    def quantize(self, colors=256, method=None, kmeans=0, palette=None, dither=1, lightness_factor=1.0):
+         """
+         Convert the image to 'P' mode with the specified number
+         of colors.
+ 
+         :param colors: The desired number of colors, <= 256
+         :param method: :data:`MEDIANCUT` (median cut),
+-                       :data:`MAXCOVERAGE` (maximum coverage),
+-                       :data:`FASTOCTREE` (fast octree),
+-                       :data:`LIBIMAGEQUANT` (libimagequant; check support using
+-                       :py:func:`PIL.features.check_feature`
+-                       with ``feature="libimagequant"``).
+-
+-                       By default, :data:`MEDIANCUT` will be used.
+-
+-                       The exception to this is RGBA images. :data:`MEDIANCUT` and
+-                       :data:`MAXCOVERAGE` do not support RGBA images, so
+-                       :data:`FASTOCTREE` is used by default instead.
++                    :data:`MAXCOVERAGE` (maximum coverage),
++                    :data:`FASTOCTREE` (fast octree),
++                    :data:`LIBIMAGEQUANT` (libimagequant; check support using
++                    :py:func:`PIL.features.check_feature`
++                    with ``feature="libimagequant"``).
++
++                    By default, :data:`MEDIANCUT` will be used.
++
++                    The exception to this is RGBA images. :data:`MEDIANCUT` and
++                    :data:`MAXCOVERAGE` do not support RGBA images, so
++                    :data:`FASTOCTREE` is used by default instead.
+         :param kmeans: Integer
+         :param palette: Quantize to the palette of given
+                         :py:class:`PIL.Image.Image`.
+         :param dither: Dithering method, used when converting from
+-           mode "RGB" to "P" or from "RGB" or "L" to "1".
+-           Available methods are :data:`NONE` or :data:`FLOYDSTEINBERG` (default).
+-           Default: 1 (legacy setting)
++        mode "RGB" to "P" or from "RGB" or "L" to "1".
++        Available methods are :data:`NONE` or :data:`FLOYDSTEINBERG` (default).
++        Default: 1 (legacy setting)
++        :param lightness_factor: Factor to adjust the brightness of palette colors.
++                                Values > 1.0 lighten the image, values < 1.0 darken.
++                                Default is 1.0 (no change).
+         :returns: A new image
+ 
+         """
++ 
++        def _adjust_palette_lightness(image, factor):
++            """
++            Adjust the brightness of a paletted image by modifying its palette.
++ 
++            Args:
++                image: A PIL image in 'P' mode with a palette
++                factor: Brightness factor (>1.0 lightens, <1.0 darkens)
++ 
++            Returns:
++                A new image with adjusted palette
++            """
++            if image.mode != "P":
++                return image
++ 
++            # Get current palette
++            palette = image.getpalette()
++            if not palette:
++                return image
++ 
++            # Create a new palette with adjusted brightness
++            new_palette = []
++            for i in range(0, len(palette), 3):
++                r, g, b = palette[i:i+3]
++ 
++                # Apply brightness factor and clamp to valid range
++                r = min(255, max(0, int(r * factor)))
++                g = min(255, max(0, int(g * factor)))
++                b = min(255, max(0, int(b * factor)))
++ 
++                new_palette.extend([r, g, b])
++ 
++            # Create a new image with the same data but adjusted palette
++            from PIL import Image
++ 
++            new_img = image.copy()
++            new_img.putpalette(new_palette)
++ 
++            return new_img
+ 
+         self.load()
+ 
+@@ -1091,6 +1133,10 @@
+                 "Fast Octree (method == 2) and libimagequant (method == 3) "
+                 "are the only valid methods for quantizing RGBA images"
+             )
++
++        # Validate lightness_factor
++        if lightness_factor <= 0:
++            raise ValueError("lightness_factor must be greater than 0")
+ 
+         if palette:
+             # use palette from reference image
+@@ -1104,6 +1150,11 @@
+             im = self.im.convert("P", dither, palette.im)
+             new_im = self._new(im)
+             new_im.palette = palette.palette.copy()
++ 
++            # Apply lightness adjustment if needed
++            if lightness_factor != 1.0:
++                new_im = _adjust_palette_lightness(new_im, lightness_factor)
++ 
+             return new_im
+ 
+         im = self._new(self.im.quantize(colors, method, kmeans))
+@@ -1112,6 +1163,10 @@
+ 
+         mode = im.im.getpalettemode()
+         im.palette = ImagePalette.ImagePalette(mode, im.im.getpalette(mode, mode))
++ 
++        # Apply lightness adjustment if needed
++        if lightness_factor != 1.0:
++            im = _adjust_palette_lightness(im, lightness_factor)
+ 
+         return im

@@ -1,0 +1,168 @@
+--- a/metrics.go
++++ b/metrics.go
+@@ -0,0 +1,51 @@
++package chi
++
++import (
++	"net/http"
++	"time"
++)
++
++// RouteMetric contains information about a route hit
++type RouteMetric struct {
++	// Pattern is the route pattern that was matched
++	Pattern string
++
++	// Method is the HTTP method used
++	Method string
++
++	// Path is the actual request path
++	Path string
++
++	// Duration is how long the request took to process
++	Duration time.Duration
++
++	// Params contains any URL parameters
++	Params map[string]string
++}
++
++// MetricsCollector defines an interface for collecting router metrics
++type MetricsCollector interface {
++	// RecordHit records a hit on a particular route
++	RecordHit(ctx *Context, r *http.Request, duration time.Duration)
++}
++
++// SimpleMetricsCollector is a basic implementation of MetricsCollector
++type SimpleMetricsCollector struct {
++	OnHit func(metric RouteMetric)
++}
++
++// RecordHit implements the MetricsCollector interface
++func (s *SimpleMetricsCollector) RecordHit(ctx *Context, r *http.Request, duration time.Duration) {
++	params := make(map[string]string)
++	for i, key := range ctx.URLParams.Keys {
++		params[key] = ctx.URLParams.Values[i]
++	}
++
++	s.OnHit(RouteMetric{
++		Pattern:  ctx.RoutePattern(),
++		Method:   r.Method,
++		Path:     r.URL.Path,
++		Duration: duration,
++		Params:   params,
++	})
++}
+
+--- a/metrics_test.go
++++ b/metrics_test.go
+@@ -0,0 +1,63 @@
++package chi
++
++import (
++	"net/http"
++	"net/http/httptest"
++	"testing"
++	"time"
++)
++
++func TestMetricsCollector(t *testing.T) {
++	var collectedMetric RouteMetric
++
++	collector := &SimpleMetricsCollector{
++		OnHit: func(metric RouteMetric) {
++			collectedMetric = metric
++		},
++	}
++
++	r := NewRouter()
++	r.SetMetricsCollector(collector)
++
++	r.Get("/users/{id}", func(w http.ResponseWriter, r *http.Request) {
++		time.Sleep(5 * time.Millisecond) // Simulate some work
++		w.Write([]byte("user"))
++	})
++
++	ts := httptest.NewServer(r)
++	defer ts.Close()
++
++	resp, _ := testRequest(t, ts, "GET", "/users/123", nil)
++	if resp == nil {
++		t.Fatal("failed to make request")
++	}
++	defer resp.Body.Close()
++
++	// Verify the metrics were collected properly
++	if collectedMetric.Pattern != "/users/{id}" {
++		t.Errorf("expected pattern '/users/{id}', got '%s'", collectedMetric.Pattern)
++	}
++
++	if collectedMetric.Method != "GET" {
++		t.Errorf("expected method 'GET', got '%s'", collectedMetric.Method)
++	}
++
++	if collectedMetric.Path != "/users/123" {
++		t.Errorf("expected path '/users/123', got '%s'", collectedMetric.Path)
++	}
++
++	if collectedMetric.Duration < 5*time.Millisecond {
++		t.Errorf("expected duration at least 5ms, got %v", collectedMetric.Duration)
++	}
++
++	if len(collectedMetric.Params) != 1 {
++		t.Errorf("expected 1 param, got %d", len(collectedMetric.Params))
++	}
++
++	if val, ok := collectedMetric.Params["id"]; !ok || val != "123" {
++		t.Errorf("expected param 'id' with value '123', got '%s'", val)
++	}
++}
++
++// testRequest is a helper to make HTTP requests for testing
++// Assumes testRequest is defined elsewhere in the test package
+
+--- a/mux.go
++++ b/mux.go
+@@ -6,6 +6,7 @@
+ 	"net/http"
+ 	"strings"
+ 	"sync"
++	"time"
+ )
+ 
+ var _ Router = &Mux{}
+@@ -45,6 +46,9 @@
+ 	// Controls the behaviour of middleware chain generation when a mux
+ 	// is registered as an inline group inside another mux.
+ 	inline bool
++
++	// Metrics collector for route monitoring
++	metricsCollector MetricsCollector
+ }
+ 
+ // NewMux returns a newly initialized Mux object that implements the Router
+@@ -454,7 +458,16 @@
+ 
+ 	// Find the route
+ 	if _, _, h := mx.tree.FindRoute(rctx, method, routePath); h != nil {
++		// Start measuring request duration
++		start := time.Now()
++
++		// Serve the request with the found handler
+ 		h.ServeHTTP(w, r)
++
++		// Record metrics if collector is configured
++		if mx.metricsCollector != nil {
++			mx.metricsCollector.RecordHit(rctx, r, time.Since(start))
++		}
+ 		return
+ 	}
+ 	if rctx.methodNotAllowed {
+@@ -504,3 +517,8 @@
+ 		w.Write(nil)
+ 	}
+ }
++
++// SetMetricsCollector sets the metrics collector for the router
++func (mx *Mux) SetMetricsCollector(collector MetricsCollector) {
++	mx.metricsCollector = collector
++}

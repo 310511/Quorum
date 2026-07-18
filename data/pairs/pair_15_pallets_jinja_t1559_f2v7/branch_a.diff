@@ -1,0 +1,339 @@
+--- a/src/jinja2/ext.py
++++ b/src/jinja2/ext.py
+@@ -332,8 +332,27 @@
+             if npgettext is not None:
+                 npgettext = _make_new_npgettext(npgettext)
+ 
++        # Get existing domain-aware functions or create fallback ones
++        existing_dgettext = self.environment.globals.get('dgettext')
++        existing_dngettext = self.environment.globals.get('dngettext')
++ 
++        def dgettext(domain: str, message: str) -> str:
++            # Use existing domain-aware function if available
++            if existing_dgettext:
++                return existing_dgettext(domain, message)
++            # Fallback to regular gettext if no domain support
++            return gettext(message)
++ 
++        def dngettext(domain: str, singular: str, plural: str, n: int) -> str:
++            # Use existing domain-aware function if available
++            if existing_dngettext:
++                return existing_dngettext(domain, singular, plural, n)
++            # Fallback to regular ngettext if no domain support
++            return ngettext(singular, plural, n)
++
+         self.environment.globals.update(
+-            gettext=gettext, ngettext=ngettext, pgettext=pgettext, npgettext=npgettext
++            gettext=gettext, ngettext=ngettext, pgettext=pgettext, npgettext=npgettext,
++            dgettext=dgettext, dngettext=dngettext
+         )
+ 
+     def _uninstall(self, translations: "_SupportedTranslations") -> None:
+@@ -363,8 +382,9 @@
+         plural_expr_assignment: t.Optional[nodes.Assign] = None
+         variables: t.Dict[str, nodes.Expr] = {}
+         trimmed = None
++        domain: t.Optional[str] = None
+         while parser.stream.current.type != "block_end":
+-            if variables:
++            if variables or domain is not None:
+                 parser.stream.expect("comma")
+ 
+             # skip colon for python compatibility
+@@ -372,6 +392,26 @@
+                 break
+ 
+             token = parser.stream.expect("name")
++ 
++            # Handle domain parameter
++            if token.value == "domain":
++                if domain is not None:
++                    parser.fail(
++                        "domain parameter defined twice.",
++                        token.lineno,
++                        exc=TemplateAssertionError,
++                    )
++                parser.stream.expect("assign")
++                domain_expr = parser.parse_expression()
++                if not isinstance(domain_expr, nodes.Const) or not isinstance(domain_expr.value, str):
++                    parser.fail(
++                        "domain parameter must be a string literal.",
++                        token.lineno,
++                        exc=TemplateAssertionError,
++                    )
++                domain = domain_expr.value
++                continue
++ 
+             if token.value in variables:
+                 parser.fail(
+                     f"translatable variable {token.value!r} defined twice.",
+@@ -459,6 +499,7 @@
+             plural_expr,
+             bool(referenced),
+             num_called_num and have_plural,
++            domain,
+         )
+         node.set_lineno(lineno)
+         if plural_expr_assignment is not None:
+@@ -514,6 +555,7 @@
+         plural_expr: t.Optional[nodes.Expr],
+         vars_referenced: bool,
+         num_called_num: bool,
++        domain: t.Optional[str] = None,
+     ) -> nodes.Output:
+         """Generates a useful node from the data provided."""
+         newstyle = self.environment.newstyle_gettext  # type: ignore
+@@ -528,19 +570,35 @@
+ 
+         # singular only:
+         if plural_expr is None:
+-            gettext = nodes.Name("gettext", "load")
+-            node = nodes.Call(gettext, [nodes.Const(singular)], [], None, None)
++            if domain is not None:
++                # Use dgettext for domain-specific translation
++                dgettext = nodes.Name("dgettext", "load")
++                node = nodes.Call(dgettext, [nodes.Const(domain), nodes.Const(singular)], [], None, None)
++            else:
++                gettext = nodes.Name("gettext", "load")
++                node = nodes.Call(gettext, [nodes.Const(singular)], [], None, None)
+ 
+         # singular and plural
+         else:
+-            ngettext = nodes.Name("ngettext", "load")
+-            node = nodes.Call(
+-                ngettext,
+-                [nodes.Const(singular), nodes.Const(plural), plural_expr],
+-                [],
+-                None,
+-                None,
+-            )
++            if domain is not None:
++                # Use dngettext for domain-specific plural translation
++                dngettext = nodes.Name("dngettext", "load")
++                node = nodes.Call(
++                    dngettext,
++                    [nodes.Const(domain), nodes.Const(singular), nodes.Const(plural), plural_expr],
++                    [],
++                    None,
++                    None,
++                )
++            else:
++                ngettext = nodes.Name("ngettext", "load")
++                node = nodes.Call(
++                    ngettext,
++                    [nodes.Const(singular), nodes.Const(plural), plural_expr],
++                    [],
++                    None,
++                    None,
++                )
+ 
+         # in case newstyle gettext is used, the method is powerful
+         # enough to handle the variable expansion and autoescape
+
+--- a/tests/test_ext.py
++++ b/tests/test_ext.py
+@@ -599,6 +599,204 @@
+         assert tmpl.render(LANGUAGE="de", apples=5) == "5 Apples"
+ 
+ 
++class TestTranslationDomain:
++    def test_trans_domain_basic(self):
++        """Test basic domain functionality with trans tag."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        # Mock domain-aware gettext functions
++        def mock_dgettext(domain, message):
++            if domain == "admin":
++                return f"ADMIN:{message}"
++            return message
++ 
++        def mock_dngettext(domain, singular, plural, n):
++            if domain == "admin":
++                return f"ADMIN:{singular if n == 1 else plural}"
++            return singular if n == 1 else plural
++ 
++        env.globals.update({
++            "gettext": lambda x: x,
++            "ngettext": lambda s, p, n: s if n == 1 else p,
++            "dgettext": mock_dgettext,
++            "dngettext": mock_dngettext,
++        })
++ 
++        # Test basic domain usage
++        tmpl = env.from_string('{% trans domain="admin" %}Hello World{% endtrans %}')
++        assert tmpl.render() == "ADMIN:Hello World"
++
++    def test_trans_domain_with_variables(self):
++        """Test domain with variables."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        def mock_dgettext(domain, message):
++            if domain == "ui":
++                return f"UI:{message}"
++            return message
++ 
++        env.globals.update({
++            "gettext": lambda x: x,
++            "dgettext": mock_dgettext,
++        })
++ 
++        tmpl = env.from_string('{% trans domain="ui", name="John" %}Hello {{ name }}{% endtrans %}')
++        assert tmpl.render() == "UI:Hello %(name)s" % {"name": "John"}
++
++    def test_trans_domain_plural(self):
++        """Test domain with pluralization."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        def mock_dngettext(domain, singular, plural, n):
++            if domain == "messages":
++                return f"MSG:{singular if n == 1 else plural}"
++            return singular if n == 1 else plural
++ 
++        env.globals.update({
++            "ngettext": lambda s, p, n: s if n == 1 else p,
++            "dngettext": mock_dngettext,
++        })
++ 
++        tmpl = env.from_string(
++            '{% trans domain="messages", count=1 %}{{ count }} item{% pluralize %}{{ count }} items{% endtrans %}'
++        )
++        assert tmpl.render() == "MSG:%(count)s item" % {"count": 1}
++ 
++        tmpl = env.from_string(
++            '{% trans domain="messages", count=2 %}{{ count }} item{% pluralize %}{{ count }} items{% endtrans %}'
++        )
++        assert tmpl.render() == "MSG:%(count)s items" % {"count": 2}
++
++    def test_trans_domain_with_trimmed(self):
++        """Test domain with trimmed option."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        def mock_dgettext(domain, message):
++            if domain == "admin":
++                return f"ADMIN:{message}"
++            return message
++ 
++        env.globals.update({
++            "gettext": lambda x: x,
++            "dgettext": mock_dgettext,
++        })
++ 
++        tmpl = env.from_string(
++            '{% trans domain="admin", trimmed %}  Hello  \n  World  {% endtrans %}'
++        )
++        assert tmpl.render() == "ADMIN:Hello World"
++
++    def test_trans_domain_error_duplicate(self):
++        """Test error when domain is defined twice."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        with pytest.raises(TemplateAssertionError):
++            env.from_string('{% trans domain="admin", domain="ui" %}Hello{% endtrans %}')
++
++    def test_trans_domain_error_non_string(self):
++        """Test error when domain is not a string literal."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        with pytest.raises(TemplateAssertionError):
++            env.from_string('{% trans domain=variable %}Hello{% endtrans %}')
++
++    def test_trans_domain_empty_string(self):
++        """Test domain with empty string."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        def mock_dgettext(domain, message):
++            return f"DOMAIN[{domain}]:{message}"
++ 
++        env.globals.update({
++            "gettext": lambda x: x,
++            "dgettext": mock_dgettext,
++        })
++ 
++        tmpl = env.from_string('{% trans domain="" %}Hello{% endtrans %}')
++        assert tmpl.render() == "DOMAIN[]:Hello"
++
++    def test_trans_domain_special_chars(self):
++        """Test domain with special characters."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        def mock_dgettext(domain, message):
++            return f"DOMAIN[{domain}]:{message}"
++ 
++        env.globals.update({
++            "gettext": lambda x: x,
++            "dgettext": mock_dgettext,
++        })
++ 
++        tmpl = env.from_string('{% trans domain="admin-ui_v2.0" %}Hello{% endtrans %}')
++        assert tmpl.render() == "DOMAIN[admin-ui_v2.0]:Hello"
++
++    def test_trans_domain_backward_compatibility(self):
++        """Test that trans without domain still works."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        env.globals.update({
++            "gettext": lambda x: f"DEFAULT:{x}",
++            "ngettext": lambda s, p, n: f"DEFAULT:{s if n == 1 else p}",
++        })
++ 
++        # Test without domain
++        tmpl = env.from_string('{% trans %}Hello World{% endtrans %}')
++        assert tmpl.render() == "DEFAULT:Hello World"
++ 
++        # Test plural without domain
++        tmpl = env.from_string('{% trans count=2 %}{{ count }} item{% pluralize %}{{ count }} items{% endtrans %}')
++        assert tmpl.render() == "DEFAULT:%(count)s items" % {"count": 2}
++
++    def test_trans_domain_with_context_vars(self):
++        """Test domain with context variables."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        def mock_dgettext(domain, message):
++            return f"{domain.upper()}:{message}"
++ 
++        env.globals.update({
++            "gettext": lambda x: x,
++            "dgettext": mock_dgettext,
++        })
++ 
++        tmpl = env.from_string('{% trans domain="user" %}Welcome {{ username }}{% endtrans %}')
++        result = tmpl.render(username="Alice")
++        assert result == "USER:Welcome %(username)s" % {"username": "Alice"}
++
++    def test_trans_domain_long_string(self):
++        """Test domain with very long domain name."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++ 
++        def mock_dgettext(domain, message):
++            return f"[{len(domain)}]:{message}"
++ 
++        env.globals.update({
++            "gettext": lambda x: x,
++            "dgettext": mock_dgettext,
++        })
++ 
++        long_domain = "a" * 100
++        tmpl = env.from_string(f'{{% trans domain="{long_domain}" %}}Hello{{% endtrans %}}')
++        assert tmpl.render() == "[100]:Hello"
++
++    def test_trans_domain_newstyle_gettext(self):
++        """Test domain with newstyle gettext."""
++        env = Environment(extensions=["jinja2.ext.i18n"])
++        env.newstyle_gettext = True  # type: ignore
++ 
++        def mock_dgettext(domain, message, **kw):
++            result = f"{domain.upper()}:{message}"
++            return result % kw if kw else result
++ 
++        env.globals.update({
++            "gettext": lambda x, **kw: x % kw if kw else x,
++            "dgettext": mock_dgettext,
++        })
++ 
++        tmpl = env.from_string('{% trans domain="admin", name="John" %}Hello {{ name }}{% endtrans %}')
++        assert tmpl.render() == "ADMIN:Hello John"
++
++
+ class TestAutoEscape:
+     def test_scoped_setting(self):
+         env = Environment(autoescape=True)

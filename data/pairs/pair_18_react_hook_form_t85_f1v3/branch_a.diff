@@ -1,0 +1,93 @@
+--- a/src/__tests__/useForm.test.tsx
++++ b/src/__tests__/useForm.test.tsx
+@@ -2075,6 +2075,55 @@
+     });
+   });
+ 
++  it('should update async default values for controlled components only once in strict mode', async () => {
++    let calls = 0;
++
++    const formProps = {
++      defaultValues: async () => {
++        const test = calls == 0 ? 'test' : 'other';
++        const timeout = calls == 0 ? 100 : 50;
++        calls++;
++
++        await sleep(timeout);
++
++        return {
++          test,
++        };
++      },
++    };
++
++    const App = () => {
++      const { control } = useForm<{
++        test: string;
++      }>(formProps);
++
++      return (
++        <form>
++          <Controller
++            control={control}
++            render={({ field }) => <input {...field} />}
++            defaultValue=""
++            name={'test'}
++          />
++        </form>
++      );
++    };
++
++    render(
++      <React.StrictMode>
++        <App />
++      </React.StrictMode>,
++    );
++
++    await waitFor(() => {
++      expect((screen.getByRole('textbox') as HTMLInputElement).value).toEqual(
++        'test',
++      );
++    });
++
++    expect(calls).toEqual(1);
++  });
++
+   it('should update async form values', async () => {
+     type FormValues = {
+       test: string;
+
+--- a/src/logic/createFormControl.ts
++++ b/src/logic/createFormControl.ts
+@@ -129,6 +129,7 @@
+     action: false,
+     mount: false,
+     watch: false,
++    isLoadingValues: false,
+   };
+   let _names: Names = {
+     mount: new Set(),
+
+--- a/src/types/form.ts
++++ b/src/types/form.ts
+@@ -777,6 +777,7 @@
+     mount: boolean;
+     action: boolean;
+     watch: boolean;
++    isLoadingValues: boolean;
+   };
+   _reset: UseFormReset<TFieldValues>;
+   _options: UseFormProps<TFieldValues, TContext>;
+
+--- a/src/useForm.ts
++++ b/src/useForm.ts
+@@ -122,7 +122,8 @@
+       control._reset(props.values, control._options.resetOptions);
+       _values.current = props.values;
+       updateFormState((state) => ({ ...state }));
+-    } else {
++    } else if (!props.values && !control._state.isLoadingValues) {
++      control._state.isLoadingValues = true;
+       control._resetDefaultValues();
+     }
+   }, [props.values, control]);

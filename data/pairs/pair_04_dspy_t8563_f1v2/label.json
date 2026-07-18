@@ -1,0 +1,9 @@
+{
+  "ground_truth": "compatible",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "stanfordnlp/dspy",
+  "pair_id": "pair_04_dspy_t8563_f1v2",
+  "cooperbench_label": "clean_merge",
+  "notes": "Add flexible parsing for `dspy.ToolCalls` to handle varied LM output formats vs Minimal Python-call syntax parser for `ToolCalls` (safe, keywords-first)"
+}

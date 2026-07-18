@@ -1,0 +1,4 @@
+{
+  "ground_truth": "conflict",
+  "notes": "Branch A renames calculate_total to compute_total in utils.py. Branch B adds checkout.py that imports and calls calculate_total. After merge there is no textual overlap, but checkout.py will raise ImportError at runtime."
+}

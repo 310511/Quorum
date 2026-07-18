@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_08_huggingface_datasets_t6252_f1v3",
+  "source_benchmark": "CooperBench",
+  "repo": "huggingface_datasets_task",
+  "github": "huggingface/datasets",
+  "base_commit": "0b55ec53e980855d71ae22f8b3d12b2a0d476a51",
+  "task_id": 6252,
+  "feature_a": {
+    "id": 1,
+    "title": "Add Automatic EXIF Orientation Correction for Images"
+  },
+  "feature_b": {
+    "id": 3,
+    "title": "Add Optional Image Size Clamping with Max Resolution Threshold"
+  },
+  "label": "clean_merge",
+  "has_conflict": false,
+  "files_touched": [
+    "src/datasets/features/image.py",
+    "tests/features/test_image.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

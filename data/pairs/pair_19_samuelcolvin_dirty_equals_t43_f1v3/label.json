@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "samuelcolvin/dirty-equals",
+  "pair_id": "pair_19_samuelcolvin_dirty_equals_t43_f1v3",
+  "cooperbench_label": "conflict",
+  "notes": "Add IsIP validator for IP address validation vs Add IsEmail validator class for email address validation with optional domain filtering"
+}

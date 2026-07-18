@@ -1,0 +1,123 @@
+--- a/llama-index-core/llama_index/core/base/llms/types.py
++++ b/llama-index-core/llama_index/core/base/llms/types.py
+@@ -118,13 +118,21 @@
+             as_base64 (bool): whether the resolved image should be returned as base64-encoded bytes
+ 
+         """
+-        return resolve_binary(
++        data_buffer = resolve_binary(
+             raw_bytes=self.image,
+             path=self.path,
+             url=str(self.url) if self.url else None,
+             as_base64=as_base64,
+         )
+ 
++        # Check size by seeking to end and getting position
++        data_buffer.seek(0, 2)  # Seek to end
++        size = data_buffer.tell()
++        data_buffer.seek(0)     # Reset to beginning
++
++        if size == 0:
++            raise ValueError("resolve_image returned zero bytes")
++        return data_buffer
+ 
+ class AudioBlock(BaseModel):
+     block_type: Literal["audio"] = "audio"
+@@ -178,12 +186,21 @@
+             as_base64 (bool): whether the resolved audio should be returned as base64-encoded bytes
+ 
+         """
+-        return resolve_binary(
++        data_buffer = resolve_binary(
+             raw_bytes=self.audio,
+             path=self.path,
+             url=str(self.url) if self.url else None,
+             as_base64=as_base64,
+         )
++        # Check size by seeking to end and getting position
++        data_buffer.seek(0, 2)  # Seek to end
++        size = data_buffer.tell()
++        data_buffer.seek(0)     # Reset to beginning
++
++        if size == 0:
++            raise ValueError("resolve_image returned zero bytes")
++        return data_buffer
++
+ 
+ class DocumentBlock(BaseModel):
+     block_type: Literal["document"] = "document"
+@@ -215,12 +232,21 @@
+         """
+         Resolve a document such that it is represented by a BufferIO object.
+         """
+-        return resolve_binary(
++        data_buffer = resolve_binary(
+             raw_bytes=self.data,
+             path=self.path,
+             url=str(self.url) if self.url else None,
+             as_base64=False,
+         )
++        # Check size by seeking to end and getting position
++        data_buffer.seek(0, 2)  # Seek to end
++        size = data_buffer.tell()
++        data_buffer.seek(0)     # Reset to beginning
++
++        if size == 0:
++            raise ValueError("resolve_image returned zero bytes")
++        return data_buffer
++
+ 
+     def _get_b64_string(self, data_buffer: BytesIO) -> str:
+         """
+
+--- a/llama-index-core/tests/base/llms/test_types.py
++++ b/llama-index-core/tests/base/llms/test_types.py
+@@ -13,16 +13,19 @@
+     MessageRole,
+     TextBlock,
+     DocumentBlock,
++    AudioBlock,
+ )
+ from llama_index.core.bridge.pydantic import BaseModel
+ from llama_index.core.schema import ImageDocument
+ from pydantic import AnyUrl
+ 
++@pytest.fixture()
++def empty_bytes() -> bytes:
++    return b""
+ 
+ @pytest.fixture()
+ def png_1px_b64() -> bytes:
+     return b"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+-
+ 
+ @pytest.fixture()
+ def png_1px(png_1px_b64) -> bytes:
+@@ -278,3 +281,27 @@
+         bytes_base64_encoded = False
+     assert bytes_base64_encoded
+     assert document.title == "dummy_pdf"
++
++def test_empty_bytes(empty_bytes: bytes, png_1px: bytes):
++    errors = []
++    try:
++        DocumentBlock(data=empty_bytes).resolve_document()
++        errors.append(0)
++    except ValueError:
++        errors.append(1)
++    try:
++        AudioBlock(audio=empty_bytes).resolve_audio()
++        errors.append(0)
++    except ValueError:
++        errors.append(1)
++    try:
++        ImageBlock(image=empty_bytes).resolve_image()
++        errors.append(0)
++    except ValueError:
++        errors.append(1)
++    try:
++        ImageBlock(image=png_1px).resolve_image()
++        errors.append(0)
++    except ValueError:
++        errors.append(1)
++    assert sum(errors) == 3

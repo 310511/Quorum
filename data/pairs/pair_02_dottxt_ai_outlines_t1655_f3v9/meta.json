@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+  "source_benchmark": "CooperBench",
+  "repo": "dottxt_ai_outlines_task",
+  "github": "dottxt-ai/outlines",
+  "base_commit": "4dd7802a8a5021f31dac75bc652f88d410a28675",
+  "task_id": 1655,
+  "feature_a": {
+    "id": 3,
+    "title": "Add Octal String Type for Matching Octal Number Patterns"
+  },
+  "feature_b": {
+    "id": 9,
+    "title": "Add GUID Type for Windows-Style GUID Validation"
+  },
+  "label": "clean_merge",
+  "has_conflict": false,
+  "files_touched": [
+    "outlines/types/__init__.py",
+    "tests/types/test_custom_types.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

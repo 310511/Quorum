@@ -1,0 +1,33 @@
+{
+  "pair_id": "pair_11_openai_tiktoken_t0_f1v3",
+  "source_benchmark": "CooperBench",
+  "repo": "openai_tiktoken_task",
+  "github": "openai/tiktoken",
+  "base_commit": "4560a8896f5fb1d35c6f8fd6eee0399f9a1a27ca",
+  "task_id": 0,
+  "feature_a": {
+    "id": 1,
+    "title": "Add Token Count Limit to Encode Function"
+  },
+  "feature_b": {
+    "id": 3,
+    "title": "Add Token Frequency Analysis"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "tests/test_feature1.py",
+    "tests/test_feature3.py",
+    "tiktoken/core.py"
+  ],
+  "files_missing_from_snapshot": [
+    "tests/test_feature1.py",
+    "tests/test_feature3.py"
+  ],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

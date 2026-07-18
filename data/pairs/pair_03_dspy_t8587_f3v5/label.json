@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "stanfordnlp/dspy",
+  "pair_id": "pair_03_dspy_t8587_f3v5",
+  "cooperbench_label": "conflict",
+  "notes": "Stream Chunk Count & Size Metrics vs StreamListener Debug Mode (Trace Logging)"
+}

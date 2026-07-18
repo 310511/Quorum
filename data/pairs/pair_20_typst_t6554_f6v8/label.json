@@ -1,0 +1,9 @@
+{
+  "ground_truth": "conflict",
+  "language": "rust",
+  "source": "CooperBench",
+  "repo": "typst/typst",
+  "pair_id": "pair_20_typst_t6554_f6v8",
+  "cooperbench_label": "conflict",
+  "notes": "# Add `skip_whitespace` parameter to `str.first` and `str.last` vs # Add `case` parameter to `str.first` and `str.last`"
+}

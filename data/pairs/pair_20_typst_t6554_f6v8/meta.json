@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_20_typst_t6554_f6v8",
+  "source_benchmark": "CooperBench",
+  "repo": "typst_task",
+  "github": "typst/typst",
+  "base_commit": "b8034a343831e8609aec2ec81eb7eeda57aa5d81",
+  "task_id": 6554,
+  "feature_a": {
+    "id": 6,
+    "title": "# Add `skip_whitespace` parameter to `str.first` and `str.last`"
+  },
+  "feature_b": {
+    "id": 8,
+    "title": "# Add `case` parameter to `str.first` and `str.last`"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "crates/typst/src/foundations/str.rs",
+    "tests/suite/foundations/str.typ"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "pair_id": "pair_13_pallets_click_t2956_f3v8",
+  "source_benchmark": "CooperBench",
+  "repo": "pallets_click_task",
+  "github": "pallets/click",
+  "base_commit": "5c1239b0116b66492cdd0848144ab3c78a04495a",
+  "task_id": 2956,
+  "feature_a": {
+    "id": 3,
+    "title": "Add batch_size parameter to multiple options for chunked processing"
+  },
+  "feature_b": {
+    "id": 8,
+    "title": "Add Option Value History Tracking with track_changes Parameter"
+  },
+  "label": "clean_merge",
+  "has_conflict": false,
+  "files_touched": [
+    "src/click/core.py",
+    "tests/test_imports.py",
+    "tests/test_info_dict.py",
+    "tests/test_options.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

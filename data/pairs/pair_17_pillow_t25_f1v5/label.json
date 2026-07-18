@@ -1,0 +1,9 @@
+{
+  "ground_truth": "compatible",
+  "language": "python",
+  "source": "CooperBench",
+  "repo": "python-pillow/Pillow",
+  "pair_id": "pair_17_pillow_t25_f1v5",
+  "cooperbench_label": "clean_merge",
+  "notes": "Only change readonly if saved filename matches opened filename vs Add corner pixel watermark option to save method"
+}

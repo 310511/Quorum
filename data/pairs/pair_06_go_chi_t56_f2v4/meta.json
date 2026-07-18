@@ -1,0 +1,37 @@
+{
+  "pair_id": "pair_06_go_chi_t56_f2v4",
+  "source_benchmark": "CooperBench",
+  "repo": "go_chi_task",
+  "github": "go-chi/chi",
+  "base_commit": "7f280968675bcc9f310008fc6b8abff0b923734c",
+  "task_id": 56,
+  "feature_a": {
+    "id": 2,
+    "title": "Add Custom HTTP Method Validation (default 501 + configurable handler)*"
+  },
+  "feature_b": {
+    "id": 4,
+    "title": "Add Method Validation Middleware"
+  },
+  "label": "clean_merge",
+  "has_conflict": false,
+  "files_touched": [
+    "context.go",
+    "invalid_method_test.go",
+    "middleware/method_validator.go",
+    "middleware/method_validator_test.go",
+    "mux.go",
+    "tree.go"
+  ],
+  "files_missing_from_snapshot": [
+    "invalid_method_test.go",
+    "middleware/method_validator.go",
+    "middleware/method_validator_test.go"
+  ],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "pair_id": "pair_18_react_hook_form_t85_f1v3",
+  "source_benchmark": "CooperBench",
+  "repo": "react_hook_form_task",
+  "github": "react-hook-form/react-hook-form",
+  "base_commit": "b5863b46346416972c025f4b621cb624ffc4a955",
+  "task_id": 85,
+  "feature_a": {
+    "id": 1,
+    "title": "Fix async defaultValues in React.StrictMode is called only once"
+  },
+  "feature_b": {
+    "id": 3,
+    "title": "Add Callback for Initial Default Values Resolution"
+  },
+  "label": "conflict",
+  "has_conflict": true,
+  "files_touched": [
+    "src/__tests__/useForm.test.tsx",
+    "src/logic/createFormControl.ts",
+    "src/types/form.ts",
+    "src/useForm.ts"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

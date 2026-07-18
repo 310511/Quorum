@@ -1,0 +1,273 @@
+--- a/context.go
++++ b/context.go
+@@ -76,6 +76,9 @@
+ 
+ 	// methodNotAllowed hint
+ 	methodNotAllowed bool
++
++	// invalidMethod flag for invalid/unrecognized HTTP method
++	invalidMethod bool
+ }
+ 
+ // Reset a routing context to its initial state.
+@@ -91,6 +94,7 @@
+ 	x.routeParams.Keys = x.routeParams.Keys[:0]
+ 	x.routeParams.Values = x.routeParams.Values[:0]
+ 	x.methodNotAllowed = false
++	x.invalidMethod = false
+ 	x.parentCtx = nil
+ }
+ 
+
+--- a/invalid_method_test.go
++++ b/invalid_method_test.go
+@@ -0,0 +1,161 @@
++package chi
++
++import (
++	"net/http"
++	"net/http/httptest"
++	"testing"
++)
++
++func TestInvalidMethod(t *testing.T) {
++	r := NewRouter()
++	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
++		w.Write([]byte("root"))
++	})
++
++	ts := httptest.NewServer(r)
++	defer ts.Close()
++
++	// Test default handler for invalid method
++	t.Run("Default handler for invalid method", func(t *testing.T) {
++		// Create custom request with invalid method
++		req, err := http.NewRequest("INVALID", ts.URL+"/", nil)
++		if err != nil {
++			t.Fatal(err)
++		}
++
++		resp, err := http.DefaultClient.Do(req)
++		if err != nil {
++			t.Fatal(err)
++		}
++		defer resp.Body.Close()
++
++		if resp.StatusCode != 405 {
++			t.Errorf("Expected 405 status for invalid method to existing route, got %d", resp.StatusCode)
++		}
++	})
++
++	// Test 405 for valid method
++	t.Run("Normal 405 for valid method", func(t *testing.T) {
++		resp, body := testRequest(t, ts, "POST", "/", nil)
++		if resp.StatusCode != 405 {
++			t.Fatalf("Expected 405 status, got %d", resp.StatusCode)
++		}
++		if len(body) > 0 {
++			t.Fatalf("Expected empty body, got '%s'", body)
++		}
++	})
++
++	// Test custom invalid method handler
++	t.Run("Custom handler for invalid method", func(t *testing.T) {
++		r := NewRouter()
++		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
++			w.Write([]byte("root"))
++		})
++
++		// Set custom invalid method handler
++		r.SetInvalidMethodHandler(func(w http.ResponseWriter, r *http.Request) {
++			w.WriteHeader(418) // I'm a teapot
++			w.Write([]byte("custom invalid method"))
++		})
++
++		ts := httptest.NewServer(r)
++		defer ts.Close()
++
++		// Test with invalid method
++		req, err := http.NewRequest("INVALID", ts.URL+"/", nil)
++		if err != nil {
++			t.Fatal(err)
++		}
++
++		resp, err := http.DefaultClient.Do(req)
++		if err != nil {
++			t.Fatal(err)
++		}
++		defer resp.Body.Close()
++
++		if resp.StatusCode != 418 {
++			t.Errorf("Expected 418 status for custom invalid method handler, got %d", resp.StatusCode)
++		}
++	})
++
++	// Test ValidMethod helper function
++	t.Run("ValidMethod helper function", func(t *testing.T) {
++		if !ValidMethod("GET") {
++			t.Error("GET should be a valid method")
++		}
++
++		if !ValidMethod("POST") {
++			t.Error("POST should be a valid method")
++		}
++
++		if ValidMethod("INVALID") {
++			t.Error("INVALID should not be a valid method")
++		}
++	})
++
++	// Test GetAllMethods helper function
++	t.Run("GetAllMethods helper function", func(t *testing.T) {
++		methods := GetAllMethods()
++		expected := 9 // GET, HEAD, POST, PUT, PATCH, DELETE, CONNECT, OPTIONS, TRACE
++
++		if len(methods) != expected {
++			t.Errorf("Expected %d standard methods, got %d", expected, len(methods))
++		}
++
++		// Check that common methods are included
++		foundGet := false
++		foundPost := false
++
++		for _, m := range methods {
++			if m == "GET" {
++				foundGet = true
++			}
++			if m == "POST" {
++				foundPost = true
++			}
++		}
++
++		if !foundGet {
++			t.Error("GET method not found in GetAllMethods()")
++		}
++
++		if !foundPost {
++			t.Error("POST method not found in GetAllMethods()")
++		}
++	})
++
++	// Test with a custom registered method
++	t.Run("Custom registered method", func(t *testing.T) {
++		r := NewRouter()
++
++		// Register custom method
++		RegisterMethod("CUSTOM")
++
++		r.MethodFunc("CUSTOM", "/custom", func(w http.ResponseWriter, r *http.Request) {
++			w.Write([]byte("custom method"))
++		})
++
++		ts := httptest.NewServer(r)
++		defer ts.Close()
++
++		// Custom registered method should work
++		req, err := http.NewRequest("CUSTOM", ts.URL+"/custom", nil)
++		if err != nil {
++			t.Fatal(err)
++		}
++
++		resp, err := http.DefaultClient.Do(req)
++		if err != nil {
++			t.Fatal(err)
++		}
++
++		if resp.StatusCode != 200 {
++			t.Errorf("Expected 200 status for custom registered method, got %d", resp.StatusCode)
++		}
++
++		// Verify it's recognized as valid
++		if !ValidMethod("CUSTOM") {
++			t.Error("CUSTOM should be a valid method after registration")
++		}
++	})
++}
+
+--- a/mux.go
++++ b/mux.go
+@@ -45,6 +45,9 @@
+ 	// Controls the behaviour of middleware chain generation when a mux
+ 	// is registered as an inline group inside another mux.
+ 	inline bool
++
++	// Handler for unrecognized methods
++	invalidMethodHandler http.HandlerFunc
+ }
+ 
+ // NewMux returns a newly initialized Mux object that implements the Router
+@@ -224,6 +227,19 @@
+ 			subMux.MethodNotAllowed(hFn)
+ 		}
+ 	})
++}
++
++// SetInvalidMethodHandler sets a custom http.HandlerFunc for invalid HTTP methods
++func (mx *Mux) SetInvalidMethodHandler(fn http.HandlerFunc) {
++	mx.invalidMethodHandler = fn
++}
++
++// InvalidMethodHandler returns the handler for unrecognized HTTP methods
++func (mx *Mux) InvalidMethodHandler() http.HandlerFunc {
++	if mx.invalidMethodHandler != nil {
++		return mx.invalidMethodHandler
++	}
++	return invalidMethodHandler
+ }
+ 
+ // With adds inline middlewares for an endpoint handler.
+@@ -435,7 +451,22 @@
+ 	}
+ 	method, ok := methodMap[rctx.RouteMethod]
+ 	if !ok {
+-		mx.MethodNotAllowedHandler().ServeHTTP(w, r)
++		rctx.invalidMethod = true
++		// Method is unknown/invalid - check if custom handler is set
++		if mx.invalidMethodHandler != nil {
++			mx.invalidMethodHandler.ServeHTTP(w, r)
++			return
++		}
++		// No custom handler - check if route exists with ANY method
++		// Try to find if path exists (use mGET as probe)
++		tempRctx := NewRouteContext()
++		if _, _, h := mx.tree.FindRoute(tempRctx, mGET, routePath); h != nil || tempRctx.methodNotAllowed {
++			// Route exists, return 405
++			mx.MethodNotAllowedHandler().ServeHTTP(w, r)
++			return
++		}
++		// Route doesn't exist, return 501
++		invalidMethodHandler(w, r)
+ 		return
+ 	}
+ 
+@@ -485,3 +516,9 @@
+ 	w.WriteHeader(405)
+ 	w.Write(nil)
+ }
++
++// invalidMethodHandler is a helper function to respond with a 501, not implemented.
++func invalidMethodHandler(w http.ResponseWriter, r *http.Request) {
++	w.WriteHeader(501)
++	w.Write([]byte("Method not implemented"))
++}
+
+--- a/tree.go
++++ b/tree.go
+@@ -43,6 +43,17 @@
+ 	http.MethodTrace:   mTRACE,
+ }
+ 
++// ValidMethod checks if a given HTTP method is recognized by the router
++func ValidMethod(method string) bool {
++	_, ok := methodMap[method]
++	return ok
++}
++
++// GetAllMethods returns all HTTP methods recognized by the router
++func GetAllMethods() []string {
++	return []string{http.MethodGet, http.MethodHead, http.MethodPost, http.MethodPut, http.MethodPatch, http.MethodDelete, http.MethodConnect, http.MethodOptions, http.MethodTrace}
++}
++
+ // RegisterMethod adds support for custom HTTP method handlers, available
+ // via Router#Method and Router#MethodFunc
+ func RegisterMethod(method string) {

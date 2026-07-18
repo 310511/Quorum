@@ -1,0 +1,54 @@
+--- a/src/datasets/features/image.py
++++ b/src/datasets/features/image.py
+@@ -88,6 +88,7 @@
+     dtype: ClassVar[str] = "PIL.Image.Image"
+     pa_type: ClassVar[Any] = pa.struct({"bytes": pa.binary(), "path": pa.string()})
+     _type: str = field(default="Image", init=False, repr=False)
++    as_array: bool = False
+ 
+     def __call__(self):
+         return self.pa_type
+@@ -131,7 +132,7 @@
+                 f"An image sample should have one of 'path' or 'bytes' but they are missing or None in {value}."
+             )
+ 
+-    def decode_example(self, value: dict, token_per_repo_id=None) -> "PIL.Image.Image":
++    def decode_example(self, value: dict, token_per_repo_id=None) -> Union[np.ndarray,"PIL.Image.Image"]:
+         """Decode example image file into image data.
+ 
+         Args:
+@@ -188,7 +189,11 @@
+         image.load()  # to avoid "Too many open files" errors
+         if self.mode and self.mode != image.mode:
+             image = image.convert(self.mode)
+-        return image
++        if self.as_array:
++            image_array = np.asarray(image).astype(np.float32) / 255.0
++            return image_array
++        else:
++            return image
+ 
+     def flatten(self) -> Union["FeatureType", Dict[str, "FeatureType"]]:
+         """If in the decodable state, return the feature itself, otherwise flatten the feature into a dictionary."""
+
+--- a/tests/features/test_image.py
++++ b/tests/features/test_image.py
+@@ -88,6 +88,18 @@
+ 
+     with pytest.raises(RuntimeError):
+         Image(decode=False).decode_example(image_path)
++
++
++@require_pil
++def test_image_decode_as_array(shared_datadir):
++    image_path = str(shared_datadir / "test_image_rgb.jpg")
++    image_feature = Image(as_array=True)
++    decoded = image_feature.decode_example({"path": image_path, "bytes": None})
++
++    assert isinstance(decoded, np.ndarray)
++    assert decoded.dtype == np.float32
++    assert decoded.shape == (480, 640, 3)
++    assert decoded.min() >= 0.0 and decoded.max() <= 1.0
+ 
+ 
+ @require_pil

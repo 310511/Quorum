@@ -1,0 +1,26 @@
+import pytest
+import tiktoken
+
+def test_token_frequency():
+    # Create a simple encoding for testing
+    enc = tiktoken.get_encoding("cl100k_base")
+ 
+    # Test basic frequency counting
+    text = "abcabcabc"
+    tokens, freq = enc.encode(text, analyze_frequency=True)
+    assert freq == {13997: 3}  # Each token appears 3 times
+ 
+    # Test with repeated tokens
+    text = "aaabbbccc"
+    tokens, freq = enc.encode(text, analyze_frequency=True)
+    assert freq == {370: 1, 5418: 1, 6194: 1, 38154: 1}
+ 
+    # Test with single token
+    text = "aaa"
+    tokens, freq = enc.encode(text, analyze_frequency=True)
+    assert freq == {33746: 1}
+ 
+    # Test empty input
+    text = ""
+    tokens, freq = enc.encode(text, analyze_frequency=True)
+    assert freq == {}

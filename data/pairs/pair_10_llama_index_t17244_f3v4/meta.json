@@ -1,0 +1,29 @@
+{
+  "pair_id": "pair_10_llama_index_t17244_f3v4",
+  "source_benchmark": "CooperBench",
+  "repo": "llama_index_task",
+  "github": "run-llama/llama_index",
+  "base_commit": "b004ea099f70e4c660b2d8e106d461d7aa78ed5f",
+  "task_id": 17244,
+  "feature_a": {
+    "id": 3,
+    "title": "Extract `normalize_image_bytes` Helper for Unified Image Normalization Logic"
+  },
+  "feature_b": {
+    "id": 4,
+    "title": "Add `force_mimetype` Parameter to `resolve_image` for Explicit MIME Type Overrides"
+  },
+  "label": "clean_merge",
+  "has_conflict": false,
+  "files_touched": [
+    "llama-index-core/llama_index/core/base/llms/types.py",
+    "llama-index-core/tests/base/llms/test_types.py"
+  ],
+  "files_missing_from_snapshot": [],
+  "patch_apply_status": {
+    "branch_a_feature": "ok",
+    "branch_a_tests": "ok",
+    "branch_b_feature": "ok",
+    "branch_b_tests": "ok"
+  }
+}

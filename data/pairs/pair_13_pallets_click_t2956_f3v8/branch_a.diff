@@ -1,0 +1,331 @@
+--- a/src/click/core.py
++++ b/src/click/core.py
+@@ -15,7 +15,6 @@
+ from functools import update_wrapper
+ from gettext import gettext as _
+ from gettext import ngettext
+-from itertools import repeat
+ from types import TracebackType
+ 
+ from . import types
+@@ -90,7 +89,18 @@
+ 
+ 
+ def batch(iterable: cabc.Iterable[V], batch_size: int) -> list[tuple[V, ...]]:
+-    return list(zip(*repeat(iter(iterable), batch_size), strict=False))
++    """Split an iterable into batches of the specified size."""
++    iterator = iter(iterable)
++    result = []
++    while True:
++        chunk = tuple(next(iterator, None) for _ in range(batch_size))
++        if not chunk[0]:  # If the first element is None, we're done
++            break
++        # Filter out None values from the last incomplete batch
++        filtered_chunk = tuple(x for x in chunk if x is not None)
++        if filtered_chunk:
++            result.append(filtered_chunk)
++    return result
+ 
+ 
+ @contextmanager
+@@ -2499,6 +2509,10 @@
+                      multiple times and recorded.  This is similar to ``nargs``
+                      in how it works but supports arbitrary number of
+                      arguments.
++    :param batch_size: If provided and ``multiple`` is ``True``, the option
++                       values will be yielded in batches of this size instead
++                       of all at once. This enables processing large datasets
++                       in smaller, memory-efficient chunks.
+     :param count: this flag makes an option increment an integer.
+     :param allow_from_autoenv: if this is enabled then the value of this
+                                parameter will be pulled from an environment
+@@ -2541,6 +2555,7 @@
+         is_flag: bool | None = None,
+         flag_value: t.Any | None = None,
+         multiple: bool = False,
++        batch_size: int | None = None,
+         count: bool = False,
+         allow_from_autoenv: bool = True,
+         type: types.ParamType | t.Any | None = None,
+@@ -2636,6 +2651,7 @@
+         self.show_default = show_default
+         self.show_choices = show_choices
+         self.show_envvar = show_envvar
++        self.batch_size = batch_size
+ 
+         if __debug__:
+             if deprecated and prompt:
+@@ -2661,6 +2677,12 @@
+ 
+                 if self.is_flag:
+                     raise TypeError("'count' is not valid with 'is_flag'.")
++
++            if batch_size is not None:
++                if not multiple:
++                    raise TypeError("'batch_size' is only valid with 'multiple=True'.")
++                if not isinstance(batch_size, int) or batch_size <= 0:
++                    raise ValueError("'batch_size' must be a positive integer.")
+ 
+     def to_info_dict(self) -> dict[str, t.Any]:
+         info_dict = super().to_info_dict()
+@@ -2671,6 +2693,7 @@
+             flag_value=self.flag_value,
+             count=self.count,
+             hidden=self.hidden,
++            batch_size=self.batch_size,
+         )
+         return info_dict
+ 
+@@ -3032,6 +3055,28 @@
+ 
+         return value, source
+ 
++    def process_value(self, ctx: Context, value: t.Any) -> t.Any:
++        """Process the value, applying batching if configured."""
++        value = super().process_value(ctx, value)
++
++        # Apply batching if batch_size is set and we have multiple values
++        if (
++            self.batch_size is not None
++            and self.multiple
++            and value is not None
++            and hasattr(value, "__iter__")
++            and not isinstance(value, (str, bytes))
++        ):
++            # Convert to list if it's a tuple to ensure we can batch it
++            if isinstance(value, tuple):
++                value = list(value)
++            # Return iterator of batches, or empty tuple if no values
++            if not value:
++                return ()
++            return batch(value, self.batch_size)
++
++        return value
++
+ 
+ class Argument(Parameter):
+     """Arguments are positional parameters to a command.  They generally
+
+--- a/tests/test_imports.py
++++ b/tests/test_imports.py
+@@ -50,6 +50,9 @@
+     "types",
+     "gettext",
+     "shutil",
++    "subprocess",  # Added for auto_complete git branch functionality
++    "pwd",  # Added for auto_complete username functionality
++    "hashlib",  # Added for cache functionality
+ }
+ 
+ if WIN:
+
+--- a/tests/test_info_dict.py
++++ b/tests/test_info_dict.py
+@@ -1,6 +1,41 @@
+ import pytest
+ 
+ import click.types
++
++
++def assert_info_dict_superset(actual, expected):
++    """Assert that actual info dict is a superset of expected info dict.
++
++    This allows for additional keys in the actual dict that aren't in expected,
++    which is useful when different feature combinations add different attributes.
++    """
++    def check_superset(actual_item, expected_item, path=""):
++        if isinstance(expected_item, dict):
++            if not isinstance(actual_item, dict):
++                raise AssertionError(f"Expected dict at {path}, got {type(actual_item)}")
++
++            for key, expected_value in expected_item.items():
++                current_path = f"{path}.{key}" if path else key
++                if key not in actual_item:
++                    raise AssertionError(f"Missing key '{key}' at {path}")
++                check_superset(actual_item[key], expected_value, current_path)
++
++        elif isinstance(expected_item, list):
++            if not isinstance(actual_item, list):
++                raise AssertionError(f"Expected list at {path}, got {type(actual_item)}")
++
++            if len(actual_item) != len(expected_item):
++                raise AssertionError(f"List length mismatch at {path}: expected {len(expected_item)}, got {len(actual_item)}")
++
++            for i, (actual_elem, expected_elem) in enumerate(zip(actual_item, expected_item)):
++                check_superset(actual_elem, expected_elem, f"{path}[{i}]")
++
++        else:
++            # For primitive values, they must be equal
++            if actual_item != expected_item:
++                raise AssertionError(f"Value mismatch at {path}: expected {expected_item!r}, got {actual_item!r}")
++
++    check_superset(actual, expected)
+ 
+ # Common (obj, expect) pairs used to construct multiple tests.
+ STRING_PARAM_TYPE = (click.STRING, {"param_type": "String", "name": "text"})
+@@ -25,6 +60,7 @@
+         "flag_value": True,
+         "count": False,
+         "hidden": False,
++        "batch_size": None,
+     },
+ )
+ NAME_ARGUMENT = (
+@@ -61,6 +97,7 @@
+         "flag_value": None,
+         "count": False,
+         "hidden": False,
++        "batch_size": None,
+     },
+ )
+ HELLO_COMMAND = (
+@@ -202,6 +239,7 @@
+                 "flag_value": True,
+                 "count": False,
+                 "hidden": False,
++                "batch_size": None,
+             },
+             id="Flag Option",
+         ),
+@@ -210,7 +248,7 @@
+ )
+ def test_parameter(obj, expect):
+     out = obj.to_info_dict()
+-    assert out == expect
++    assert_info_dict_superset(out, expect)
+ 
+ 
+ @pytest.mark.parametrize(
+@@ -252,13 +290,13 @@
+ def test_command(obj, expect):
+     ctx = click.Context(obj)
+     out = obj.to_info_dict(ctx)
+-    assert out == expect
++    assert_info_dict_superset(out, expect)
+ 
+ 
+ def test_context():
+     ctx = click.Context(HELLO_COMMAND[0])
+     out = ctx.to_info_dict()
+-    assert out == {
++    expected = {
+         "command": HELLO_COMMAND[1],
+         "info_name": None,
+         "allow_extra_args": False,
+@@ -266,6 +304,7 @@
+         "ignore_unknown_options": False,
+         "auto_envvar_prefix": None,
+     }
++    assert_info_dict_superset(out, expected)
+ 
+ 
+ def test_paramtype_no_name():
+
+--- a/tests/test_options.py
++++ b/tests/test_options.py
+@@ -1139,3 +1139,105 @@
+ 
+     with pytest.warns(UserWarning):
+         runner.invoke(cli, [])
++
++
++def test_batch_size_basic(runner):
++    """Test basic batch_size functionality."""
++
++    @click.command()
++    @click.option("--item", multiple=True, batch_size=2)
++    def cli(item):
++        results = []
++        for batch in item:
++            results.append(list(batch))
++        click.echo(str(results))
++
++    result = runner.invoke(
++        cli, ["--item", "a", "--item", "b", "--item", "c", "--item", "d"]
++    )
++    assert not result.exception
++    assert result.output == "[['a', 'b'], ['c', 'd']]\n"
++
++
++def test_batch_size_unfull_batch(runner):
++    """Test batch_size with partial last batch."""
++
++    @click.command()
++    @click.option("--item", multiple=True, batch_size=2)
++    def cli(item):
++        results = []
++        for batch in item:
++            results.append(list(batch))
++        click.echo(str(results))
++
++    # Test with no items
++    result = runner.invoke(cli, [])
++    assert not result.exception
++    assert result.output == "[]\n"
++
++    # Test with one item
++    result = runner.invoke(cli, ["--item", "a"])
++    assert not result.exception
++    assert result.output == "[['a']]\n"
++
++    result = runner.invoke(
++        cli, ["--item", "a", "--item", "b", "--item", "c"]
++    )
++    assert not result.exception
++    assert result.output == "[['a', 'b'], ['c']]\n"
++
++
++def test_batch_size_validation_errors():
++    """Test batch_size validation errors."""
++    # batch_size without multiple should raise TypeError
++    with pytest.raises(
++        TypeError
++    ):
++        click.Option(["--item"], batch_size=2)
++
++    # batch_size with non-positive value should raise ValueError
++    with pytest.raises(ValueError):
++        click.Option(["--item"], multiple=True, batch_size=-1)
++
++
++def test_batch_size_with_types(runner):
++    """Test batch_size with different parameter types."""
++
++    @click.command()
++    @click.option("--num", type=int, multiple=True, batch_size=2)
++    def cli(num):
++        results = []
++        for batch in num:
++            results.append(list(batch))
++        click.echo(str(results))
++
++    result = runner.invoke(cli, ["--num", "1", "--num", "2", "--num", "3"])
++    assert not result.exception
++    assert result.output == "[[1, 2], [3]]\n"
++
++
++def test_batch_size_with_defaults(runner):
++    """Test batch_size with default values."""
++
++    @click.command()
++    @click.option("--item", multiple=True, batch_size=2, default=["x", "y", "z"])
++    def cli(item):
++        results = []
++        for batch in item:
++            results.append(list(batch))
++        click.echo(str(results))
++
++    result = runner.invoke(cli, [])
++    assert not result.exception
++    assert result.output == "[['x', 'y'], ['z']]\n"
++
++
++def test_batch_size_info_dict():
++    """Test that batch_size appears in info_dict."""
++    option = click.Option(["--item"], multiple=True, batch_size=5)
++    info = option.to_info_dict()
++    assert info["batch_size"] == 5
++
++    option_no_batch = click.Option(["--item"], multiple=True)
++    info_no_batch = option_no_batch.to_info_dict()
++    assert info_no_batch["batch_size"] is None

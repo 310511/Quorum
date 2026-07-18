@@ -1,0 +1,175 @@
+--- a/dirty_equals/__init__.py
++++ b/dirty_equals/__init__.py
+@@ -18,7 +18,7 @@
+     IsPositiveFloat,
+     IsPositiveInt,
+ )
+-from ._other import FunctionCheck, IsJson, IsUUID
++from ._other import FunctionCheck, IsEmail, IsJson, IsUUID
+ from ._sequence import Contains, HasLen, IsList, IsListOrTuple, IsTuple
+ from ._strings import IsAnyStr, IsBytes, IsStr
+ 
+@@ -67,6 +67,7 @@
+     'IsInstance',
+     # other
+     'FunctionCheck',
++    'IsEmail',
+     'IsJson',
+     'IsUUID',
+     # strings
+
+--- a/dirty_equals/_other.py
++++ b/dirty_equals/_other.py
+@@ -1,5 +1,6 @@
+ import json
+-from typing import Any, Callable, TypeVar, overload
++import re
++from typing import Any, Callable, Optional, TypeVar, overload
+ from uuid import UUID
+ 
+ from ._base import DirtyEquals
+@@ -120,6 +121,48 @@
+             return False
+ 
+ 
++class IsEmail(DirtyEquals[str]):
++    """
++    A class that checks if a value is a valid email address, optionally checking domain.
++    """
++
++    def __init__(self, domain: Optional[str] = None):
++        """
++        Args:
++            domain: The domain to check, if omitted, any valid email format is accepted.
++
++        ```py title="IsEmail"
++        from dirty_equals import IsEmail
++
++        assert 'user@example.com' == IsEmail
++        assert 'user@example.com' == IsEmail(domain='example.com')
++        assert 'user@other.com' != IsEmail(domain='example.com')
++        assert 'invalid-email' != IsEmail
++        ```
++        """
++        self.domain = domain
++        # Basic email regex pattern
++        self._email_pattern = re.compile(
++            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
++        )
++        super().__init__(domain or plain_repr('*'))
++
++    def equals(self, other: Any) -> bool:
++        if not isinstance(other, str):
++            return False
++ 
++        # Check basic email format
++        if not self._email_pattern.match(other):
++            return False
++ 
++        # If domain is specified, check it matches
++        if self.domain is not None:
++            email_domain = other.split('@')[1]
++            return email_domain == self.domain
++ 
++        return True
++
++
+ class FunctionCheck(DirtyEquals[Any]):
+     """
+     Use a function to check if a value "equals" whatever you want to check
+
+--- a/tests/test_other.py
++++ b/tests/test_other.py
+@@ -2,7 +2,7 @@
+ 
+ import pytest
+ 
+-from dirty_equals import FunctionCheck, IsJson, IsUUID
++from dirty_equals import FunctionCheck, IsEmail, IsJson, IsUUID
+ 
+ 
+ @pytest.mark.parametrize(
+@@ -128,3 +128,83 @@
+ def test_json_both():
+     with pytest.raises(TypeError, match='IsJson requires either an argument or kwargs, not both'):
+         IsJson(1, a=2)
++
++
++# IsEmail tests
++@pytest.mark.parametrize(
++    'email,dirty',
++    [
++        ('user@example.com', IsEmail()),
++        ('user@example.com', IsEmail),
++        ('test.email+tag@domain.co.uk', IsEmail()),
++        ('user123@test-domain.org', IsEmail()),
++        ('a@b.co', IsEmail()),
++        ('user_name@domain.info', IsEmail()),
++        ('user.name@example.com', IsEmail(domain='example.com')),
++        ('test@domain.org', IsEmail(domain='domain.org')),
++    ],
++)
++def test_is_email_true(email, dirty):
++    assert email == dirty
++
++
++@pytest.mark.parametrize(
++    'email,dirty',
++    [
++        ('invalid-email', IsEmail()),
++        ('user@', IsEmail()),
++        ('@domain.com', IsEmail()),
++        ('user@domain', IsEmail()),
++        ('user.domain.com', IsEmail()),
++        ('user@domain.c', IsEmail()),
++        ('user@.com', IsEmail()),
++        ('user@domain.', IsEmail()),
++        (123, IsEmail()),
++        (None, IsEmail()),
++        ([], IsEmail()),
++        ('user@example.com', IsEmail(domain='other.com')),
++        ('user@domain.org', IsEmail(domain='example.com')),
++    ],
++)
++def test_is_email_false(email, dirty):
++    assert email != dirty
++
++
++def test_is_email_repr():
++    is_email = IsEmail()
++    with pytest.raises(AssertionError):
++        assert 'invalid-email' == is_email
++    assert str(is_email) == 'IsEmail(*)'
++
++
++def test_is_email_domain_repr():
++    is_email = IsEmail(domain='example.com')
++    with pytest.raises(AssertionError):
++        assert 'user@other.com' == is_email
++    assert str(is_email) == "IsEmail('example.com')"
++
++
++def test_is_email_edge_cases():
++    # Test empty string
++    assert '' != IsEmail()
++ 
++    # Test very long email
++    long_email = 'a' * 50 + '@' + 'b' * 50 + '.com'
++    assert long_email == IsEmail()
++ 
++    # Test email with numbers and special chars
++    assert 'user123+tag@domain-name.co.uk' == IsEmail()
++ 
++    # Test case sensitivity in domain matching
++    assert 'user@Example.Com' != IsEmail(domain='example.com')
++    assert 'user@example.com' == IsEmail(domain='example.com')
++
++
++def test_is_email_domain_filtering():
++    # Test exact domain matching
++    assert 'user@example.com' == IsEmail(domain='example.com')
++    assert 'user@example.org' != IsEmail(domain='example.com')
++ 
++    # Test subdomain handling
++    assert 'user@sub.example.com' != IsEmail(domain='example.com')
++    assert 'user@sub.example.com' == IsEmail(domain='sub.example.com')

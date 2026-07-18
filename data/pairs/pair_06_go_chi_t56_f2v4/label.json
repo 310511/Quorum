@@ -1,0 +1,9 @@
+{
+  "ground_truth": "compatible",
+  "language": "go",
+  "source": "CooperBench",
+  "repo": "go-chi/chi",
+  "pair_id": "pair_06_go_chi_t56_f2v4",
+  "cooperbench_label": "clean_merge",
+  "notes": "Add Custom HTTP Method Validation (default 501 + configurable handler)* vs Add Method Validation Middleware"
+}

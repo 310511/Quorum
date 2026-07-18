@@ -1,0 +1,11 @@
+diff --git a/utils.py b/utils.py
+--- a/utils.py
++++ b/utils.py
+@@ -1,5 +1,5 @@
+ # utils.py — shared helpers for order total calculation
+ 
+-def calculate_total(items):
+-    """Sum line-item prices. Used by checkout and reporting."""
++def compute_total(items):
++    """Sum line-item prices. Used by checkout and reporting."""
+     return sum(item["price"] for item in items)

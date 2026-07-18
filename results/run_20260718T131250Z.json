@@ -1,0 +1,939 @@
+{
+  "timestamp": "20260718T131250Z",
+  "config_path": "config.yaml",
+  "pairs_dir": "data\\pairs\\self_generated",
+  "input_mode": "raw",
+  "summary": {
+    "baseline_accuracy": [
+      1,
+      5,
+      0
+    ],
+    "committee_accuracy": [
+      0,
+      5,
+      5
+    ]
+  },
+  "results": [
+    {
+      "pair": "self_example_1_rename_stale",
+      "input_mode": "raw",
+      "ground_truth": "conflict",
+      "baseline_verdict": "conflict",
+      "committee_verdict": "escalate",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 15.453197099996032,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "conflict",
+            "confidence": 1.0,
+            "reasoning": "Branch B introduces an independent caller of `add` in a new file which Branch A has updated its existing callers to use the renamed function `add_v2`. This semantic conflict means that if both branches are merged together, the combined result will be logically incorrect because the old symbol is still present and being used.",
+            "evidence": [
+              "Branch B introduces a new file with an independent caller of `add`",
+              "Branch A updates its existing callers to use the renamed function `add_v2`"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 15.453183100005845,
+          "raw_content": "{\n    \"verdict\": \"conflict\",\n    \"confidence\": 1.0,\n    \"reasoning\": \"Branch B introduces an independent caller of `add` in a new file which Branch A has updated its existing callers to use the renamed function `add_v2`. This semantic conflict means that if both branches are merged together, the combined result will be logically incorrect because the old symbol is still present and being used.\",\n    \"evidence\": [\"Branch B introduces a new file with an independent caller of `add`\", \"Branch A updates its existing callers to use the renamed function `add_v2`\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 105.52204689997598,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A renames the `add` function to `add_v2` and updates all callers accordingly. Branch B introduces a new caller of the original `add` function. Merging these changes will result in a semantic conflict because Branch B continues to use the old name (`add`) while Branch A has updated the codebase to use the new name (`add_v2`). This creates an inconsistency that would likely cause runtime errors or unexpected behavior.",
+              "evidence": [
+                "Branch A: `def add_v2(left: int, right: int) -> int:` - Renames the function from `add` to `add_v2`.",
+                "Branch A: `from calculator import add_v2, calculate_total` - Imports the new renamed function.",
+                "Branch A: `self.assertEqual(add_v2(2, 3), 5)` - Tests using the new function name.",
+                "Branch B: `from calculator import add` - Imports the original `add` function.",
+                "Branch B: `def call_original(*args, **kwargs): return add(*args, **kwargs)` - Defines a function that calls the original `add`."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 105.52192569998442,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A renames the `add` function to `add_v2` and updates all callers accordingly. Branch B introduces a new caller of the original `add` function. Merging these changes will result in a semantic conflict because Branch B continues to use the old name (`add`) while Branch A has updated the codebase to use the new name (`add_v2`). This creates an inconsistency that would likely cause runtime errors or unexpected behavior.\",\n  \"evidence\": [\n    \"Branch A: `def add_v2(left: int, right: int) -> int:` - Renames the function from `add` to `add_v2`.\",\n    \"Branch A: `from calculator import add_v2, calculate_total` - Imports the new renamed function.\",\n    \"Branch A: `self.assertEqual(add_v2(2, 3), 5)` - Tests using the new function name.\",\n    \"Branch B: `from calculator import add` - Imports the original `add` function.\",\n    \"Branch B: `def call_original(*args, **kwargs): return add(*args, **kwargs)` - Defines a function that calls the original `add`.\"\n  ]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "Branch B's addition does not introduce any semantic conflicts or logical errors because it is adding a new function that uses the `add` function from Branch A without modification. The tests pass and there are no visible changes in behavior.",
+              "evidence": [
+                "The merged code passes all tests",
+                "There is no visible change in behavior"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 6.546417100005783,
+            "raw_content": "{\n    \"verdict\": \"compatible\",\n    \"confidence\": 1.0,\n    \"reasoning\": \"Branch B's addition does not introduce any semantic conflicts or logical errors because it is adding a new function that uses the `add` function from Branch A without modification. The tests pass and there are no visible changes in behavior.\",\n    \"evidence\": [\"The merged code passes all tests\", \"There is no visible change in behavior\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged result would retain the removed symbol 'add' from Branch A, which is no longer available in Branch B. This inconsistency makes the combined code logically incorrect.",
+              "evidence": [
+                "Branch A renames `add` to `add_v2`, while Branch B retains the original `add` function",
+                "The merged tree fails because Branch B retains the removed symbol"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 59.9541360999865,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged result would retain the removed symbol 'add' from Branch A, which is no longer available in Branch B. This inconsistency makes the combined code logically incorrect.\",\n  \"evidence\": [\"Branch A renames `add` to `add_v2`, while Branch B retains the original `add` function\", \"The merged tree fails because Branch B retains the removed symbol\"]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "escalate",
+        "agreeing_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [],
+        "evidence_overlap_score": 0.25,
+        "shared_evidence": [
+          "add",
+          "add_v2"
+        ],
+        "explanation": "Disagreement: majority (2 models) say 'conflict' but deepseek-coder:6.7b disagree (deepseek-coder:6.7b=compatible). Shared identifiers among agreeing models: ['add', 'add_v2'] (overlap=0.25).",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 105.52,
+            "evidence_identifiers": [
+              "accordingly",
+              "add",
+              "add_v2",
+              "assertequal",
+              "calculate_total",
+              "calculator",
+              "call_original",
+              "codebase",
+              "continues",
+              "creates",
+              "defines",
+              "inconsistency",
+              "int",
+              "kwargs",
+              "original",
+              "runtime",
+              "updated",
+              "updates",
+              "use"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch A renames the `add` function to `add_v2` and updates all callers accordingly. Branch B introduces a new caller of the original `add` function. Merging these changes will result in a semantic conflict because Branch B continues to use the old name (`add`) while Branch A has updated the codebase to use the new name (`add_v2`). This creates an inconsistency that would likely cause runtime errors or unexpected behavior.",
+            "evidence": [
+              "Branch A: `def add_v2(left: int, right: int) -> int:` - Renames the function from `add` to `add_v2`.",
+              "Branch A: `from calculator import add_v2, calculate_total` - Imports the new renamed function.",
+              "Branch A: `self.assertEqual(add_v2(2, 3), 5)` - Tests using the new function name.",
+              "Branch B: `from calculator import add` - Imports the original `add` function.",
+              "Branch B: `def call_original(*args, **kwargs): return add(*args, **kwargs)` - Defines a function that calls the original `add`."
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 6.55,
+            "evidence_identifiers": [
+              "addition",
+              "modification",
+              "passes",
+              "visible"
+            ],
+            "evidence_quality": "weak",
+            "verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "Branch B's addition does not introduce any semantic conflicts or logical errors because it is adding a new function that uses the `add` function from Branch A without modification. The tests pass and there are no visible changes in behavior.",
+            "evidence": [
+              "The merged code passes all tests",
+              "There is no visible change in behavior"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 59.95,
+            "evidence_identifiers": [
+              "add",
+              "add_v2",
+              "available",
+              "inconsistency",
+              "logically",
+              "longer",
+              "original",
+              "retain",
+              "retains",
+              "symbol",
+              "tree"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged result would retain the removed symbol 'add' from Branch A, which is no longer available in Branch B. This inconsistency makes the combined code logically incorrect.",
+            "evidence": [
+              "Branch A renames `add` to `add_v2`, while Branch B retains the original `add` function",
+              "The merged tree fails because Branch B retains the removed symbol"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair": "self_inventory_0002_rename_stale",
+      "input_mode": "raw",
+      "ground_truth": "conflict",
+      "baseline_verdict": "compatible",
+      "committee_verdict": "escalate",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 17.68893219999154,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "Branch B adds an entirely new function (`call_original`) that is not present in Branch A. This does not affect the existing behavior of any other part of the codebase or its tests. The renaming of `compute_available` to `compute_available_v2` in Branch A has no impact on how it's called elsewhere, so there are no semantic conflicts.",
+            "evidence": [
+              "Branch B adds a new function (`call_original`) that is not present in Branch A",
+              "The renaming of `compute_available` to `compute_available_v2` in Branch A does not affect its usage elsewhere"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 17.688922099972842,
+          "raw_content": "{\n    \"verdict\": \"compatible\",\n    \"confidence\": 1.0,\n    \"reasoning\": \"Branch B adds an entirely new function (`call_original`) that is not present in Branch A. This does not affect the existing behavior of any other part of the codebase or its tests. The renaming of `compute_available` to `compute_available_v2` in Branch A has no impact on how it's called elsewhere, so there are no semantic conflicts.\",\n    \"evidence\": [\"Branch B adds a new function (`call_original`) that is not present in Branch A\", \"The renaming of `compute_available` to `compute_available_v2` in Branch A does not affect its usage elsewhere\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 33.6848433999985,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A renames `compute_available` to `compute_available_v2` and updates all callers. Branch B adds a new caller that uses the original name `compute_available`. Merging these branches will result in the old function being called from a new location, leading to a logical error because the code relies on the old function name.",
+              "evidence": [
+                "Branch A: Renames `compute_available` to `compute_available_v2`",
+                "Branch B: Uses `compute_available` in `call_original`",
+                "test_inventory_0002.py: Tests still call `compute_available` instead of the renamed version"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 33.68471359999967,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A renames `compute_available` to `compute_available_v2` and updates all callers. Branch B adds a new caller that uses the original name `compute_available`. Merging these branches will result in the old function being called from a new location, leading to a logical error because the code relies on the old function name.\",\n  \"evidence\": [\"Branch A: Renames `compute_available` to `compute_available_v2`\", \"Branch B: Uses `compute_available` in `call_original`\", \"test_inventory_0002.py: Tests still call `compute_available` instead of the renamed version\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "Branch B adds an independent caller of `compute_available` in a new file without any semantic conflict with Branch A. The renaming and updating of `compute_available` in Branch A does not affect the existing tests or functionality.",
+              "evidence": [
+                "The merged codebase passes all tests",
+                "Branch B's addition doesn't break anything"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 6.996659700002056,
+            "raw_content": "{\n  \"verdict\": \"compatible\",\n  \"confidence\": 1.0,\n  \"reasoning\": \"Branch B adds an independent caller of `compute_available` in a new file without any semantic conflict with Branch A. The renaming and updating of `compute_available` in Branch A does not affect the existing tests or functionality.\",\n  \"evidence\": [\"The merged codebase passes all tests\", \"Branch B's addition doesn't break anything\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged result would retain the removed symbol `compute_available` from Branch B, which is no longer defined in Branch A. This inconsistency would break logical correctness.",
+              "evidence": [
+                "Branch B retains the removed symbol `compute_available`"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 14.390956699993694,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged result would retain the removed symbol `compute_available` from Branch B, which is no longer defined in Branch A. This inconsistency would break logical correctness.\",\n  \"evidence\": [\"Branch B retains the removed symbol `compute_available`\"]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "escalate",
+        "agreeing_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [],
+        "evidence_overlap_score": 0.25,
+        "shared_evidence": [
+          "compute_available"
+        ],
+        "explanation": "Disagreement: majority (2 models) say 'conflict' but deepseek-coder:6.7b disagree (deepseek-coder:6.7b=compatible). Shared identifiers among agreeing models: ['compute_available'] (overlap=0.25).",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 33.68,
+            "evidence_identifiers": [
+              "adds",
+              "call_original",
+              "compute_available",
+              "compute_available_v2",
+              "instead",
+              "original",
+              "relies",
+              "test_inventory_0002_py",
+              "updates",
+              "version"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch A renames `compute_available` to `compute_available_v2` and updates all callers. Branch B adds a new caller that uses the original name `compute_available`. Merging these branches will result in the old function being called from a new location, leading to a logical error because the code relies on the old function name.",
+            "evidence": [
+              "Branch A: Renames `compute_available` to `compute_available_v2`",
+              "Branch B: Uses `compute_available` in `call_original`",
+              "test_inventory_0002.py: Tests still call `compute_available` instead of the renamed version"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 7.0,
+            "evidence_identifiers": [
+              "addition",
+              "adds",
+              "affect",
+              "anything",
+              "codebase",
+              "compute_available",
+              "doesn",
+              "functionality",
+              "independent",
+              "passes",
+              "updating"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "Branch B adds an independent caller of `compute_available` in a new file without any semantic conflict with Branch A. The renaming and updating of `compute_available` in Branch A does not affect the existing tests or functionality.",
+            "evidence": [
+              "The merged codebase passes all tests",
+              "Branch B's addition doesn't break anything"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 14.39,
+            "evidence_identifiers": [
+              "compute_available",
+              "correctness",
+              "defined",
+              "inconsistency",
+              "longer",
+              "retain",
+              "retains",
+              "symbol"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged result would retain the removed symbol `compute_available` from Branch B, which is no longer defined in Branch A. This inconsistency would break logical correctness.",
+            "evidence": [
+              "Branch B retains the removed symbol `compute_available`"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair": "self_pricing_0001_rename_stale",
+      "input_mode": "raw",
+      "ground_truth": "conflict",
+      "baseline_verdict": "compatible",
+      "committee_verdict": "escalate",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 15.34994280000683,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "Branch B adds an independent caller of `compute_subtotal` in a new file without any semantic conflict with Branch A. The renaming from `compute_subtotal` to `compute_subtotal_v2` in Branch A is not affecting the existing tests or functionalities, so it does not cause a semantic conflict.",
+            "evidence": [
+              "Branch B adds an independent caller of `compute_subtotal` without any semantic conflict with Branch A."
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 15.349933799996506,
+          "raw_content": "{\n  \"verdict\": \"compatible\",\n  \"confidence\": 1.0,\n  \"reasoning\": \"Branch B adds an independent caller of `compute_subtotal` in a new file without any semantic conflict with Branch A. The renaming from `compute_subtotal` to `compute_subtotal_v2` in Branch A is not affecting the existing tests or functionalities, so it does not cause a semantic conflict.\",\n  \"evidence\": [\"Branch B adds an independent caller of `compute_subtotal` without any semantic conflict with Branch A.\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 31.750574799982132,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A renames `compute_subtotal` to `compute_subtotal_v2` and updates all callers. Branch B adds a new caller that still uses the original function name `compute_subtotal`. Merging these branches will result in the old function being called while the new version exists, leading to inconsistent behavior and a logical conflict.",
+              "evidence": [
+                "Branch A: Renames `compute_subtotal` to `compute_subtotal_v2`",
+                "Branch B: Uses `compute_subtotal` in `call_original`",
+                "test_pricing_0001.py: Tests assert against the old function name `compute_subtotal`"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 31.750469799997518,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A renames `compute_subtotal` to `compute_subtotal_v2` and updates all callers. Branch B adds a new caller that still uses the original function name `compute_subtotal`. Merging these branches will result in the old function being called while the new version exists, leading to inconsistent behavior and a logical conflict.\",\n  \"evidence\": [\"Branch A: Renames `compute_subtotal` to `compute_subtotal_v2`\", \"Branch B: Uses `compute_subtotal` in `call_original`\", \"test_pricing_0001.py: Tests assert against the old function name `compute_subtotal`\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "Branch B adds an independent caller of `compute_subtotal` in a new file without any semantic conflict with Branch A. The renaming and updating of `compute_subtotal` to `compute_subtotal_v2` in Branch A does not affect the existing tests or other parts of the codebase, so it is compatible.",
+              "evidence": [
+                "Branch B adds a new file quorum_consumer_pricing_0001.py with an independent caller of `compute_subtotal`",
+                "Branch A renames and updates `compute_subtotal` to `compute_subtotal_v2` without affecting existing tests or other parts of the codebase"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 11.300966899987543,
+            "raw_content": "{\n  \"verdict\": \"compatible\",\n  \"confidence\": 1.0,\n  \"reasoning\": \"Branch B adds an independent caller of `compute_subtotal` in a new file without any semantic conflict with Branch A. The renaming and updating of `compute_subtotal` to `compute_subtotal_v2` in Branch A does not affect the existing tests or other parts of the codebase, so it is compatible.\",\n  \"evidence\": [\"Branch B adds a new file quorum_consumer_pricing_0001.py with an independent caller of `compute_subtotal`\", \"Branch A renames and updates `compute_subtotal` to `compute_subtotal_v2` without affecting existing tests or other parts of the codebase\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged result would retain the removed symbol from Branch A, causing a logical inconsistency. Although Branch B's changes do not overlap with Branch A's, their combined effect is still broken.",
+              "evidence": [
+                "compute_subtotal_v2 is defined but compute_subtotal is no longer available",
+                "call_original uses compute_subtotal which is now compute_subtotal_v2"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 19.443431499996223,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged result would retain the removed symbol from Branch A, causing a logical inconsistency. Although Branch B's changes do not overlap with Branch A's, their combined effect is still broken.\",\n  \"evidence\": [\"compute_subtotal_v2 is defined but compute_subtotal is no longer available\", \"call_original uses compute_subtotal which is now compute_subtotal_v2\"]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "escalate",
+        "agreeing_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [],
+        "evidence_overlap_score": 0.5,
+        "shared_evidence": [
+          "call_original",
+          "compute_subtotal_v2"
+        ],
+        "explanation": "Disagreement: majority (2 models) say 'conflict' but deepseek-coder:6.7b disagree (deepseek-coder:6.7b=compatible). Shared identifiers among agreeing models: ['call_original', 'compute_subtotal_v2'] (overlap=0.50).",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 31.75,
+            "evidence_identifiers": [
+              "adds",
+              "assert",
+              "call_original",
+              "compute_subtotal",
+              "compute_subtotal_v2",
+              "inconsistent",
+              "original",
+              "test_pricing_0001_py",
+              "updates",
+              "version"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch A renames `compute_subtotal` to `compute_subtotal_v2` and updates all callers. Branch B adds a new caller that still uses the original function name `compute_subtotal`. Merging these branches will result in the old function being called while the new version exists, leading to inconsistent behavior and a logical conflict.",
+            "evidence": [
+              "Branch A: Renames `compute_subtotal` to `compute_subtotal_v2`",
+              "Branch B: Uses `compute_subtotal` in `call_original`",
+              "test_pricing_0001.py: Tests assert against the old function name `compute_subtotal`"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 11.3,
+            "evidence_identifiers": [
+              "adds",
+              "affect",
+              "affecting",
+              "codebase",
+              "compute_subtotal",
+              "compute_subtotal_v2",
+              "independent",
+              "quorum_consumer_pricing_0001_py",
+              "updates",
+              "updating"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "Branch B adds an independent caller of `compute_subtotal` in a new file without any semantic conflict with Branch A. The renaming and updating of `compute_subtotal` to `compute_subtotal_v2` in Branch A does not affect the existing tests or other parts of the codebase, so it is compatible.",
+            "evidence": [
+              "Branch B adds a new file quorum_consumer_pricing_0001.py with an independent caller of `compute_subtotal`",
+              "Branch A renames and updates `compute_subtotal` to `compute_subtotal_v2` without affecting existing tests or other parts of the codebase"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 19.44,
+            "evidence_identifiers": [
+              "although",
+              "available",
+              "call_original",
+              "compute_subtotal_v2",
+              "defined",
+              "effect",
+              "inconsistency",
+              "longer",
+              "now",
+              "retain",
+              "symbol"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged result would retain the removed symbol from Branch A, causing a logical inconsistency. Although Branch B's changes do not overlap with Branch A's, their combined effect is still broken.",
+            "evidence": [
+              "compute_subtotal_v2 is defined but compute_subtotal is no longer available",
+              "call_original uses compute_subtotal which is now compute_subtotal_v2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair": "self_scoring_0003_rename_stale",
+      "input_mode": "raw",
+      "ground_truth": "conflict",
+      "baseline_verdict": "compatible",
+      "committee_verdict": "escalate",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 16.202261600003112,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "Branch B adds an independent caller of `compute_total` in a new file without any semantic conflict with Branch A. The renaming from `compute_total` to `compute_total_v2` in Branch A is also compatible as it only affects the tests and not the actual implementation.",
+            "evidence": [
+              "Branch B adds an independent caller of `compute_total` without any semantic conflict with Branch A."
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 16.202252299990505,
+          "raw_content": "{\n    \"verdict\": \"compatible\",\n    \"confidence\": 1.0,\n    \"reasoning\": \"Branch B adds an independent caller of `compute_total` in a new file without any semantic conflict with Branch A. The renaming from `compute_total` to `compute_total_v2` in Branch A is also compatible as it only affects the tests and not the actual implementation.\",\n    \"evidence\": [\"Branch B adds an independent caller of `compute_total` without any semantic conflict with Branch A.\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 28.00847609998891,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A renames `compute_total` to `compute_total_v2` and updates all callers accordingly. Branch B introduces a new caller of the original `compute_total` function. When merged, Branch B's code will still call the old function name, leading to an incorrect result or unexpected behavior because the renamed function is no longer used.",
+              "evidence": [
+                "Branch A renames `compute_total` to `compute_total_v2`",
+                "Branch B calls `compute_total` in `quorum_consumer_scoring_0003.py`",
+                "The tests in Branch A use `compute_total` while the tests in Branch B use `call_original` which ultimately calls `compute_total`"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 28.00838250000379,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A renames `compute_total` to `compute_total_v2` and updates all callers accordingly. Branch B introduces a new caller of the original `compute_total` function. When merged, Branch B's code will still call the old function name, leading to an incorrect result or unexpected behavior because the renamed function is no longer used.\",\n  \"evidence\": [\"Branch A renames `compute_total` to `compute_total_v2`\", \"Branch B calls `compute_total` in `quorum_consumer_scoring_0003.py`\", \"The tests in Branch A use `compute_total` while the tests in Branch B use `call_original` which ultimately calls `compute_total`\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "Branch B adds an independent caller of `compute_total` in a new file without any semantic conflict with Branch A. The renaming from `compute_total` to `compute_total_v2` in Branch A is not affecting the functionality or tests in Branch B.",
+              "evidence": [
+                "Branch B adds an independent caller of `compute_total` in a new file without any semantic conflict with Branch A."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 8.123615399992559,
+            "raw_content": "{\n    \"verdict\": \"compatible\",\n    \"confidence\": 1.0,\n    \"reasoning\": \"Branch B adds an independent caller of `compute_total` in a new file without any semantic conflict with Branch A. The renaming from `compute_total` to `compute_total_v2` in Branch A is not affecting the functionality or tests in Branch B.\",\n    \"evidence\": [\"Branch B adds an independent caller of `compute_total` in a new file without any semantic conflict with Branch A.\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged result would retain the removed symbol from Branch A, which is no longer available in Branch B. This inconsistency makes the combined code logically incorrect.",
+              "evidence": [
+                "compute_total_v2 is defined but still calls compute_total",
+                "Branch B retains the original function name despite its removal"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 15.434454000002006,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged result would retain the removed symbol from Branch A, which is no longer available in Branch B. This inconsistency makes the combined code logically incorrect.\",\n  \"evidence\": [\"compute_total_v2 is defined but still calls compute_total\", \"Branch B retains the original function name despite its removal\"]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "escalate",
+        "agreeing_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [],
+        "evidence_overlap_score": 0.25,
+        "shared_evidence": [
+          "compute_total_v2"
+        ],
+        "explanation": "Disagreement: majority (2 models) say 'conflict' but deepseek-coder:6.7b disagree (deepseek-coder:6.7b=compatible). Shared identifiers among agreeing models: ['compute_total_v2'] (overlap=0.25).",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 28.01,
+            "evidence_identifiers": [
+              "accordingly",
+              "call_original",
+              "compute_total",
+              "compute_total_v2",
+              "longer",
+              "original",
+              "quorum_consumer_scoring_0003_py",
+              "ultimately",
+              "updates",
+              "use",
+              "used"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch A renames `compute_total` to `compute_total_v2` and updates all callers accordingly. Branch B introduces a new caller of the original `compute_total` function. When merged, Branch B's code will still call the old function name, leading to an incorrect result or unexpected behavior because the renamed function is no longer used.",
+            "evidence": [
+              "Branch A renames `compute_total` to `compute_total_v2`",
+              "Branch B calls `compute_total` in `quorum_consumer_scoring_0003.py`",
+              "The tests in Branch A use `compute_total` while the tests in Branch B use `call_original` which ultimately calls `compute_total`"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 8.12,
+            "evidence_identifiers": [
+              "adds",
+              "affecting",
+              "compute_total",
+              "compute_total_v2",
+              "functionality",
+              "independent"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "Branch B adds an independent caller of `compute_total` in a new file without any semantic conflict with Branch A. The renaming from `compute_total` to `compute_total_v2` in Branch A is not affecting the functionality or tests in Branch B.",
+            "evidence": [
+              "Branch B adds an independent caller of `compute_total` in a new file without any semantic conflict with Branch A."
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 15.43,
+            "evidence_identifiers": [
+              "available",
+              "compute_total_v2",
+              "defined",
+              "despite",
+              "inconsistency",
+              "its",
+              "logically",
+              "longer",
+              "original",
+              "removal",
+              "retain",
+              "retains",
+              "symbol"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged result would retain the removed symbol from Branch A, which is no longer available in Branch B. This inconsistency makes the combined code logically incorrect.",
+            "evidence": [
+              "compute_total_v2 is defined but still calls compute_total",
+              "Branch B retains the original function name despite its removal"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair": "self_shipping_0004_rename_stale",
+      "input_mode": "raw",
+      "ground_truth": "conflict",
+      "baseline_verdict": "compatible",
+      "committee_verdict": "escalate",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 15.05350159999216,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "Branch B adds an independent caller of `compute_cost` in a new file which is not affected by the renaming in Branch A. The merged codebase will still pass its tests and run without any logical issues.",
+            "evidence": [
+              "The new test case in Branch B does not depend on the renamed function from Branch A, so it doesn't affect the semantics of the code."
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 15.053493799990974,
+          "raw_content": "{\n  \"verdict\": \"compatible\",\n  \"confidence\": 1.0,\n  \"reasoning\": \"Branch B adds an independent caller of `compute_cost` in a new file which is not affected by the renaming in Branch A. The merged codebase will still pass its tests and run without any logical issues.\",\n  \"evidence\": [\"The new test case in Branch B does not depend on the renamed function from Branch A, so it doesn't affect the semantics of the code.\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 28.46288239999558,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A renames `compute_cost` to `compute_cost_v2` and updates all callers accordingly. Branch B independently adds a new caller of the original `compute_cost` function. Merging these branches will result in the tests for Branch B failing because they are using the old, now renamed, function name. This is a semantic conflict as there's no textual overlap but the logic is broken.",
+              "evidence": [
+                "Branch A: Renames `compute_cost` to `compute_cost_v2`",
+                "Branch A: Updates test cases to use `compute_cost_v2`",
+                "Branch B: Adds a new caller using `compute_cost`",
+                "test_shipping_0004.py: Tests assert against `compute_cost` which is no longer defined"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 28.462765799980843,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A renames `compute_cost` to `compute_cost_v2` and updates all callers accordingly. Branch B independently adds a new caller of the original `compute_cost` function. Merging these branches will result in the tests for Branch B failing because they are using the old, now renamed, function name. This is a semantic conflict as there's no textual overlap but the logic is broken.\",\n  \"evidence\": [\"Branch A: Renames `compute_cost` to `compute_cost_v2`\", \"Branch A: Updates test cases to use `compute_cost_v2`\", \"Branch B: Adds a new caller using `compute_cost`\", \"test_shipping_0004.py: Tests assert against `compute_cost` which is no longer defined\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "Branch B adds an independent caller of `compute_cost` in a new file without any semantic conflict with Branch A. The renaming of `compute_cost` to `compute_cost_v2` in Branch A does not affect the existing tests or other parts of the codebase, so it is compatible.",
+              "evidence": [
+                "Branch B adds an independent caller of `compute_cost` without any semantic conflict with Branch A."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 8.411721899989061,
+            "raw_content": "{\n  \"verdict\": \"compatible\",\n  \"confidence\": 1.0,\n  \"reasoning\": \"Branch B adds an independent caller of `compute_cost` in a new file without any semantic conflict with Branch A. The renaming of `compute_cost` to `compute_cost_v2` in Branch A does not affect the existing tests or other parts of the codebase, so it is compatible.\",\n  \"evidence\": [\"Branch B adds an independent caller of `compute_cost` without any semantic conflict with Branch A.\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged result would retain the removed symbol `compute_cost` from Branch B, which is no longer defined in Branch A. This inconsistency breaks logical correctness.",
+              "evidence": [
+                "Branch B retains the removed symbol `compute_cost`",
+                "Branch A updates existing callers to use `compute_cost_v2`"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 15.90342759998748,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged result would retain the removed symbol `compute_cost` from Branch B, which is no longer defined in Branch A. This inconsistency breaks logical correctness.\",\n  \"evidence\": [\"Branch B retains the removed symbol `compute_cost`\", \"Branch A updates existing callers to use `compute_cost_v2`\"]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "escalate",
+        "agreeing_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [],
+        "evidence_overlap_score": 0.6666666666666666,
+        "shared_evidence": [
+          "compute_cost",
+          "compute_cost_v2"
+        ],
+        "explanation": "Disagreement: majority (2 models) say 'conflict' but deepseek-coder:6.7b disagree (deepseek-coder:6.7b=compatible). Shared identifiers among agreeing models: ['compute_cost', 'compute_cost_v2'] (overlap=0.67).",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 28.46,
+            "evidence_identifiers": [
+              "accordingly",
+              "adds",
+              "assert",
+              "compute_cost",
+              "compute_cost_v2",
+              "defined",
+              "failing",
+              "longer",
+              "now",
+              "original",
+              "test_shipping_0004_py",
+              "updates",
+              "use"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch A renames `compute_cost` to `compute_cost_v2` and updates all callers accordingly. Branch B independently adds a new caller of the original `compute_cost` function. Merging these branches will result in the tests for Branch B failing because they are using the old, now renamed, function name. This is a semantic conflict as there's no textual overlap but the logic is broken.",
+            "evidence": [
+              "Branch A: Renames `compute_cost` to `compute_cost_v2`",
+              "Branch A: Updates test cases to use `compute_cost_v2`",
+              "Branch B: Adds a new caller using `compute_cost`",
+              "test_shipping_0004.py: Tests assert against `compute_cost` which is no longer defined"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 8.41,
+            "evidence_identifiers": [
+              "adds",
+              "affect",
+              "codebase",
+              "compute_cost",
+              "compute_cost_v2",
+              "independent"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "Branch B adds an independent caller of `compute_cost` in a new file without any semantic conflict with Branch A. The renaming of `compute_cost` to `compute_cost_v2` in Branch A does not affect the existing tests or other parts of the codebase, so it is compatible.",
+            "evidence": [
+              "Branch B adds an independent caller of `compute_cost` without any semantic conflict with Branch A."
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 15.9,
+            "evidence_identifiers": [
+              "compute_cost",
+              "compute_cost_v2",
+              "correctness",
+              "defined",
+              "inconsistency",
+              "longer",
+              "retain",
+              "retains",
+              "symbol",
+              "updates",
+              "use"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged result would retain the removed symbol `compute_cost` from Branch B, which is no longer defined in Branch A. This inconsistency breaks logical correctness.",
+            "evidence": [
+              "Branch B retains the removed symbol `compute_cost`",
+              "Branch A updates existing callers to use `compute_cost_v2`"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

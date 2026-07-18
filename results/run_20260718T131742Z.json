@@ -1,0 +1,1007 @@
+{
+  "timestamp": "20260718T131742Z",
+  "config_path": "config.yaml",
+  "pairs_dir": "data\\pairs\\self_generated",
+  "input_mode": "structured",
+  "summary": {
+    "baseline_accuracy": [
+      5,
+      5,
+      0
+    ],
+    "committee_accuracy": [
+      5,
+      5,
+      0
+    ]
+  },
+  "results": [
+    {
+      "pair": "self_example_1_rename_stale",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "conflict",
+      "committee_verdict": "conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 21.547928899992257,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch B adds a new caller of `add` in a new file while Branch A renames `add` to `add_v2` and updates existing callers. This results in a semantic conflict as the merged code will fail because Branch B retains the removed symbol.",
+            "evidence": [
+              "Branch B adds a new function 'call_original' which calls 'add', but Branch A renames 'add' to 'add_v2' and updates existing callers in 'calculator.py'. This results in a semantic conflict as the merged code will fail because 'call_original' still references 'add'."
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 21.54791860000114,
+          "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"Branch B adds a new caller of `add` in a new file while Branch A renames `add` to `add_v2` and updates existing callers. This results in a semantic conflict as the merged code will fail because Branch B retains the removed symbol.\",\n   \"evidence\": [\"Branch B adds a new function 'call_original' which calls 'add', but Branch A renames 'add' to 'add_v2' and updates existing callers in 'calculator.py'. This results in a semantic conflict as the merged code will fail because 'call_original' still references 'add'.\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 34.1205912999867,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A renames `add` to `add_v2` and removes the original `add` function. Branch B adds a new function `call_original` that calls the *original* `add` function. Merging these changes will result in a semantic conflict because Branch B continues to use the old name, while Branch A has removed the original implementation. This creates an inconsistent state where the same function is called with different names and potentially different behavior.",
+              "evidence": [
+                "Branch A removes `add` (function_name: 'add', signature: 'def add(left:', body_hash: 'd73c088980a9ac57')",
+                "Branch B adds `call_original` which calls `add` (function_name: 'call_original', signature: 'def call_original(*args, **kwargs):', body_hash: '4500b6f6b5be8be9', calls: ['add'])",
+                "The cross_branch_links section explicitly identifies `add` as a rename_stale_reference that is removed on branch A and referenced on branch B."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 34.12048440001672,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A renames `add` to `add_v2` and removes the original `add` function. Branch B adds a new function `call_original` that calls the *original* `add` function. Merging these changes will result in a semantic conflict because Branch B continues to use the old name, while Branch A has removed the original implementation. This creates an inconsistent state where the same function is called with different names and potentially different behavior.\",\n  \"evidence\": [\n    \"Branch A removes `add` (function_name: 'add', signature: 'def add(left:', body_hash: 'd73c088980a9ac57')\",\n    \"Branch B adds `call_original` which calls `add` (function_name: 'call_original', signature: 'def call_original(*args, **kwargs):', body_hash: '4500b6f6b5be8be9', calls: ['add'])\",\n    \"The cross_branch_links section explicitly identifies `add` as a rename_stale_reference that is removed on branch A and referenced on branch B.\"\n  ]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch B introduces a new caller of `add` in a new file which Branch A has removed. This is a semantic conflict.",
+              "evidence": [
+                "cross_branch_links: 'rename_stale_reference' type with detail 'import: from calculator import add; renamed to add_v2 on branch_a'",
+                "'call in call_original; renamed to add_v2 on branch_a'"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 9.970255599997472,
+            "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"Branch B introduces a new caller of `add` in a new file which Branch A has removed. This is a semantic conflict.\",\n   \"evidence\": [\"cross_branch_links: 'rename_stale_reference' type with detail 'import: from calculator import add; renamed to add_v2 on branch_a'\", \n                \"'call in call_original; renamed to add_v2 on branch_a'\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged tree fails because Branch B retains the removed symbol 'add', which was renamed to 'add_v2' on Branch A. This creates a logical inconsistency, as Branch B still calls the old name 'add'. The cross_branch_links indicate that this removal and reference are not resolved.",
+              "evidence": [
+                "cross_branch_links[0].symbol: 'add'",
+                "cross_branch_links[0].type: 'removed_but_referenced'",
+                "branch_a.removed.function_name: 'add'",
+                "branch_b.added.function_name: 'call_original'"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 18.817287999991095,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged tree fails because Branch B retains the removed symbol 'add', which was renamed to 'add_v2' on Branch A. This creates a logical inconsistency, as Branch B still calls the old name 'add'. The cross_branch_links indicate that this removal and reference are not resolved.\",\n  \"evidence\": [\n    \"cross_branch_links[0].symbol: 'add'\",\n    \"cross_branch_links[0].type: 'removed_but_referenced'\",\n    \"branch_a.removed.function_name: 'add'\",\n    \"branch_b.added.function_name: 'call_original'\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "conflict",
+        "agreeing_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [],
+        "failed_models": [],
+        "weak_evidence_models": [],
+        "evidence_overlap_score": 0.6,
+        "shared_evidence": [
+          "add",
+          "add_v2",
+          "call_original"
+        ],
+        "explanation": "3 models agree on 'conflict' with identifier overlap score 0.60. Shared identifiers: ['add', 'add_v2', 'call_original']",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 34.12,
+            "evidence_identifiers": [
+              "add",
+              "add_v2",
+              "adds",
+              "body_hash",
+              "call_original",
+              "continues",
+              "creates",
+              "cross_branch_links",
+              "d73c088980a9ac57",
+              "explicitly",
+              "function_name",
+              "identifies",
+              "inconsistent",
+              "kwargs",
+              "potentially",
+              "rename_stale_reference",
+              "signature",
+              "state",
+              "use"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch A renames `add` to `add_v2` and removes the original `add` function. Branch B adds a new function `call_original` that calls the *original* `add` function. Merging these changes will result in a semantic conflict because Branch B continues to use the old name, while Branch A has removed the original implementation. This creates an inconsistent state where the same function is called with different names and potentially different behavior.",
+            "evidence": [
+              "Branch A removes `add` (function_name: 'add', signature: 'def add(left:', body_hash: 'd73c088980a9ac57')",
+              "Branch B adds `call_original` which calls `add` (function_name: 'call_original', signature: 'def call_original(*args, **kwargs):', body_hash: '4500b6f6b5be8be9', calls: ['add'])",
+              "The cross_branch_links section explicitly identifies `add` as a rename_stale_reference that is removed on branch A and referenced on branch B."
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 9.97,
+            "evidence_identifiers": [
+              "add",
+              "add_v2",
+              "branch_a",
+              "calculator",
+              "call_original",
+              "cross_branch_links",
+              "rename_stale_reference"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch B introduces a new caller of `add` in a new file which Branch A has removed. This is a semantic conflict.",
+            "evidence": [
+              "cross_branch_links: 'rename_stale_reference' type with detail 'import: from calculator import add; renamed to add_v2 on branch_a'",
+              "'call in call_original; renamed to add_v2 on branch_a'"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 18.82,
+            "evidence_identifiers": [
+              "add",
+              "add_v2",
+              "branch_a",
+              "branch_b",
+              "call_original",
+              "creates",
+              "cross_branch_links",
+              "function_name",
+              "inconsistency",
+              "indicate",
+              "removal",
+              "removed_but_referenced",
+              "resolved",
+              "retains",
+              "symbol",
+              "tree"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged tree fails because Branch B retains the removed symbol 'add', which was renamed to 'add_v2' on Branch A. This creates a logical inconsistency, as Branch B still calls the old name 'add'. The cross_branch_links indicate that this removal and reference are not resolved.",
+            "evidence": [
+              "cross_branch_links[0].symbol: 'add'",
+              "cross_branch_links[0].type: 'removed_but_referenced'",
+              "branch_a.removed.function_name: 'add'",
+              "branch_b.added.function_name: 'call_original'"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair": "self_inventory_0002_rename_stale",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "conflict",
+      "committee_verdict": "conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 24.50583869998809,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "The merged codebase will fail due to the removal of a symbol that is still referenced in another branch (Branch B). This includes cross_branch_links and function calls from other branches.",
+            "evidence": [
+              "cross_branch_links",
+              "function calls"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 24.505829500005348,
+          "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"The merged codebase will fail due to the removal of a symbol that is still referenced in another branch (Branch B). This includes cross_branch_links and function calls from other branches.\",\n   \"evidence\": [\"cross_branch_links\", \"function calls\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 30.954249000002164,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A renames `compute_available` to `compute_available_v2`, while Branch B continues to call the original `compute_available`. Merging these changes will result in a semantic conflict because Branch B's code relies on the old function name, and the renamed function is no longer accessible by that name. This creates an incompatibility where the merged codebase would not behave as intended.",
+              "evidence": [
+                "Branch A added `compute_available_v2` which replaces `compute_available`.",
+                "Branch B added `call_original`, which calls `compute_available` (the original name).",
+                "The `cross_branch_links` section explicitly identifies a 'rename_stale_reference' from `compute_available` on Branch A to `compute_available` on Branch B, indicating that the renamed function is still being used where it should no longer be."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 30.954123100003926,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A renames `compute_available` to `compute_available_v2`, while Branch B continues to call the original `compute_available`. Merging these changes will result in a semantic conflict because Branch B's code relies on the old function name, and the renamed function is no longer accessible by that name. This creates an incompatibility where the merged codebase would not behave as intended.\",\n  \"evidence\": [\n    \"Branch A added `compute_available_v2` which replaces `compute_available`.\",\n    \"Branch B added `call_original`, which calls `compute_available` (the original name).\",\n    \"The `cross_branch_links` section explicitly identifies a 'rename_stale_reference' from `compute_available` on Branch A to `compute_available` on Branch B, indicating that the renamed function is still being used where it should no longer be.\"\n  ]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The merged codebase will fail because Branch B retains the removed symbol `compute_available` in its tests while Branch A has renamed it to `compute_available_v2`.",
+              "evidence": [
+                "Branch B's test files still call 'compute_available', which was removed from Branch A"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 8.736614699999336,
+            "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"The merged codebase will fail because Branch B retains the removed symbol `compute_available` in its tests while Branch A has renamed it to `compute_available_v2`.\",\n   \"evidence\": [\"Branch B's test files still call 'compute_available', which was removed from Branch A\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged result would be logically broken due to the removal of `compute_available` on Branch A while Branch B still references/calls it. The cross_branch_links indicate that `compute_available` was renamed to `compute_available_v2` on Branch A, but its original definition is still referenced in Branch B's `call_original` function.",
+              "evidence": [
+                "cross_branch_links[0].symbol: compute_available",
+                "cross_branch_links[1].symbol: compute_available"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 17.244401300005848,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged result would be logically broken due to the removal of `compute_available` on Branch A while Branch B still references/calls it. The cross_branch_links indicate that `compute_available` was renamed to `compute_available_v2` on Branch A, but its original definition is still referenced in Branch B's `call_original` function.\",\n  \"evidence\": [\n    \"cross_branch_links[0].symbol: compute_available\",\n    \"cross_branch_links[1].symbol: compute_available\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "conflict",
+        "agreeing_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [],
+        "failed_models": [],
+        "weak_evidence_models": [],
+        "evidence_overlap_score": 0.6666666666666666,
+        "shared_evidence": [
+          "compute_available",
+          "compute_available_v2"
+        ],
+        "explanation": "3 models agree on 'conflict' with identifier overlap score 0.67. Shared identifiers: ['compute_available', 'compute_available_v2']",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 30.95,
+            "evidence_identifiers": [
+              "accessible",
+              "behave",
+              "call_original",
+              "codebase",
+              "compute_available",
+              "compute_available_v2",
+              "continues",
+              "creates",
+              "cross_branch_links",
+              "explicitly",
+              "identifies",
+              "incompatibility",
+              "indicating",
+              "intended",
+              "longer",
+              "original",
+              "relies",
+              "rename_stale_reference",
+              "replaces",
+              "used"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch A renames `compute_available` to `compute_available_v2`, while Branch B continues to call the original `compute_available`. Merging these changes will result in a semantic conflict because Branch B's code relies on the old function name, and the renamed function is no longer accessible by that name. This creates an incompatibility where the merged codebase would not behave as intended.",
+            "evidence": [
+              "Branch A added `compute_available_v2` which replaces `compute_available`.",
+              "Branch B added `call_original`, which calls `compute_available` (the original name).",
+              "The `cross_branch_links` section explicitly identifies a 'rename_stale_reference' from `compute_available` on Branch A to `compute_available` on Branch B, indicating that the renamed function is still being used where it should no longer be."
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 8.74,
+            "evidence_identifiers": [
+              "codebase",
+              "compute_available",
+              "compute_available_v2",
+              "its",
+              "retains",
+              "symbol"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "The merged codebase will fail because Branch B retains the removed symbol `compute_available` in its tests while Branch A has renamed it to `compute_available_v2`.",
+            "evidence": [
+              "Branch B's test files still call 'compute_available', which was removed from Branch A"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 17.24,
+            "evidence_identifiers": [
+              "call_original",
+              "compute_available",
+              "compute_available_v2",
+              "cross_branch_links",
+              "due",
+              "indicate",
+              "its",
+              "logically",
+              "removal",
+              "symbol"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged result would be logically broken due to the removal of `compute_available` on Branch A while Branch B still references/calls it. The cross_branch_links indicate that `compute_available` was renamed to `compute_available_v2` on Branch A, but its original definition is still referenced in Branch B's `call_original` function.",
+            "evidence": [
+              "cross_branch_links[0].symbol: compute_available",
+              "cross_branch_links[1].symbol: compute_available"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair": "self_pricing_0001_rename_stale",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "conflict",
+      "committee_verdict": "conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 20.221457100007683,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "The merged codebase would fail because Branch B retains the removed symbol `compute_subtotal` in a new file while Branch A renames it to `compute_subtotal_v2` and updates existing callers.",
+            "evidence": [
+              "Branch B adds a new caller of `compute_subtotal` in a new file",
+              "Branch A renames `compute_subtotal` to `compute_subtotal_v2` and updates existing callers"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 20.221450300014112,
+          "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"The merged codebase would fail because Branch B retains the removed symbol `compute_subtotal` in a new file while Branch A renames it to `compute_subtotal_v2` and updates existing callers.\",\n   \"evidence\": [\"Branch B adds a new caller of `compute_subtotal` in a new file\", \n                \"Branch A renames `compute_subtotal` to `compute_subtotal_v2` and updates existing callers\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 34.73925459999009,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A renames `compute_subtotal` to `compute_subtotal_v2`, while Branch B continues to call the original `compute_subtotal`. This creates a semantic conflict because the renamed function is no longer accessible by its intended callers (as indicated by the `cross_branch_links`).  The merged codebase will have code that relies on the old name (`compute_subtotal`) but attempts to use the new name (`compute_subtotal_v2`), leading to runtime errors or unexpected behavior. The `rename_stale_reference` cross-branch link clearly highlights this issue.",
+              "evidence": [
+                "The `cross_branch_links` section explicitly identifies `compute_subtotal` as being renamed on branch A and still imported/called on branch B.",
+                "Branch A's changes include renaming `compute_subtotal` to `compute_subtotal_v2` and updating the function calls in test files to use this new name.",
+                "Branch B continues to import and call `compute_subtotal`, indicating that it hasn't adapted to the rename."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 34.739141599973664,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A renames `compute_subtotal` to `compute_subtotal_v2`, while Branch B continues to call the original `compute_subtotal`. This creates a semantic conflict because the renamed function is no longer accessible by its intended callers (as indicated by the `cross_branch_links`).  The merged codebase will have code that relies on the old name (`compute_subtotal`) but attempts to use the new name (`compute_subtotal_v2`), leading to runtime errors or unexpected behavior. The `rename_stale_reference` cross-branch link clearly highlights this issue.\",\n  \"evidence\": [\n    \"The `cross_branch_links` section explicitly identifies `compute_subtotal` as being renamed on branch A and still imported/called on branch B.\",\n    \"Branch A's changes include renaming `compute_subtotal` to `compute_subtotal_v2` and updating the function calls in test files to use this new name.\",\n    \"Branch B continues to import and call `compute_subtotal`, indicating that it hasn't adapted to the rename.\"\n  ]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The merged codebase will fail because Branch B retains the removed symbol compute_subtotal while Branch A has renamed it to compute_subtotal_v2. This is a semantic conflict.",
+              "evidence": [
+                "compute_subtotal was present in merge-base but absent on branch A, and added back with different name (compute_subtotal_v2) on branch B",
+                "cross_branch_links show that compute_subtotal was removed from one branch and still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 12.037741100008134,
+            "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"The merged codebase will fail because Branch B retains the removed symbol compute_subtotal while Branch A has renamed it to compute_subtotal_v2. This is a semantic conflict.\",\n   \"evidence\": [\"compute_subtotal was present in merge-base but absent on branch A, and added back with different name (compute_subtotal_v2) on branch B\", \n                \"cross_branch_links show that compute_subtotal was removed from one branch and still referenced/called on the other\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged result would be logically broken due to the presence of `compute_subtotal` still being referenced/called in `quorum_consumer_pricing_0001.py` on Branch B, despite it being removed from Branch A.",
+              "evidence": [
+                "{\"referenced_on\": \"branch_b\", \"removed_on\": \"branch_a\", \"symbol\": \"compute_subtotal\", \"type\": \"rename_stale_reference\"}",
+                "{\"referenced_on\": \"branch_b\", \"removed_on\": \"branch_a\", \"symbol\": \"compute_subtotal\", \"type\": \"call in call_original\"}"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 20.66230149997864,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged result would be logically broken due to the presence of `compute_subtotal` still being referenced/called in `quorum_consumer_pricing_0001.py` on Branch B, despite it being removed from Branch A.\",\n  \"evidence\": [\n    {\n      \"symbol\": \"compute_subtotal\",\n      \"type\": \"rename_stale_reference\",\n      \"removed_on\": \"branch_a\",\n      \"referenced_on\": \"branch_b\"\n    },\n    {\n      \"symbol\": \"compute_subtotal\",\n      \"type\": \"call in call_original\",\n      \"removed_on\": \"branch_a\",\n      \"referenced_on\": \"branch_b\"\n    }\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "conflict",
+        "agreeing_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [],
+        "failed_models": [],
+        "weak_evidence_models": [],
+        "evidence_overlap_score": 0.25,
+        "shared_evidence": [
+          "compute_subtotal"
+        ],
+        "explanation": "3 models agree on 'conflict' with identifier overlap score 0.25. Shared identifiers: ['compute_subtotal']",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 34.74,
+            "evidence_identifiers": [
+              "accessible",
+              "adapted",
+              "attempts",
+              "clearly",
+              "codebase",
+              "compute_subtotal",
+              "compute_subtotal_v2",
+              "continues",
+              "creates",
+              "cross_branch_links",
+              "explicitly",
+              "hasn",
+              "highlights",
+              "identifies",
+              "include",
+              "indicated",
+              "indicating",
+              "intended",
+              "its",
+              "longer",
+              "original",
+              "relies",
+              "rename_stale_reference",
+              "runtime",
+              "updating",
+              "use"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch A renames `compute_subtotal` to `compute_subtotal_v2`, while Branch B continues to call the original `compute_subtotal`. This creates a semantic conflict because the renamed function is no longer accessible by its intended callers (as indicated by the `cross_branch_links`).  The merged codebase will have code that relies on the old name (`compute_subtotal`) but attempts to use the new name (`compute_subtotal_v2`), leading to runtime errors or unexpected behavior. The `rename_stale_reference` cross-branch link clearly highlights this issue.",
+            "evidence": [
+              "The `cross_branch_links` section explicitly identifies `compute_subtotal` as being renamed on branch A and still imported/called on branch B.",
+              "Branch A's changes include renaming `compute_subtotal` to `compute_subtotal_v2` and updating the function calls in test files to use this new name.",
+              "Branch B continues to import and call `compute_subtotal`, indicating that it hasn't adapted to the rename."
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 12.04,
+            "evidence_identifiers": [
+              "base",
+              "codebase",
+              "compute_subtotal",
+              "compute_subtotal_v2",
+              "cross_branch_links",
+              "retains",
+              "show",
+              "symbol"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "The merged codebase will fail because Branch B retains the removed symbol compute_subtotal while Branch A has renamed it to compute_subtotal_v2. This is a semantic conflict.",
+            "evidence": [
+              "compute_subtotal was present in merge-base but absent on branch A, and added back with different name (compute_subtotal_v2) on branch B",
+              "cross_branch_links show that compute_subtotal was removed from one branch and still referenced/called on the other"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 20.66,
+            "evidence_identifiers": [
+              "branch_a",
+              "branch_b",
+              "call_original",
+              "compute_subtotal",
+              "despite",
+              "due",
+              "logically",
+              "presence",
+              "quorum_consumer_pricing_0001_py",
+              "referenced_on",
+              "removed_on",
+              "rename_stale_reference",
+              "symbol"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged result would be logically broken due to the presence of `compute_subtotal` still being referenced/called in `quorum_consumer_pricing_0001.py` on Branch B, despite it being removed from Branch A.",
+            "evidence": [
+              "{\"referenced_on\": \"branch_b\", \"removed_on\": \"branch_a\", \"symbol\": \"compute_subtotal\", \"type\": \"rename_stale_reference\"}",
+              "{\"referenced_on\": \"branch_b\", \"removed_on\": \"branch_a\", \"symbol\": \"compute_subtotal\", \"type\": \"call in call_original\"}"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair": "self_scoring_0003_rename_stale",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "conflict",
+      "committee_verdict": "conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 16.779716700024437,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "The merged codebase will fail because the renamed function `compute_total` from Branch A is called in another branch (Branch B). This conflict would be resolved if we merge Branch A first and then Branch B.",
+            "evidence": [
+              "cross_branch_links",
+              "function calls"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 16.779709299997194,
+          "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"The merged codebase will fail because the renamed function `compute_total` from Branch A is called in another branch (Branch B). This conflict would be resolved if we merge Branch A first and then Branch B.\",\n   \"evidence\": [\"cross_branch_links\", \"function calls\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 33.686069799994584,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A renames `compute_total` to `compute_total_v2` and Branch B continues to call the original `compute_total`. This creates a semantic conflict because the renamed function is no longer accessible where it was previously called, leading to broken code. The cross-branch links clearly highlight this issue.",
+              "evidence": [
+                "Branch A: Renames `compute_total` to `compute_total_v2` and adds `from scoring_0003 import compute_total_v2, aggregate_total`",
+                "Branch B: Adds `call_original` which calls `compute_total` and imports `from scoring_0003 import compute_total`",
+                "Cross-branch link: `compute_total` is marked as a 'rename_stale_reference' with `removed_on`: 'branch_a'` and `referenced_on`: 'branch_b'`, indicating that the original function is removed but still referenced in Branch B."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 33.685910500003956,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A renames `compute_total` to `compute_total_v2` and Branch B continues to call the original `compute_total`. This creates a semantic conflict because the renamed function is no longer accessible where it was previously called, leading to broken code. The cross-branch links clearly highlight this issue.\",\n  \"evidence\": [\n    \"Branch A: Renames `compute_total` to `compute_total_v2` and adds `from scoring_0003 import compute_total_v2, aggregate_total`\",\n    \"Branch B: Adds `call_original` which calls `compute_total` and imports `from scoring_0003 import compute_total`\",\n    \"Cross-branch link: `compute_total` is marked as a 'rename_stale_reference' with `removed_on`: 'branch_a'` and `referenced_on`: 'branch_b'`, indicating that the original function is removed but still referenced in Branch B.\"\n  ]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The merged codebase will fail because Branch B retains the removed symbol `compute_total` in a new file while Branch A renames it to `compute_total_v2` and updates existing callers.",
+              "evidence": [
+                "Branch B adds a new function 'call_original' that calls compute_total, which is renamed to compute_total_v2 on Branch A",
+                "'test_consumer_is_available' in Branch B imports and uses the removed symbol compute_total"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 12.066555700002937,
+            "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"The merged codebase will fail because Branch B retains the removed symbol `compute_total` in a new file while Branch A renames it to `compute_total_v2` and updates existing callers.\",\n   \"evidence\": [\"Branch B adds a new function 'call_original' that calls compute_total, which is renamed to compute_total_v2 on Branch A\", \n                \"'test_consumer_is_available' in Branch B imports and uses the removed symbol compute_total\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged result would be logically broken due to the presence of `compute_total` still being referenced in `call_original` on branch B, despite being removed from branch A.",
+              "evidence": [
+                "cross_branch_links[1].symbol: compute_total",
+                "cross_branch_links[2].symbol: compute_total"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 19.815170100016985,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged result would be logically broken due to the presence of `compute_total` still being referenced in `call_original` on branch B, despite being removed from branch A.\",\n  \"evidence\": [\n    \"cross_branch_links[1].symbol: compute_total\",\n    \"cross_branch_links[2].symbol: compute_total\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "conflict",
+        "agreeing_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [],
+        "failed_models": [],
+        "weak_evidence_models": [],
+        "evidence_overlap_score": 0.3333333333333333,
+        "shared_evidence": [
+          "call_original",
+          "compute_total"
+        ],
+        "explanation": "3 models agree on 'conflict' with identifier overlap score 0.33. Shared identifiers: ['call_original', 'compute_total']",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 33.69,
+            "evidence_identifiers": [
+              "accessible",
+              "adds",
+              "aggregate_total",
+              "branch_a",
+              "branch_b",
+              "call_original",
+              "clearly",
+              "compute_total",
+              "compute_total_v2",
+              "continues",
+              "creates",
+              "cross",
+              "highlight",
+              "indicating",
+              "link",
+              "links",
+              "longer",
+              "marked",
+              "original",
+              "previously",
+              "referenced_on",
+              "removed_on",
+              "rename_stale_reference",
+              "scoring_0003"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "Branch A renames `compute_total` to `compute_total_v2` and Branch B continues to call the original `compute_total`. This creates a semantic conflict because the renamed function is no longer accessible where it was previously called, leading to broken code. The cross-branch links clearly highlight this issue.",
+            "evidence": [
+              "Branch A: Renames `compute_total` to `compute_total_v2` and adds `from scoring_0003 import compute_total_v2, aggregate_total`",
+              "Branch B: Adds `call_original` which calls `compute_total` and imports `from scoring_0003 import compute_total`",
+              "Cross-branch link: `compute_total` is marked as a 'rename_stale_reference' with `removed_on`: 'branch_a'` and `referenced_on`: 'branch_b'`, indicating that the original function is removed but still referenced in Branch B."
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 12.07,
+            "evidence_identifiers": [
+              "adds",
+              "call_original",
+              "codebase",
+              "compute_total",
+              "compute_total_v2",
+              "retains",
+              "symbol",
+              "test_consumer_is_available",
+              "updates"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "The merged codebase will fail because Branch B retains the removed symbol `compute_total` in a new file while Branch A renames it to `compute_total_v2` and updates existing callers.",
+            "evidence": [
+              "Branch B adds a new function 'call_original' that calls compute_total, which is renamed to compute_total_v2 on Branch A",
+              "'test_consumer_is_available' in Branch B imports and uses the removed symbol compute_total"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 19.82,
+            "evidence_identifiers": [
+              "call_original",
+              "compute_total",
+              "cross_branch_links",
+              "despite",
+              "due",
+              "logically",
+              "presence",
+              "symbol"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged result would be logically broken due to the presence of `compute_total` still being referenced in `call_original` on branch B, despite being removed from branch A.",
+            "evidence": [
+              "cross_branch_links[1].symbol: compute_total",
+              "cross_branch_links[2].symbol: compute_total"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "pair": "self_shipping_0004_rename_stale",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "conflict",
+      "committee_verdict": "conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 26.751734699995723,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "The merged codebase will fail because Branch B retains the removed symbol `compute_cost` in its tests while Branch A has renamed it to `compute_cost_v2`.",
+            "evidence": [
+              "Branch B's test cases call for 'compute_cost', which does not exist on branch A",
+              "The cross-branch link shows that the symbol 'compute_cost' was removed from Branch A and still referenced in Branch B"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 26.75172610001755,
+          "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"The merged codebase will fail because Branch B retains the removed symbol `compute_cost` in its tests while Branch A has renamed it to `compute_cost_v2`.\",\n   \"evidence\": [\"Branch B's test cases call for 'compute_cost', which does not exist on branch A\", \n                \"The cross-branch link shows that the symbol 'compute_cost' was removed from Branch A and still referenced in Branch B\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 31.649695200001588,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The merge introduces a significant semantic conflict due to the renaming of `compute_cost` in Branch A and its subsequent use by Branch B. While there's no textual conflict (no overlapping lines), Branch B continues to call the original `compute_cost` function name after it has been renamed to `compute_cost_v2`. This creates a broken dependency, as any code relying on the old name will now fail when using the new one. The cross-branch links clearly highlight this issue.",
+              "evidence": [
+                "The `cross_branch_links` section explicitly identifies `compute_cost` as being renamed and referenced across branches.",
+                "Branch B's `call_original` function directly calls `compute_cost`, which is now `compute_cost_v2` in Branch A, leading to a semantic incompatibility.",
+                "The changes to the test files (`test_shipping_0004.py`) demonstrate that the tests are still using the old name (`compute_cost`), indicating a failure to update all callers."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 31.649598799995147,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"The merge introduces a significant semantic conflict due to the renaming of `compute_cost` in Branch A and its subsequent use by Branch B. While there's no textual conflict (no overlapping lines), Branch B continues to call the original `compute_cost` function name after it has been renamed to `compute_cost_v2`. This creates a broken dependency, as any code relying on the old name will now fail when using the new one. The cross-branch links clearly highlight this issue.\",\n  \"evidence\": [\n    \"The `cross_branch_links` section explicitly identifies `compute_cost` as being renamed and referenced across branches.\",\n    \"Branch B's `call_original` function directly calls `compute_cost`, which is now `compute_cost_v2` in Branch A, leading to a semantic incompatibility.\",\n    \"The changes to the test files (`test_shipping_0004.py`) demonstrate that the tests are still using the old name (`compute_cost`), indicating a failure to update all callers.\"\n  ]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The merged codebase would fail due to the removal of a symbol that is still referenced in another branch (Branch B). This includes cross_branch_links and function calls from other branches.",
+              "evidence": [
+                "cross_branch_links",
+                "function calls"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 7.768763299973216,
+            "raw_content": "{\n   \"verdict\": \"conflict\",\n   \"confidence\": 0.95,\n   \"reasoning\": \"The merged codebase would fail due to the removal of a symbol that is still referenced in another branch (Branch B). This includes cross_branch_links and function calls from other branches.\",\n   \"evidence\": [\"cross_branch_links\", \"function calls\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The merged tree fails because Branch B retains the removed symbol `compute_cost`, which was renamed to `compute_cost_v2` on Branch A. This semantic conflict arises from the fact that Branch B still calls the old name, while Branch A has updated its callers to use the new name.",
+              "evidence": [
+                "cross_branch_links[0].symbol: compute_cost",
+                "cross_branch_links[1].symbol: compute_cost",
+                "branch_a.removed[0].function_name: compute_cost",
+                "branch_b.added[0].function_name: compute_cost"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 17.282121199998073,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The merged tree fails because Branch B retains the removed symbol `compute_cost`, which was renamed to `compute_cost_v2` on Branch A. This semantic conflict arises from the fact that Branch B still calls the old name, while Branch A has updated its callers to use the new name.\",\n  \"evidence\": [\n    \"cross_branch_links[0].symbol: compute_cost\",\n    \"cross_branch_links[1].symbol: compute_cost\",\n    \"branch_a.removed[0].function_name: compute_cost\",\n    \"branch_b.added[0].function_name: compute_cost\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "conflict",
+        "agreeing_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "dissenting_models": [],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "evidence_overlap_score": 0.5,
+        "shared_evidence": [
+          "compute_cost",
+          "compute_cost_v2"
+        ],
+        "explanation": "3 models agree on 'conflict' with identifier overlap score 0.50. Shared identifiers: ['compute_cost', 'compute_cost_v2'] Weak evidence (excluded from overlap): deepseek-coder:6.7b",
+        "model_summaries": [
+          {
+            "model": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 31.65,
+            "evidence_identifiers": [
+              "across",
+              "call_original",
+              "clearly",
+              "compute_cost",
+              "compute_cost_v2",
+              "continues",
+              "creates",
+              "cross",
+              "cross_branch_links",
+              "demonstrate",
+              "dependency",
+              "directly",
+              "due",
+              "explicitly",
+              "highlight",
+              "identifies",
+              "incompatibility",
+              "indicating",
+              "its",
+              "links",
+              "now",
+              "original",
+              "relying",
+              "significant",
+              "subsequent",
+              "test_shipping_0004_py",
+              "update",
+              "use"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "The merge introduces a significant semantic conflict due to the renaming of `compute_cost` in Branch A and its subsequent use by Branch B. While there's no textual conflict (no overlapping lines), Branch B continues to call the original `compute_cost` function name after it has been renamed to `compute_cost_v2`. This creates a broken dependency, as any code relying on the old name will now fail when using the new one. The cross-branch links clearly highlight this issue.",
+            "evidence": [
+              "The `cross_branch_links` section explicitly identifies `compute_cost` as being renamed and referenced across branches.",
+              "Branch B's `call_original` function directly calls `compute_cost`, which is now `compute_cost_v2` in Branch A, leading to a semantic incompatibility.",
+              "The changes to the test files (`test_shipping_0004.py`) demonstrate that the tests are still using the old name (`compute_cost`), indicating a failure to update all callers."
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "elapsed_seconds": 7.77,
+            "evidence_identifiers": [
+              "another",
+              "codebase",
+              "cross_branch_links",
+              "due",
+              "includes",
+              "removal",
+              "symbol"
+            ],
+            "evidence_quality": "weak",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "reasoning": "The merged codebase would fail due to the removal of a symbol that is still referenced in another branch (Branch B). This includes cross_branch_links and function calls from other branches.",
+            "evidence": [
+              "cross_branch_links",
+              "function calls"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "elapsed_seconds": 17.28,
+            "evidence_identifiers": [
+              "arises",
+              "branch_a",
+              "branch_b",
+              "compute_cost",
+              "compute_cost_v2",
+              "cross_branch_links",
+              "fact",
+              "function_name",
+              "its",
+              "retains",
+              "symbol",
+              "tree",
+              "updated",
+              "use"
+            ],
+            "evidence_quality": "strong",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "reasoning": "The merged tree fails because Branch B retains the removed symbol `compute_cost`, which was renamed to `compute_cost_v2` on Branch A. This semantic conflict arises from the fact that Branch B still calls the old name, while Branch A has updated its callers to use the new name.",
+            "evidence": [
+              "cross_branch_links[0].symbol: compute_cost",
+              "cross_branch_links[1].symbol: compute_cost",
+              "branch_a.removed[0].function_name: compute_cost",
+              "branch_b.added[0].function_name: compute_cost"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

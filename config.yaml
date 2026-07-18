@@ -6,12 +6,12 @@ time_budget_seconds: 300
 # Ollama queues parallel requests; set true to run committee models concurrently.
 committee_parallel: true
 models:
-  - name: "gemma4:e2b"
+  - name: "gemma3:4b"
     role: "general-reasoning"
-  - name: "qwen2.5-coder:3b"
+  - name: "deepseek-coder:6.7b"
     role: "coder"
   - name: "llama3.2:3b"
     role: "general-reasoning"
-baseline_model: "qwen2.5-coder:3b"
+baseline_model: "deepseek-coder:6.7b"
 # Input to models: "raw" (diff text) or "structured" (Tree-sitter function delta)
 input_mode: "raw"

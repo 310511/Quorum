@@ -14,7 +14,7 @@ import httpx
 
 logger = logging.getLogger(__name__)
 
-VerdictLabel = Literal["compatible", "conflict"]
+VerdictLabel = Literal["no_conflict", "conflict"]
 ModelOutcome = Literal["ok", "error"]
 
 SYSTEM_PROMPT = """You are a code review expert analyzing whether two independent git branch changes would conflict semantically when merged.
@@ -43,6 +43,7 @@ class ModelConfig:
 @dataclass
 class VerdictResponse:
     verdict: VerdictLabel
+    original_verdict: str
     confidence: float
     reasoning: str
     evidence: list[str]
@@ -171,7 +172,7 @@ class ModelClient:
         return content.strip()
 
 
-def _normalize_verdict(raw: Any) -> VerdictLabel | None:
+def normalize_verdict(raw: Any) -> VerdictLabel | None:
     if raw is None:
         return None
     text = str(raw).strip().lower().replace("-", "_").replace(" ", "_")
@@ -192,19 +193,34 @@ def _normalize_verdict(raw: Any) -> VerdictLabel | None:
         "incompatible",
         "clash",
         "has_conflict",
+        "incorrect",
+        "bug",
+        "breaking_change",
+        "breaking",
+        "unsafe",
+        "likely_incorrect",
+        "semantically_incorrect",
+        "likely_conflict",
+        "probably_conflict",
     }
     if text in compatible:
-        return "compatible"
+        return "no_conflict"
     if text in conflict:
         return "conflict"
     if "logically_correct" in text or text in {"correct", "mergeable", "fine", "valid"}:
-        return "compatible"
-    if "logically_incorrect" in text or "logically_broken" in text or "broken" in text:
+        return "no_conflict"
+    if (
+        "logically_incorrect" in text
+        or "logically_broken" in text
+        or "broken" in text
+        or "incorrect" in text
+        or "breaking" in text
+    ):
         return "conflict"
     if "conflict" in text and "no_conflict" not in text:
         return "conflict"
-    if "compat" in text or "clean_merge" in text:
-        return "compatible"
+    if "compat" in text or "clean_merge" in text or "safe" in text:
+        return "no_conflict"
     return None
 
 
@@ -227,13 +243,14 @@ def _parse_verdict_json(raw: str) -> VerdictResponse:
         if match:
             cleaned = match.group(0)
 
-    data = json.loads(cleaned)
+    data, _ = json.JSONDecoder().raw_decode(cleaned)
     if not isinstance(data, dict):
         raise ValueError("JSON root must be an object")
 
-    verdict = _normalize_verdict(_extract_verdict_field(data))
+    original_verdict_value = _extract_verdict_field(data)
+    verdict = normalize_verdict(original_verdict_value)
     if verdict is None:
-        raise ValueError(f"invalid verdict: {_extract_verdict_field(data)!r}")
+        raise ValueError(f"invalid verdict: {original_verdict_value!r}")
 
     confidence_raw = data.get("confidence", data.get("score", 0.0))
     try:
@@ -244,13 +261,17 @@ def _parse_verdict_json(raw: str) -> VerdictResponse:
 
     reasoning = data.get("reasoning") or data.get("explanation") or data.get("analysis")
     if not isinstance(reasoning, str) or not reasoning.strip():
-        raise ValueError("reasoning must be a non-empty string")
+        reasoning = "No reasoning provided by model."
 
     evidence = data.get("evidence", data.get("evidence_list", []))
+    if evidence is None:
+        evidence = []
     if isinstance(evidence, str):
         evidence = [evidence]
-    if not isinstance(evidence, list):
-        raise ValueError("evidence must be a list")
+    elif isinstance(evidence, dict):
+        evidence = [json.dumps(evidence, sort_keys=True)]
+    elif not isinstance(evidence, list):
+        evidence = [str(evidence)]
     normalized_evidence: list[str] = []
     for item in evidence:
         if not item:
@@ -263,6 +284,7 @@ def _parse_verdict_json(raw: str) -> VerdictResponse:
 
     return VerdictResponse(
         verdict=verdict,
+        original_verdict=str(original_verdict_value),
         confidence=confidence,
         reasoning=reasoning.strip(),
         evidence=evidence,

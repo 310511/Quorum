@@ -1,0 +1,32 @@
+--- a/inventory_0002.py
++++ b/inventory_0002.py
+@@ -1,7 +1,7 @@
+ from helpers import clamp_0002
+ 
+ 
+-def compute_available(stock: int, reserved: int) -> int:
++def compute_available_v2(stock: int, reserved: int) -> int:
+     return clamp_0002(stock + reserved)
+--- a/test_inventory_0002.py
++++ b/test_inventory_0002.py
+@@ -1,17 +1,17 @@
+ import unittest
+ 
+-from inventory_0002 import compute_available, aggregate_available
++from inventory_0002 import compute_available_v2, aggregate_available
+ 
+ 
+ class Inventory0002Tests(unittest.TestCase):
+     def test_compute_available(self):
+-        self.assertEqual(compute_available(5, 4), 9)
++        self.assertEqual(compute_available_v2(5, 4), 9)
+ 
+     def test_aggregate_available(self):
+         self.assertEqual(aggregate_available([5, 4]), 9)
+ 
+     def test_compute_available_product_shape(self):
+-        self.assertEqual(compute_available(5, 4) + aggregate_available([5]), 14)
++        self.assertEqual(compute_available_v2(5, 4) + aggregate_available([5]), 14)
+ 
+ 
+ if __name__ == '__main__':

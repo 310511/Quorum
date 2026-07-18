@@ -1,0 +1,32 @@
+--- a/pricing_0001.py
++++ b/pricing_0001.py
+@@ -1,7 +1,7 @@
+ from helpers import clamp_0001
+ 
+ 
+-def compute_subtotal(price: int, discount: int) -> int:
++def compute_subtotal_v2(price: int, discount: int) -> int:
+     return clamp_0001(price + discount)
+--- a/test_pricing_0001.py
++++ b/test_pricing_0001.py
+@@ -1,17 +1,17 @@
+ import unittest
+ 
+-from pricing_0001 import compute_subtotal, aggregate_subtotal
++from pricing_0001 import compute_subtotal_v2, aggregate_subtotal
+ 
+ 
+ class Pricing0001Tests(unittest.TestCase):
+     def test_compute_subtotal(self):
+-        self.assertEqual(compute_subtotal(4, 3), 7)
++        self.assertEqual(compute_subtotal_v2(4, 3), 7)
+ 
+     def test_aggregate_subtotal(self):
+         self.assertEqual(aggregate_subtotal([4, 3]), 7)
+ 
+     def test_compute_subtotal_product_shape(self):
+-        self.assertEqual(compute_subtotal(4, 3) + aggregate_subtotal([4]), 11)
++        self.assertEqual(compute_subtotal_v2(4, 3) + aggregate_subtotal([4]), 11)
+ 
+ 
+ if __name__ == '__main__':

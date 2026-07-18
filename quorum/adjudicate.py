@@ -9,7 +9,7 @@ from typing import Any, Literal
 
 from quorum.models import ModelResult, VerdictLabel
 
-FinalOutcome = Literal["compatible", "conflict", "escalate"]
+FinalOutcome = Literal["no_conflict", "conflict", "escalate"]
 
 # English + generic review vocabulary — excluded from identifier overlap.
 _STOPWORDS = frozenset(
@@ -117,7 +117,10 @@ def adjudicate(
             model_summaries=_summarize_all(results, diff_ids),
         )
 
-    by_verdict: dict[VerdictLabel, list[ModelResult]] = {"compatible": [], "conflict": []}
+    by_verdict: dict[VerdictLabel, list[ModelResult]] = {
+        "no_conflict": [],
+        "conflict": [],
+    }
     for result in ok_results:
         assert result.verdict is not None
         by_verdict[result.verdict.verdict].append(result)
@@ -126,13 +129,13 @@ def adjudicate(
     majority_group: list[ModelResult] = []
     minority_group: list[ModelResult] = []
 
-    if len(by_verdict["conflict"]) > len(by_verdict["compatible"]):
+    if len(by_verdict["conflict"]) > len(by_verdict["no_conflict"]):
         majority_label = "conflict"
         majority_group = by_verdict["conflict"]
-        minority_group = by_verdict["compatible"]
-    elif len(by_verdict["compatible"]) > len(by_verdict["conflict"]):
-        majority_label = "compatible"
-        majority_group = by_verdict["compatible"]
+        minority_group = by_verdict["no_conflict"]
+    elif len(by_verdict["no_conflict"]) > len(by_verdict["conflict"]):
+        majority_label = "no_conflict"
+        majority_group = by_verdict["no_conflict"]
         minority_group = by_verdict["conflict"]
     else:
         return AdjudicationResult(
@@ -140,7 +143,7 @@ def adjudicate(
             agreeing_models=[r.model_name for r in ok_results],
             failed_models=failed,
             explanation=(
-                "Models split evenly between 'compatible' and 'conflict'; "
+                "Models split evenly between 'no_conflict' and 'conflict'; "
                 "escalating rather than forcing a majority vote."
             ),
             model_summaries=_summarize_all(results, diff_ids),

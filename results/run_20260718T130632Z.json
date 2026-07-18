@@ -1,0 +1,19 @@
+{
+  "timestamp": "20260718T130632Z",
+  "config_path": "config.yaml",
+  "pairs_dir": "data\\pairs\\self_generated",
+  "input_mode": "raw",
+  "summary": {
+    "baseline_accuracy": [
+      0,
+      0,
+      0
+    ],
+    "committee_accuracy": [
+      0,
+      0,
+      0
+    ]
+  },
+  "results": []
+}

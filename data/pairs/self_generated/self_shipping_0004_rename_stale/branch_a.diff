@@ -1,0 +1,32 @@
+--- a/shipping_0004.py
++++ b/shipping_0004.py
+@@ -1,7 +1,7 @@
+ from helpers import clamp_0004
+ 
+ 
+-def compute_cost(weight: int, distance: int) -> int:
++def compute_cost_v2(weight: int, distance: int) -> int:
+     return clamp_0004(weight + distance)
+--- a/test_shipping_0004.py
++++ b/test_shipping_0004.py
+@@ -1,17 +1,17 @@
+ import unittest
+ 
+-from shipping_0004 import compute_cost, aggregate_cost
++from shipping_0004 import compute_cost_v2, aggregate_cost
+ 
+ 
+ class Shipping0004Tests(unittest.TestCase):
+     def test_compute_cost(self):
+-        self.assertEqual(compute_cost(7, 6), 13)
++        self.assertEqual(compute_cost_v2(7, 6), 13)
+ 
+     def test_aggregate_cost(self):
+         self.assertEqual(aggregate_cost([7, 6]), 13)
+ 
+     def test_compute_cost_product_shape(self):
+-        self.assertEqual(compute_cost(7, 6) + aggregate_cost([7]), 20)
++        self.assertEqual(compute_cost_v2(7, 6) + aggregate_cost([7]), 20)
+ 
+ 
+ if __name__ == '__main__':

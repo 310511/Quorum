@@ -10,18 +10,24 @@ import sys
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Literal
 
 import yaml
 
-from quorum.adjudicate import AdjudicationResult, adjudicate
-from quorum.baseline import BaselineRun, run_baseline
-from quorum.committee import CommitteeRun, InputMode, load_pair, run_committee
+from quorum.adjudicate import AdjudicationResult
+from quorum.adjudicate_v2 import EvidenceAdjudication, adjudicate_v2
+from quorum.dataset import audit_dataset
 from quorum.import_cooperbench import import_cooperbench_zip
-from quorum.delta import compute_pair_delta
-from quorum.models import ModelConfig
+from quorum.metrics import (
+    comparison_markdown,
+    concise_comparison_report,
+    score_evaluation,
+)
+from quorum.models import ModelConfig, normalize_verdict
 
 DEFAULT_CONFIG = Path("config.yaml")
 RESULTS_DIR = Path("results")
+InputMode = Literal["raw", "structured"]
 
 
 def load_config(config_path: Path) -> dict:
@@ -112,7 +118,7 @@ def print_check_output(
     ground_truth: str | None,
     baseline: BaselineRun,
     committee: CommitteeRun,
-    adjudication: AdjudicationResult,
+    adjudication: "AdjudicationResult | EvidenceAdjudication",
     input_mode: InputMode = "raw",
 ) -> None:
     print("=" * 72)
@@ -159,6 +165,9 @@ async def _run_pair(
     config: dict,
     input_mode: InputMode,
 ) -> dict:
+    from quorum.baseline import run_baseline
+    from quorum.committee import load_pair, run_committee
+
     if input_mode == "structured":
         lang = pair_language(pair_dir)
         if lang and lang != "python":
@@ -181,14 +190,15 @@ async def _run_pair(
     structured_payload = (
         pair.structured_delta.to_dict() if pair.structured_delta else None
     )
-    adjudication = adjudicate(
+    adjudication = adjudicate_v2(
         committee.model_results,
         branch_a_diff=pair.branch_a_diff,
         branch_b_diff=pair.branch_b_diff,
         structured_delta=structured_payload,
     )
     label = load_label(pair_dir)
-    ground_truth = label.get("ground_truth") if label else None
+    ground_truth_raw = label.get("ground_truth") if label else None
+    ground_truth = normalize_verdict(ground_truth_raw) if ground_truth_raw else None
 
     return {
         "pair": pair.name,
@@ -396,6 +406,115 @@ async def run_eval(
     return out_path
 
 
+def _strip_runtime_objects(row: dict) -> dict:
+    row.pop("_baseline_run", None)
+    row.pop("_committee_run", None)
+    row.pop("_adjudication", None)
+    return row
+
+
+async def _evaluate_pair_subset(
+    pairs: list[Path],
+    config: dict,
+    mode: InputMode,
+) -> list[dict]:
+    results: list[dict] = []
+    for index, pair_dir in enumerate(pairs, 1):
+        print(
+            f"\n[{index}/{len(pairs)}] Running {pair_dir.name} ({mode})...",
+            flush=True,
+        )
+        row = await _run_pair(pair_dir, config, mode)
+        results.append(_strip_runtime_objects(row))
+    return results
+
+
+async def run_cooperbench_comparison(
+    pairs_dir: Path,
+    config_path: Path,
+    *,
+    reuse_raw: Path | None = None,
+) -> tuple[Path, Path, Path]:
+    """Evaluate the same Python CooperBench subset with raw and AST inputs."""
+    pairs = []
+    for pair in discover_pairs(pairs_dir):
+        label = load_label(pair) or {}
+        if label.get("source") == "CooperBench" and label.get("language") == "python":
+            pairs.append(pair)
+    if not pairs:
+        raise FileNotFoundError(
+            f"no Python CooperBench pairs found under {pairs_dir}"
+        )
+
+    config = load_config(config_path)
+    RESULTS_DIR.mkdir(exist_ok=True)
+
+    if reuse_raw is not None:
+        raw_path = Path(reuse_raw)
+        if not raw_path.exists():
+            raise FileNotFoundError(f"raw results not found: {raw_path}")
+        raw_payload = json.loads(raw_path.read_text(encoding="utf-8"))
+        raw_results = raw_payload["results"]
+        timestamp = str(raw_payload.get("timestamp") or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
+        print(f"Reusing raw results from {raw_path}", flush=True)
+    else:
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        raw_path = RESULTS_DIR / f"run_{timestamp}_cooper_raw.json"
+        print(f"Python CooperBench subset: {len(pairs)} pairs")
+        raw_results = await _evaluate_pair_subset(pairs, config, "raw")
+        raw_scores = score_evaluation(raw_results)
+        raw_payload = {
+            "timestamp": timestamp,
+            "dataset": "CooperBench",
+            "subset": "python",
+            "pair_count": len(pairs),
+            "input_mode": "raw",
+            "config_path": str(config_path),
+            "metrics": raw_scores,
+            "results": raw_results,
+        }
+        raw_path.write_text(json.dumps(raw_payload, indent=2), encoding="utf-8")
+        print(f"\nRaw results saved to {raw_path}", flush=True)
+
+    raw_scores = score_evaluation(raw_results)
+    structured_path = RESULTS_DIR / f"run_{timestamp}_cooper_structured.json"
+    comparison_path = RESULTS_DIR / f"comparison_{timestamp}.md"
+
+    print(f"Python CooperBench subset: {len(pairs)} pairs (structured)")
+    structured_results = await _evaluate_pair_subset(pairs, config, "structured")
+    structured_scores = score_evaluation(structured_results)
+    structured_payload = {
+        "timestamp": timestamp,
+        "dataset": "CooperBench",
+        "subset": "python",
+        "pair_count": len(pairs),
+        "input_mode": "structured",
+        "config_path": str(config_path),
+        "metrics": structured_scores,
+        "results": structured_results,
+    }
+    structured_path.write_text(
+        json.dumps(structured_payload, indent=2), encoding="utf-8"
+    )
+    # Keep raw metrics in sync with the final scorer (e.g. after parser updates).
+    if reuse_raw is not None:
+        raw_payload["metrics"] = raw_scores
+        raw_path.write_text(json.dumps(raw_payload, indent=2), encoding="utf-8")
+    comparison_path.write_text(
+        comparison_markdown(
+            raw_scores,
+            structured_scores,
+            timestamp,
+            len(pairs),
+        ),
+        encoding="utf-8",
+    )
+    print(f"\nStructured results saved to {structured_path}")
+    print(f"Comparison saved to {comparison_path}\n")
+    print(concise_comparison_report(raw_scores, structured_scores))
+    return raw_path, structured_path, comparison_path
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(
         prog="quorum",
@@ -434,14 +553,55 @@ def main(argv: list[str] | None = None) -> None:
         "zip_path",
         type=Path,
         nargs="?",
-        default=Path("cooperbench_merge_pairs.zip"),
-        help="Path to CooperBench zip (default: cooperbench_merge_pairs.zip)",
+        default=Path("dataset/cooperbench_merge_pairs.zip"),
+        help="Path to CooperBench zip (default: dataset/cooperbench_merge_pairs.zip)",
     )
     import_parser.add_argument(
         "--dest",
         type=Path,
         default=Path("data/pairs"),
         help="Destination directory (default: data/pairs)",
+    )
+
+    audit_parser = sub.add_parser(
+        "audit-dataset",
+        help="Validate and summarize self-generated JSONL records",
+    )
+    audit_parser.add_argument(
+        "records_path",
+        type=Path,
+        nargs="?",
+        default=Path("dataset/records.jsonl"),
+        help="JSONL records path (default: dataset/records.jsonl)",
+    )
+    audit_parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Print machine-readable JSON",
+    )
+
+    generate_parser = sub.add_parser(
+        "generate-semantic-pairs",
+        help="Build verified two-branch conflicts from baseline fixtures",
+    )
+    generate_parser.add_argument(
+        "records_path",
+        type=Path,
+        nargs="?",
+        default=Path("dataset/records.jsonl"),
+        help="JSONL records path (default: dataset/records.jsonl)",
+    )
+    generate_parser.add_argument(
+        "--dest",
+        type=Path,
+        default=Path("data/pairs/self_generated"),
+        help="Destination directory (default: data/pairs/self_generated)",
+    )
+    generate_parser.add_argument(
+        "--limit",
+        type=int,
+        default=10,
+        help="Maximum number of verified pairs to generate (default: 10)",
     )
 
     check_parser = sub.add_parser("check", help="Run baseline + committee on one pair")
@@ -463,6 +623,47 @@ def main(argv: list[str] | None = None) -> None:
         help="Run each pair with raw and structured input; print side-by-side accuracy",
     )
 
+    cooper_parser = sub.add_parser(
+        "eval-cooperbench",
+        help="Compare raw and structured inputs on Python CooperBench pairs",
+    )
+    cooper_parser.add_argument(
+        "pairs_dir",
+        type=Path,
+        nargs="?",
+        default=Path("data/pairs"),
+        help="CooperBench pair directory (default: data/pairs)",
+    )
+    cooper_parser.add_argument(
+        "--reuse-raw",
+        type=Path,
+        default=None,
+        help="Reuse an existing cooper_raw.json and only rerun structured AST",
+    )
+
+    ablate_parser = sub.add_parser(
+        "ablate-adjudication",
+        help="Compare adjudication policies offline on saved CooperBench runs",
+    )
+    ablate_parser.add_argument(
+        "--raw",
+        type=Path,
+        required=True,
+        help="Saved raw-mode evaluation JSON (e.g. results/run_..._cooper_raw.json)",
+    )
+    ablate_parser.add_argument(
+        "--structured",
+        type=Path,
+        required=True,
+        help="Saved structured-mode evaluation JSON",
+    )
+    ablate_parser.add_argument(
+        "--pairs-dir",
+        type=Path,
+        default=Path("data/pairs"),
+        help="Directory containing the pair folders (default: data/pairs)",
+    )
+
     # Also accept --input-mode before subcommand: quorum --input-mode structured check ...
     parser.add_argument("--input-mode", **input_mode_kwargs)
 
@@ -474,6 +675,8 @@ def main(argv: list[str] | None = None) -> None:
 
     try:
         if args.command == "extract":
+            from quorum.delta import compute_pair_delta
+
             delta = compute_pair_delta(args.pair_dir)
             print(json.dumps(delta.to_dict(), indent=2))
         elif args.command == "import-cooperbench":
@@ -481,6 +684,40 @@ def main(argv: list[str] | None = None) -> None:
             print(f"Imported {len(imported)} pairs into {args.dest}")
             for name in imported:
                 print(f"  - {name}")
+        elif args.command == "audit-dataset":
+            audit = audit_dataset(args.records_path)
+            payload = audit.to_dict()
+            if args.json:
+                print(json.dumps(payload, indent=2))
+            else:
+                usable = payload["usable"]
+                print(f"Records: {audit.total_records}")
+                print(f"Usable baselines: {usable['baselines']}")
+                print(
+                    "Usable synthetic single-patch examples: "
+                    f"{usable['synthetic_single_patch']}"
+                )
+                print(f"Usable agent records: {usable['agent_records']}")
+                print(f"Candidate agent pairs: {usable['candidate_agent_pairs']}")
+                print(f"Pending manual review: {audit.pending_manual_review}")
+                print(f"Rejected records: {audit.rejected_records}")
+                if audit.rejection_reasons:
+                    print("Rejections:")
+                    for reason, count in audit.rejection_reasons.items():
+                        print(f"  {reason}: {count}")
+                for warning in audit.warnings:
+                    print(f"Warning: {warning}")
+        elif args.command == "generate-semantic-pairs":
+            from quorum.generate_pairs import generate_verified_pairs
+
+            generated = generate_verified_pairs(
+                args.records_path,
+                args.dest,
+                limit=args.limit,
+            )
+            print(f"Generated {len(generated)} verified pairs in {args.dest}")
+            for pair in generated:
+                print(f"  {pair.name}: renamed {pair.symbol}")
         elif args.command == "check":
             asyncio.run(
                 run_check(args.pair_dir, args.config, input_mode=args.input_mode)
@@ -494,6 +731,24 @@ def main(argv: list[str] | None = None) -> None:
                     compare_inputs=args.compare_inputs,
                 )
             )
+        elif args.command == "eval-cooperbench":
+            asyncio.run(
+                run_cooperbench_comparison(
+                    args.pairs_dir,
+                    args.config,
+                    reuse_raw=args.reuse_raw,
+                )
+            )
+        elif args.command == "ablate-adjudication":
+            from quorum.ablation import run_ablation
+
+            json_path, report_path = run_ablation(
+                args.raw,
+                args.structured,
+                pairs_root=args.pairs_dir,
+            )
+            print(f"Ablation results: {json_path}")
+            print(f"Ablation report:  {report_path}")
     except KeyboardInterrupt:
         print("\nInterrupted.", file=sys.stderr)
         sys.exit(130)

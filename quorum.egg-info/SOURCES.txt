@@ -6,8 +6,10 @@ quorum/adjudicate.py
 quorum/baseline.py
 quorum/cli.py
 quorum/committee.py
+quorum/dataset.py
 quorum/delta.py
 quorum/extract.py
+quorum/generate_pairs.py
 quorum/import_cooperbench.py
 quorum/models.py
 quorum.egg-info/PKG-INFO
@@ -17,3 +19,4 @@ quorum.egg-info/entry_points.txt
 quorum.egg-info/requires.txt
 quorum.egg-info/top_level.txt
 tests/test_adjudicate.py
+tests/test_dataset.py

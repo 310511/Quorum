@@ -51,7 +51,7 @@ See `data/pairs/example_1/` for a worked semantic conflict (function rename vs. 
 Import the bundled zip (already done once if you see `pair_*` folders under `data/pairs/`):
 
 ```bash
-python -m quorum import-cooperbench cooperbench_merge_pairs.zip
+python -m quorum import-cooperbench dataset/cooperbench_merge_pairs.zip
 ```
 
 20 pairs: **12 conflict**, **8 compatible** (clean_merge). **16 Python**, 2 Go, 1 TypeScript, 1 Rust.
@@ -88,6 +88,29 @@ input_mode: raw        # or structured
 ```
 
 Results save to `results/run_<timestamp>.json`.
+
+**Audit the self-generated dataset:**
+
+```bash
+python -m quorum audit-dataset dataset/records.jsonl
+python -m quorum audit-dataset --json dataset/records.jsonl
+```
+
+The audit rejects empty agent patches and reports candidate agent pairs separately.
+Synthetic mutations are retained as single-patch validity examples; they are not
+counted as semantic merge-conflict pairs unless two independently passing branches
+are combined and the merged result is labeled by tests and manual review.
+
+**Generate verified semantic-conflict pairs from baseline fixtures:**
+
+```bash
+python -m quorum generate-semantic-pairs dataset/records.jsonl \
+  --dest data/pairs/self_generated --limit 10
+```
+
+For each pair, Branch A and Branch B must pass independently, their changed files
+must not overlap, and the combined tree must fail its tests. The generated pair
+contains snapshots, diffs, provenance, and the captured validation result.
 
 ## Architecture
 

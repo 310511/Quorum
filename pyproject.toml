@@ -7,7 +7,7 @@ name = "quorum"
 version = "0.1.0"
 description = "Phase 0 prototype: heterogeneous LLM committee for semantic merge conflict detection"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
     "httpx>=0.27",
     "pyyaml>=6.0",

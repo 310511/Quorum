@@ -96,7 +96,7 @@ def _build_structured_prompt(pair: BranchPair) -> str:
     context_block = pair.context or "(see structured delta below)"
     return f"""Analyze whether Branch A and Branch B would conflict semantically if merged into the same codebase.
 
-You are given a structured Python function-level delta (extracted via Tree-sitter AST parsing) for each branch relative to the merge-base — NOT raw diffs. Each changed function includes function_name, signature, and body_hash.
+You are given a deterministic structured Python AST delta (extracted via Tree-sitter) for each branch relative to the merge-base — NOT raw diffs. It preserves function names and signatures, calls, identifiers, decorators, control-flow summaries, imports, classes, assignments, and explicit API change types.
 
 ## Merge-base context
 {context_block}
@@ -109,8 +109,8 @@ You are given a structured Python function-level delta (extracted via Tree-sitte
 The delta shows, per branch:
 - added: new functions not present at merge-base
 - removed: functions present at merge-base but absent on the branch
-- changed: same function name with different signature and/or body_hash (includes `calls` made inside the new body)
-- files: module-level import additions/removals per changed file
+- changed: same function name with AST-aware `api_changes`, before/after signatures, body hashes, calls, identifiers, decorators, and control-flow summaries
+- files: deterministic import, class, assignment, and identifier additions/removals per changed file
 - cross_branch_links: symbols removed/renamed on one branch but still imported or called on the other
 
 Pay special attention to:

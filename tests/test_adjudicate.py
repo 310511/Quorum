@@ -13,6 +13,7 @@ def _result(model: str, verdict: str, evidence: list[str], reasoning: str = "") 
         outcome="ok",
         verdict=VerdictResponse(
             verdict=verdict,  # type: ignore[arg-type]
+            original_verdict=verdict,
             confidence=0.9,
             reasoning=reasoning or "test reasoning",
             evidence=evidence,
@@ -58,7 +59,7 @@ def test_unanimous_conflict_with_shared_identifiers_resolves():
 
 def test_split_verdict_still_escalates():
     results = [
-        _result("gemma", "compatible", ["guid type added"], reasoning="orthogonal"),
+        _result("gemma", "no_conflict", ["guid type added"], reasoning="orthogonal"),
         _result("qwen", "conflict", ["guid", "hash_sha256"], reasoning="both add types"),
         _result("llama", "conflict", ["hash_sha256", "guid"], reasoning="same file"),
     ]

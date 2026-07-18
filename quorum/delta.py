@@ -6,7 +6,13 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from quorum.extract import FunctionInfo, extract_file_info, extract_from_tree, functions_by_name
+from quorum.extract import (
+    FunctionInfo,
+    extract_file_info,
+    extract_from_tree,
+    extract_module_summary,
+    functions_by_name,
+)
 
 
 @dataclass
@@ -17,9 +23,22 @@ class FunctionDelta:
     branch: FunctionInfo | None = None
 
     def to_dict(self) -> dict:
+        change_types: list[str] = []
+        if self.merge_base and self.branch:
+            if self.merge_base.signature != self.branch.signature:
+                change_types.append("signature_changed")
+            if self.merge_base.body_hash != self.branch.body_hash:
+                change_types.append("body_changed")
+            if self.merge_base.calls != self.branch.calls:
+                change_types.append("calls_changed")
+            if self.merge_base.control_flow != self.branch.control_flow:
+                change_types.append("control_flow_changed")
+            if self.merge_base.decorators != self.branch.decorators:
+                change_types.append("decorators_changed")
         result = {
             "function_name": self.function_name,
             "file": self.file,
+            "api_changes": change_types,
             "merge_base": self.merge_base.to_dict() if self.merge_base else None,
             "branch": self.branch.to_dict() if self.branch else None,
         }
@@ -33,12 +52,24 @@ class FileDelta:
     file: str
     imports_added: list[str] = field(default_factory=list)
     imports_removed: list[str] = field(default_factory=list)
+    classes_added: list[str] = field(default_factory=list)
+    classes_removed: list[str] = field(default_factory=list)
+    assignments_added: list[str] = field(default_factory=list)
+    assignments_removed: list[str] = field(default_factory=list)
+    identifiers_added: list[str] = field(default_factory=list)
+    identifiers_removed: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
             "file": self.file,
             "imports_added": self.imports_added,
             "imports_removed": self.imports_removed,
+            "classes_added": self.classes_added,
+            "classes_removed": self.classes_removed,
+            "assignments_added": self.assignments_added,
+            "assignments_removed": self.assignments_removed,
+            "identifiers_added": self.identifiers_added,
+            "identifiers_removed": self.identifiers_removed,
         }
 
 
@@ -118,18 +149,21 @@ def _resolve_source(branch_dir: Path, merge_base_dir: Path, rel_path: str) -> st
     return None
 
 
-def _file_tree(branch_dir: Path, merge_base_dir: Path) -> tuple[dict[str, list[FunctionInfo]], dict[str, list[str]]]:
+def _file_tree(
+    branch_dir: Path,
+    merge_base_dir: Path,
+) -> tuple[dict[str, list[FunctionInfo]], dict[str, dict[str, list[str]]]]:
     rel_paths = _collect_py_paths(merge_base_dir, branch_dir)
     functions: dict[str, list[FunctionInfo]] = {}
-    imports: dict[str, list[str]] = {}
+    summaries: dict[str, dict[str, list[str]]] = {}
     for rel in rel_paths:
         source = _resolve_source(branch_dir, merge_base_dir, rel)
         if source is None:
             continue
-        fn_list, import_list = extract_file_info(source, rel)
+        fn_list, _ = extract_file_info(source, rel)
         functions[rel] = fn_list
-        imports[rel] = import_list
-    return functions, imports
+        summaries[rel] = extract_module_summary(source)
+    return functions, summaries
 
 
 def _import_symbols(import_lines: list[str]) -> set[str]:
@@ -153,7 +187,7 @@ def _import_symbols(import_lines: list[str]) -> set[str]:
 
 def _referenced_symbols(
     branch_delta: BranchDelta,
-    branch_imports: dict[str, list[str]],
+    branch_summaries: dict[str, dict[str, list[str]]],
 ) -> dict[str, list[tuple[str, str]]]:
     refs: dict[str, list[tuple[str, str]]] = {}
     for file_delta in branch_delta.files:
@@ -171,25 +205,56 @@ def _referenced_symbols(
 
 
 def _file_import_delta(
-    merge_imports: dict[str, list[str]],
-    branch_imports: dict[str, list[str]],
+    merge_summaries: dict[str, dict[str, list[str]]],
+    branch_summaries: dict[str, dict[str, list[str]]],
 ) -> list[FileDelta]:
     deltas: list[FileDelta] = []
-    for rel in sorted(set(merge_imports) | set(branch_imports)):
-        base = set(merge_imports.get(rel, []))
-        branch = set(branch_imports.get(rel, []))
-        added = sorted(branch - base)
-        removed = sorted(base - branch)
-        if added or removed:
-            deltas.append(FileDelta(file=rel, imports_added=added, imports_removed=removed))
+    for rel in sorted(set(merge_summaries) | set(branch_summaries)):
+        base = merge_summaries.get(rel, {})
+        branch = branch_summaries.get(rel, {})
+
+        def changes(key: str) -> tuple[list[str], list[str]]:
+            base_values = set(base.get(key, []))
+            branch_values = set(branch.get(key, []))
+            return sorted(branch_values - base_values), sorted(base_values - branch_values)
+
+        imports_added, imports_removed = changes("imports")
+        classes_added, classes_removed = changes("classes")
+        assignments_added, assignments_removed = changes("assignments")
+        identifiers_added, identifiers_removed = changes("identifiers")
+        if any(
+            (
+                imports_added,
+                imports_removed,
+                classes_added,
+                classes_removed,
+                assignments_added,
+                assignments_removed,
+                identifiers_added,
+                identifiers_removed,
+            )
+        ):
+            deltas.append(
+                FileDelta(
+                    file=rel,
+                    imports_added=imports_added,
+                    imports_removed=imports_removed,
+                    classes_added=classes_added,
+                    classes_removed=classes_removed,
+                    assignments_added=assignments_added,
+                    assignments_removed=assignments_removed,
+                    identifiers_added=identifiers_added,
+                    identifiers_removed=identifiers_removed,
+                )
+            )
     return deltas
 
 
 def _diff_branch(
     merge_base: dict[str, list[FunctionInfo]],
     branch: dict[str, list[FunctionInfo]],
-    merge_imports: dict[str, list[str]],
-    branch_imports: dict[str, list[str]],
+    merge_summaries: dict[str, dict[str, list[str]]],
+    branch_summaries: dict[str, dict[str, list[str]]],
 ) -> BranchDelta:
     base_index = functions_by_name(merge_base)
     branch_index = functions_by_name(branch)
@@ -217,15 +282,15 @@ def _diff_branch(
         added=added,
         removed=removed,
         changed=changed,
-        files=_file_import_delta(merge_imports, branch_imports),
+        files=_file_import_delta(merge_summaries, branch_summaries),
     )
 
 
 def _cross_branch_links(
     branch_a: BranchDelta,
     branch_b: BranchDelta,
-    branch_a_imports: dict[str, list[str]],
-    branch_b_imports: dict[str, list[str]],
+    branch_a_summaries: dict[str, dict[str, list[str]]],
+    branch_b_summaries: dict[str, dict[str, list[str]]],
 ) -> list[CrossBranchLink]:
     links: list[CrossBranchLink] = []
 
@@ -263,8 +328,8 @@ def _cross_branch_links(
                         )
                     )
 
-    refs_b = _referenced_symbols(branch_b, branch_b_imports)
-    refs_a = _referenced_symbols(branch_a, branch_a_imports)
+    refs_b = _referenced_symbols(branch_b, branch_b_summaries)
+    refs_a = _referenced_symbols(branch_a, branch_a_summaries)
     check_pair(
         {fn.function_name for fn in branch_a.removed},
         {fn.function_name for fn in branch_a.added},
@@ -303,16 +368,22 @@ def compute_pair_delta(pair_dir: Path) -> PairDelta:
             )
 
     merge_base = extract_from_tree(merge_base_dir)
-    merge_imports = {
-        rel: extract_file_info((merge_base_dir / rel).read_text(encoding="utf-8"), rel)[1]
+    merge_summaries = {
+        rel: extract_module_summary(
+            (merge_base_dir / rel).read_text(encoding="utf-8")
+        )
         for rel in _collect_py_paths(merge_base_dir)
     }
 
-    branch_a, branch_a_imports = _file_tree(branch_a_dir, merge_base_dir)
-    branch_b, branch_b_imports = _file_tree(branch_b_dir, merge_base_dir)
+    branch_a, branch_a_summaries = _file_tree(branch_a_dir, merge_base_dir)
+    branch_b, branch_b_summaries = _file_tree(branch_b_dir, merge_base_dir)
 
-    delta_a = _diff_branch(merge_base, branch_a, merge_imports, branch_a_imports)
-    delta_b = _diff_branch(merge_base, branch_b, merge_imports, branch_b_imports)
+    delta_a = _diff_branch(
+        merge_base, branch_a, merge_summaries, branch_a_summaries
+    )
+    delta_b = _diff_branch(
+        merge_base, branch_b, merge_summaries, branch_b_summaries
+    )
 
     rel_paths = _collect_py_paths(merge_base_dir, branch_a_dir, branch_b_dir)
     return PairDelta(
@@ -320,5 +391,10 @@ def compute_pair_delta(pair_dir: Path) -> PairDelta:
         files=rel_paths,
         branch_a=delta_a,
         branch_b=delta_b,
-        cross_branch_links=_cross_branch_links(delta_a, delta_b, branch_a_imports, branch_b_imports),
+        cross_branch_links=_cross_branch_links(
+            delta_a,
+            delta_b,
+            branch_a_summaries,
+            branch_b_summaries,
+        ),
     )

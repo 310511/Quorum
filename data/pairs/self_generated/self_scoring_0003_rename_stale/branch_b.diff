@@ -1,0 +1,25 @@
+--- a/quorum_consumer_scoring_0003.py
++++ b/quorum_consumer_scoring_0003.py
+@@ -0,0 +1,7 @@
++"""Independent caller added by Branch B."""
++
++from scoring_0003 import compute_total
++
++
++def call_original(*args, **kwargs):
++    return compute_total(*args, **kwargs)
+--- a/test_quorum_consumer_scoring_0003.py
++++ b/test_quorum_consumer_scoring_0003.py
+@@ -0,0 +1,12 @@
++import unittest
++
++from quorum_consumer_scoring_0003 import call_original
++
++
++class Scoring0003Tests(unittest.TestCase):
++    def test_consumer_is_available(self):
++        self.assertTrue(callable(call_original))
++
++
++if __name__ == "__main__":
++    unittest.main()

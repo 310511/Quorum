@@ -1,0 +1,81 @@
+{
+  "adjudicator": "v3_behavior_break_gate",
+  "frozen": true,
+  "isolation_check": {
+    "adjudicate_v2_parameters": [
+      "results",
+      "branch_a_diff",
+      "branch_b_diff",
+      "structured_delta"
+    ],
+    "unexpected_parameters": [],
+    "forbidden_string_hits_in_source": [],
+    "build_facts_parameters": [
+      "branch_a_diff",
+      "branch_b_diff",
+      "structured_delta"
+    ],
+    "score_rationale_parameters": [
+      "facts",
+      "result"
+    ],
+    "passes": true,
+    "notes": "adjudicate_v2 consumes ModelResult list + diffs (+ optional AST delta). ground_truth is read only AFTER prediction, for scoring in the offline evaluator \u2014 never passed into adjudicate_v2."
+  },
+  "prediction_hashes": {
+    "blind_eval": {
+      "path": "results/run_blind_eval_raw_final.json",
+      "exists": true,
+      "bytes": 1963353,
+      "n_results": 200,
+      "sha256_file": "84e6499179d485b7023c40209ca552bb96de2cc128eab254d53c74b657f3ca78",
+      "sha256_model_outputs_only": "77eb9eac58ec3c33c8c782e1a41893b37cc3149355652607eb5bd1bf1f715cca"
+    },
+    "hard_negatives": {
+      "path": "results/run_20260718T224427Z.json",
+      "exists": true,
+      "bytes": 1051698,
+      "n_results": 100,
+      "sha256_file": "f40859623492f4daac85e265dace055cba510954c0524a11c874dae922dda8d1",
+      "sha256_model_outputs_only": "6c7d32d223a920df3419abe0eae3fc2b64c07cf9628454982096b3651ce33126"
+    },
+    "hard_compatible_partial": {
+      "path": "results/twins_raw_checkpoint.json",
+      "exists": true,
+      "bytes": 570270,
+      "n_results": 54,
+      "sha256_file": "cb1cc62a3a11acd28f0a1e995589c3c1ac58289720e4c04472f9fc1fc7c7af71",
+      "sha256_model_outputs_only": "a36f325117d13a11d1dcc2d2728d66f35b555d7b2a7248f2c322de773e5ad81a"
+    }
+  },
+  "flip_analysis": {
+    "blind_eval": {
+      "n": 200,
+      "flip_summary": {
+        "wrong_to_correct": 111,
+        "unchanged_correct": 87,
+        "wrong_to_wrong": 1,
+        "correct_to_wrong": 1
+      },
+      "n_flips": 113
+    },
+    "hard_negatives": {
+      "n": 100,
+      "flip_summary": {
+        "wrong_to_correct": 13,
+        "unchanged_correct": 79,
+        "correct_to_wrong": 4,
+        "wrong_to_wrong": 4
+      },
+      "n_flips": 21
+    },
+    "hard_compatible_partial": {
+      "n": 54,
+      "flip_summary": {
+        "wrong_to_correct": 35,
+        "unchanged_correct": 19
+      },
+      "n_flips": 35
+    }
+  }
+}

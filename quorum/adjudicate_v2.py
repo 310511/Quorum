@@ -1,4 +1,9 @@
-"""Evidence-weighted adjudication: score rationales, don't just count votes."""
+"""Evidence-weighted adjudication: score rationales, don't just count votes.
+
+FROZEN — Adjudicator v3 (behavior-break gate). Do not change this module until
+after a full re-eval, evaluation write-up, and independent audit. See
+results/adjudicator_v3_verification.md and results/adjudicator_v3_freeze.json.
+"""
 
 from __future__ import annotations
 
@@ -31,6 +36,8 @@ class RepositoryFacts:
     branch_a_identifiers: set[str] = field(default_factory=set)
     branch_b_identifiers: set[str] = field(default_factory=set)
     changed_api: set[str] = field(default_factory=set)
+    semantic_changed_symbols: set[str] = field(default_factory=set)
+    cross_branch_risk_symbols: set[str] = field(default_factory=set)
 
 
 @dataclass
@@ -43,6 +50,9 @@ class RationaleScore:
     api_alignment: float
     completeness: float
     specificity: float
+    break_evidence: float = 0.0
+    causal_chain: float = 0.0
+    speculation_penalty: float = 0.0
     grounded_identifiers: list[str] = field(default_factory=list)
     hallucinated_identifiers: list[str] = field(default_factory=list)
 
@@ -76,6 +86,39 @@ def _diff_api_symbols(diff: str) -> set[str]:
         for match in re.finditer(pattern, diff):
             symbols.add(match.group(1).lower())
     return symbols
+
+
+def _is_executable_removal(line: str) -> bool:
+    """Whether a removed diff line represents behavior, not docs/whitespace."""
+    if not line.startswith("-") or line.startswith("---"):
+        return False
+    text = line[1:].strip()
+    if not text or text.startswith("#"):
+        return False
+    if text.startswith(('"""', "'''")):
+        return False
+    return True
+
+
+def _semantic_changed_symbols(diff: str) -> set[str]:
+    """Functions whose hunks remove executable code or a prior signature."""
+    changed: set[str] = set()
+    current_function: str | None = None
+    for line in diff.splitlines():
+        match = re.search(r"\bdef\s+([a-zA-Z_][a-zA-Z0-9_]*)", line)
+        if match:
+            current_function = match.group(1).lower()
+        if _is_executable_removal(line) and current_function:
+            changed.add(current_function)
+    return changed
+
+
+def _added_identifiers(diff: str) -> set[str]:
+    identifiers: set[str] = set()
+    for line in diff.splitlines():
+        if line.startswith("+") and not line.startswith("+++"):
+            identifiers.update(extract_identifiers(line[1:]))
+    return identifiers
 
 
 def _structured_branch_facts(branch: dict[str, Any]) -> tuple[set[str], set[str]]:
@@ -128,6 +171,13 @@ def build_facts(
     facts.branch_a_identifiers = _diff_branch_identifiers(branch_a_diff)
     facts.branch_b_identifiers = _diff_branch_identifiers(branch_b_diff)
     facts.changed_api = _diff_api_symbols(branch_a_diff) | _diff_api_symbols(branch_b_diff)
+    changed_a = _semantic_changed_symbols(branch_a_diff)
+    changed_b = _semantic_changed_symbols(branch_b_diff)
+    facts.semantic_changed_symbols = changed_a | changed_b
+    facts.cross_branch_risk_symbols = (
+        (changed_a & _added_identifiers(branch_b_diff))
+        | (changed_b & _added_identifiers(branch_a_diff))
+    )
 
     if structured_delta:
         ids_a, api_a = _structured_branch_facts(structured_delta.get("branch_a", {}))
@@ -141,6 +191,7 @@ def build_facts(
                 facts.changed_api.add(symbol)
                 facts.branch_a_identifiers.add(symbol)
                 facts.branch_b_identifiers.add(symbol)
+                facts.cross_branch_risk_symbols.add(symbol)
 
     facts.identifiers = facts.branch_a_identifiers | facts.branch_b_identifiers
     return facts
@@ -154,6 +205,52 @@ def _cited_identifiers(result: ModelResult) -> set[str]:
         cited.update(extract_identifiers(str(item)))
     cited.update(extract_identifiers(result.verdict.reasoning))
     return cited
+
+
+_SPECULATION_PATTERNS = (
+    r"\bmight\b",
+    r"\bmay\b",
+    r"\bcould\b",
+    r"\blikely\b",
+    r"\bseems?\b",
+    r"\bpossibly\b",
+    r"\bunclear\b",
+    r"\bpotential(?:ly)?\b",
+    r"\bprobably\b",
+)
+
+_BREAK_PATTERNS = (
+    r"\b(?:name|import|type|attribute)error\b",
+    r"\bstale\s+(?:call|caller|import|reference)\b",
+    r"\bno longer (?:exists|accepts|returns|raises)\b",
+    r"\b(?:remove|removed|rename|renamed)\w*\b.{0,80}\b(?:call|caller|import|reference)\b",
+    r"\b(?:signature|argument|parameter).{0,60}\b(?:mismatch|break|invalid)\b",
+    r"\b(?:exception|error).{0,60}\b(?:mismatch|uncaught|not caught|swallowed)\b",
+    r"\b(?:mutates?|modifies?)\b.{0,60}\b(?:original|caller|input|owned)\b",
+    r"\b(?:alias|ownership|copy)\b.{0,60}\b(?:mutation|mutates|corrupt)\b",
+    r"\b(?:default|boundary|sentinel|ordering|case.sensitiv).{0,80}\b"
+    r"(?:changes?|violat|incorrect|wrong|break|fail)\b",
+)
+
+_CAUSAL_PATTERNS = (
+    r"\bbecause\b",
+    r"\btherefore\b",
+    r"\bcauses?\b",
+    r"\bleads? to\b",
+    r"\bresults? in\b",
+    r"\bbreaks?\b",
+    r"\bafter (?:the )?merge\b",
+    r"\bwhile branch\b",
+    r"->|→",
+)
+
+
+def _rationale_text(result: ModelResult) -> str:
+    if not result.verdict:
+        return ""
+    return " ".join(
+        [result.verdict.reasoning, *[str(item) for item in result.verdict.evidence]]
+    ).lower()
 
 
 def score_rationale(result: ModelResult, facts: RepositoryFacts) -> RationaleScore:
@@ -175,6 +272,21 @@ def score_rationale(result: ModelResult, facts: RepositoryFacts) -> RationaleSco
     completeness = 0.5 * covers_a + 0.5 * covers_b
 
     specificity = min(1.0, len(grounded) / 4)
+    text = _rationale_text(result)
+    speculation_hits = sum(bool(re.search(pattern, text)) for pattern in _SPECULATION_PATTERNS)
+    speculation_penalty = min(0.5, speculation_hits * 0.12)
+    causal_chain = 1.0 if any(re.search(pattern, text) for pattern in _CAUSAL_PATTERNS) else 0.0
+
+    risk_hits = set(grounded) & facts.cross_branch_risk_symbols
+    mechanism = any(re.search(pattern, text) for pattern in _BREAK_PATTERNS)
+    break_evidence = 0.0
+    if verdict == "conflict" and risk_hits:
+        break_evidence = 0.5
+        if mechanism:
+            break_evidence += 0.3
+        if causal_chain:
+            break_evidence += 0.2
+    break_evidence = min(1.0, break_evidence)
 
     total = (
         _W_GROUNDING * grounding
@@ -182,6 +294,11 @@ def score_rationale(result: ModelResult, facts: RepositoryFacts) -> RationaleSco
         + _W_COMPLETENESS * completeness
         + _W_SPECIFICITY * specificity
     )
+    if verdict == "conflict":
+        # Identifier-rich conflict prose is not enough: it must connect a
+        # real cross-branch behavior change to a concrete failure mechanism.
+        total *= 0.45 + 0.55 * break_evidence
+    total = max(0.0, total - speculation_penalty)
     return RationaleScore(
         model_name=result.model_name,
         verdict=verdict,
@@ -191,6 +308,9 @@ def score_rationale(result: ModelResult, facts: RepositoryFacts) -> RationaleSco
         api_alignment=round(api_alignment, 4),
         completeness=round(completeness, 4),
         specificity=round(specificity, 4),
+        break_evidence=round(break_evidence, 4),
+        causal_chain=round(causal_chain, 4),
+        speculation_penalty=round(speculation_penalty, 4),
         grounded_identifiers=grounded,
         hallucinated_identifiers=hallucinated,
     )
@@ -206,6 +326,9 @@ def _score_dict(score: RationaleScore) -> dict:
         "api_alignment": score.api_alignment,
         "completeness": score.completeness,
         "specificity": score.specificity,
+        "break_evidence": score.break_evidence,
+        "causal_chain": score.causal_chain,
+        "speculation_penalty": score.speculation_penalty,
         "grounded_identifiers": score.grounded_identifiers,
         "hallucinated_identifiers": score.hallucinated_identifiers,
     }
@@ -245,6 +368,86 @@ def adjudicate_v2(
         if scores
         else set()
     )
+
+    # Preserve abstention when every model is uncertain; the behavior-break
+    # burden of proof should not convert uniformly weak evidence into SAFE.
+    if len([v for v, group in by_verdict.items() if group]) > 1 and all(
+        s.confidence < LOW_CONFIDENCE for s in scores
+    ):
+        return EvidenceAdjudication(
+            final_verdict="escalate",
+            explanation=(
+                "Verdicts disagree and every model reported confidence below "
+                f"{LOW_CONFIDENCE}; escalating."
+            ),
+            agreeing_models=[s.model_name for s in scores],
+            failed_models=failed,
+            weak_evidence_models=weak,
+            shared_evidence=shared,
+            evidence_overlap_score=0.0,
+            decision_rule="uniform_low_confidence",
+            rationale_scores=score_dicts,
+        )
+
+    # Burden of proof: a conflict verdict is admissible only when a rationale
+    # identifies a real symbol changed on one branch and used on the other,
+    # then gives a causal explanation of the resulting behavior break.
+    admissible_conflicts = [
+        s
+        for s in by_verdict["conflict"]
+        if s.break_evidence >= 0.7
+        and s.causal_chain > 0
+        and bool(s.grounded_identifiers)
+    ]
+    if by_verdict["conflict"] and not admissible_conflicts:
+        no_conflict_scores = by_verdict["no_conflict"]
+        return EvidenceAdjudication(
+            final_verdict="no_conflict",
+            explanation=(
+                "Conflict rejected: no rationale demonstrated a grounded "
+                "cross-branch behavior break with a causal chain. "
+                f"Static risk symbols: {sorted(facts.cross_branch_risk_symbols)}."
+            ),
+            agreeing_models=[s.model_name for s in no_conflict_scores],
+            dissenting_models=[s.model_name for s in by_verdict["conflict"]],
+            failed_models=failed,
+            weak_evidence_models=weak,
+            shared_evidence=shared,
+            evidence_overlap_score=max(
+                (s.break_evidence for s in by_verdict["conflict"]), default=0.0
+            ),
+            decision_rule="conflict_evidence_gate",
+            rationale_scores=score_dicts,
+        )
+
+    if admissible_conflicts:
+        strongest = max(
+            admissible_conflicts,
+            key=lambda score: (score.break_evidence, score.total),
+        )
+        return EvidenceAdjudication(
+            final_verdict="conflict",
+            explanation=(
+                f"{strongest.model_name} demonstrated a grounded cross-branch "
+                "behavior break with a causal chain. "
+                f"Risk symbols: {sorted(facts.cross_branch_risk_symbols)}; "
+                f"break evidence={strongest.break_evidence:.2f}."
+            ),
+            agreeing_models=[s.model_name for s in admissible_conflicts],
+            dissenting_models=[
+                s.model_name for s in scores if s.verdict != "conflict"
+            ],
+            failed_models=failed,
+            weak_evidence_models=weak,
+            shared_evidence=shared,
+            evidence_overlap_score=strongest.break_evidence,
+            decision_rule="grounded_behavior_break",
+            rationale_scores=score_dicts,
+        )
+
+    # Unsupported conflict rationales cannot win a disagreement by length,
+    # confidence, or identifier count.
+    by_verdict["conflict"] = admissible_conflicts
 
     # Unanimous verdict resolves directly; evidence quality is recorded, not
     # used as an extra reason to escalate.
@@ -305,23 +508,6 @@ def adjudicate_v2(
                 f"accepted over {other.model_name} despite the vote split. "
                 f"Grounded evidence: {dominant.grounded_identifiers or 'none'}."
             ),
-        )
-
-    # Escalate on uniformly low confidence.
-    if all(s.confidence < LOW_CONFIDENCE for s in scores):
-        return EvidenceAdjudication(
-            final_verdict="escalate",
-            explanation=(
-                "Verdicts disagree and every model reported confidence below "
-                f"{LOW_CONFIDENCE}; escalating."
-            ),
-            agreeing_models=[s.model_name for s in scores],
-            failed_models=failed,
-            weak_evidence_models=weak,
-            shared_evidence=shared,
-            evidence_overlap_score=margin,
-            decision_rule="uniform_low_confidence",
-            rationale_scores=score_dicts,
         )
 
     # Tie-breaker: best confidence-weighted rationale per side (not a sum —

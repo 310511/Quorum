@@ -1,0 +1,161 @@
+pair,corpus,family,gt,committee,error_type,category,why_wrong
+03231ac0449792ff,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+032e64e7176c9bdb,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+0331da9ce58944e4,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+04438ea270d9411c,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+044a7311799aace2,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+04715166d244100f,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+052aec629d626acc,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+091abc8c6a81d161,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+09e047da636a13e3,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+10a788790300ae8e,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+113742ad0fe44d42,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+14b5debb01ede9aa,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+16cf22bb1287ec59,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+1842c001f679b2f3,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+1cfabcd981415ce7,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+1d31507323d178ae,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+1e3048475a39d2a7,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+1fdf06b0acf843c1,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+2079da0582a7dbc6,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+20da8986c49e8130,blind_eval,aliasing_contract,conflict,escalate,escalation_miss,aliasing,Escalated instead of deciding; Ignored copy-vs-alias / ownership mutation hazard
+20efb98d0b1e45a0,blind_eval,error_contract,conflict,escalate,escalation_miss,exception_contract,Escalated instead of deciding; Missed exception-contract change (silent fallback vs raise)
+24d6cf316635cbba,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+25b55e9654079983,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+2739bd54d39c9c41,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+294c664a14de9b74,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+2acba6653222a60c,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+2b11e8510b66823e,blind_eval,ordering_default,conflict,escalate,escalation_miss,mutation,Escalated instead of deciding; Missed default-semantics / sentinel mutation
+3243a69d60213c51,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+397638d461e08caa,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+399daa1263969c10,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+3fb25addae660e9e,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+3fd5184c77392ede,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+41afddff8a756842,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+45324a2611b6910a,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+45f5fb1e9711cb09,blind_eval,aliasing_contract,conflict,escalate,escalation_miss,aliasing,Escalated instead of deciding; Ignored copy-vs-alias / ownership mutation hazard
+4764e5af79659eec,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+4a6f18287ff10a14,blind_eval,sentinel_default,conflict,escalate,escalation_miss,mutation,Escalated instead of deciding; Missed default-semantics / sentinel mutation
+4b1b609837d30e21,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+4c8765f1c0f1656e,blind_eval,aliasing_contract,conflict,no_conflict,false_negative,aliasing,Ignored copy-vs-alias / ownership mutation hazard
+4cc42a8ab174cc18,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+531dc75e1d8ccb5f,blind_eval,case_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+53ff39b28eeb17f8,blind_eval,case_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+563f2f6fbc2d529a,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+58750c71e21f2f6d,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+59a15b8c9fd82d99,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+5e6ba466fac58bb4,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+5fa6271192f6f710,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+61759bff6d55cee2,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+66d85ac83242e80c,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+66e8e93ae3b81e50,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+67a53d687eab0e24,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+69ebdaa9ef346f66,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+6a1d9070709192f7,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+71c2d46d2a443fdc,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+7251e8e4f4e4672b,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+7633a838f7a2aeb4,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+766305a942189e0f,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+77b2ed91d53f7ecb,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+78dfdaddbef0bf3f,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+7d76d7a3d82e0062,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+7d7d49b90dec7a9f,blind_eval,ordering_default,conflict,escalate,escalation_miss,mutation,Escalated instead of deciding; Missed default-semantics / sentinel mutation
+7d7e4f185b5f4ed2,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+7f6215c8c2d72ae8,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+849cf408f8c88bb2,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+85a3a2334aaadc49,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+87b9e5fa4ea20ad0,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+887f73ccec9cc7ad,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+8a116e208c673428,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+8d42dcd019ae2cd8,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+924e8b26f78a9f5b,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+939a9e411b3426ea,blind_eval,sentinel_default,conflict,escalate,escalation_miss,mutation,Escalated instead of deciding; Missed default-semantics / sentinel mutation
+98b8b1e4b584a88c,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+9aa87bae12174e4e,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+9eb578e52bfe06a0,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+9f317ad404d1247c,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+a2f0fcecacb1b988,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+a8b5a7f5078982b8,blind_eval,sentinel_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+aa856882e3b900d7,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+aae23a1e0e3d29b7,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+ab213189ea513af0,blind_eval,sentinel_default,conflict,no_conflict,false_negative,mutation,Missed default-semantics / sentinel mutation
+ab59c9e47dbab097,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+ac3195522586cc84,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+acb4fdf2184e6c48,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+b1d20992039e157f,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+b42e858a8c5b0c4d,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+bd19fd91ce2303e3,blind_eval,ordering_default,conflict,no_conflict,false_negative,mutation,Missed default-semantics / sentinel mutation
+c357e9cc33faefde,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+ca49b44be4901428,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+cdd9ef567322ea35,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+d334b49ab37720a4,blind_eval,case_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+d364ec7df2339361,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+d37cd89109f0a264,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+d38cd6dd5fa2248b,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+d4497ba843eb5924,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+d4adbb34da588211,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+d5f10684ecf71d4d,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+d7b024344dac0e50,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+d84e32abe003073c,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+db0fa6fa0db53982,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+dbf4cf9d4d35a2df,blind_eval,aliasing_safe_copy,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+e2b7e12af33c9763,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+e4d70c9fae7079f0,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+e6095ca42e19cebb,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+e89d0b04627e4bdd,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+eb83946c68b62faa,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,hallucination,Hallucinated rename/stale dependency that is not in the diffs
+f1338fc1b2193f76,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+f37cfa0dad1e3d55,blind_eval,boundary_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+f3c705c55285920e,blind_eval,ordering_dual_api,no_conflict,conflict,false_positive,conflict_bias,Treated additive dual-API / docstring twin as incompatible APIs
+f522f7d24223b273,blind_eval,case_sensitivity,conflict,escalate,escalation_miss,ownership,Escalated instead of deciding; Missed case-sensitivity contract
+f7220ff3432eae57,blind_eval,cross_file_orthogonal,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+f8b0f91a171bc40b,blind_eval,aliasing_contract,conflict,escalate,escalation_miss,aliasing,Escalated instead of deciding; Ignored copy-vs-alias / ownership mutation hazard
+fe69e6e85b2bdbcf,blind_eval,error_dual_api,no_conflict,conflict,false_positive,conflict_bias,Predicted conflict without demonstrating a behavior break
+hard_aliasing_contract_0004,hard_negatives,aliasing_contract,conflict,no_conflict,false_negative,aliasing,Ignored copy-vs-alias / ownership mutation hazard
+hard_boundary_contract_0001,hard_negatives,boundary_contract,conflict,escalate,escalation_miss,ownership,Escalated instead of deciding; Missed boundary/threshold contract change
+hard_boundary_contract_0013,hard_negatives,boundary_contract,conflict,escalate,escalation_miss,ownership,Escalated instead of deciding; Missed boundary/threshold contract change
+hard_case_sensitivity_0012,hard_negatives,case_sensitivity,conflict,escalate,escalation_miss,ownership,Escalated instead of deciding; Missed case-sensitivity contract
+hard_case_sensitivity_0018,hard_negatives,case_sensitivity,conflict,no_conflict,false_negative,ownership,Missed case-sensitivity contract
+hard_case_sensitivity_0072,hard_negatives,case_sensitivity,conflict,escalate,escalation_miss,ownership,Escalated instead of deciding; Missed case-sensitivity contract
+hard_error_contract_0005,hard_negatives,error_contract,conflict,escalate,escalation_miss,exception_contract,Escalated instead of deciding; Missed exception-contract change (silent fallback vs raise)
+hard_error_contract_0023,hard_negatives,error_contract,conflict,escalate,escalation_miss,exception_contract,Escalated instead of deciding; Missed exception-contract change (silent fallback vs raise)
+hard_error_contract_0029,hard_negatives,error_contract,conflict,escalate,escalation_miss,exception_contract,Escalated instead of deciding; Missed exception-contract change (silent fallback vs raise)
+hard_error_contract_0053,hard_negatives,error_contract,conflict,escalate,escalation_miss,exception_contract,Escalated instead of deciding; Missed exception-contract change (silent fallback vs raise)
+hard_error_contract_0059,hard_negatives,error_contract,conflict,escalate,escalation_miss,exception_contract,Escalated instead of deciding; Missed exception-contract change (silent fallback vs raise)
+hard_error_contract_0071,hard_negatives,error_contract,conflict,escalate,escalation_miss,exception_contract,Escalated instead of deciding; Missed exception-contract change (silent fallback vs raise)
+hard_error_contract_0077,hard_negatives,error_contract,conflict,escalate,escalation_miss,exception_contract,Escalated instead of deciding; Missed exception-contract change (silent fallback vs raise)
+hard_error_contract_0095,hard_negatives,error_contract,conflict,escalate,escalation_miss,exception_contract,Escalated instead of deciding; Missed exception-contract change (silent fallback vs raise)
+hard_ordering_default_0068,hard_negatives,ordering_default,conflict,escalate,escalation_miss,mutation,Escalated instead of deciding; Missed default-semantics / sentinel mutation
+hard_ordering_default_0080,hard_negatives,ordering_default,conflict,no_conflict,false_negative,mutation,Missed default-semantics / sentinel mutation
+hard_sentinel_default_0021,hard_negatives,sentinel_default,conflict,escalate,escalation_miss,mutation,Escalated instead of deciding; Missed default-semantics / sentinel mutation
+twin_aliasing_contract_0001,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_aliasing_contract_0002,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_aliasing_contract_0003,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_aliasing_contract_0004,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_aliasing_contract_0005,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_aliasing_contract_0006,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_aliasing_contract_0007,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_aliasing_contract_0008,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_aliasing_contract_0009,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_aliasing_contract_0011,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_aliasing_contract_0012,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_aliasing_contract_0013,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_aliasing_contract_0014,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_aliasing_contract_0015,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_aliasing_contract_0016,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_aliasing_contract_0017,hard_compatible,aliasing_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0003,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_boundary_contract_0004,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0005,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_boundary_contract_0006,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0007,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0008,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0009,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch
+twin_boundary_contract_0010,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0011,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0012,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0013,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0014,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0015,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0016,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,conflict_bias,Conflict-biased vote on behavior-preserving twin
+twin_boundary_contract_0017,hard_compatible,boundary_contract,no_conflict,conflict,false_positive,hallucination,Hallucinated semantic break on docstring-only left branch

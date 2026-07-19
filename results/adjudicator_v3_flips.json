@@ -1,0 +1,1726 @@
+{
+  "blind_eval": {
+    "n": 200,
+    "flip_summary": {
+      "wrong_to_correct": 111,
+      "unchanged_correct": 87,
+      "wrong_to_wrong": 1,
+      "correct_to_wrong": 1
+    },
+    "n_flips": 113,
+    "flips": [
+      {
+        "pair": "03231ac0449792ff",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "032e64e7176c9bdb",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "0331da9ce58944e4",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "04438ea270d9411c",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "044a7311799aace2",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "04715166d244100f",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "052aec629d626acc",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "091abc8c6a81d161",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "09e047da636a13e3",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "10a788790300ae8e",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "113742ad0fe44d42",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "14b5debb01ede9aa",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "16cf22bb1287ec59",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "1842c001f679b2f3",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "1cfabcd981415ce7",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "1d31507323d178ae",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "1e3048475a39d2a7",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "1fdf06b0acf843c1",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "2079da0582a7dbc6",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "20da8986c49e8130",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['select_058']; break evidence=0.70."
+      },
+      {
+        "pair": "20efb98d0b1e45a0",
+        "old": "error",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_053']."
+      },
+      {
+        "pair": "24d6cf316635cbba",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "25b55e9654079983",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "2739bd54d39c9c41",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "291104c4780e2f15",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "correct_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_077']."
+      },
+      {
+        "pair": "294c664a14de9b74",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "2acba6653222a60c",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "2b11e8510b66823e",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['normalize_044']; break evidence=1.00."
+      },
+      {
+        "pair": "3243a69d60213c51",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "397638d461e08caa",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "399daa1263969c10",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "3fb25addae660e9e",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "3fd5184c77392ede",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "41afddff8a756842",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "45324a2611b6910a",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "45f5fb1e9711cb09",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "llama3.2:3b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['select_028']; break evidence=0.70."
+      },
+      {
+        "pair": "4764e5af79659eec",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "4a6f18287ff10a14",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['resolve_limit_003']; break evidence=1.00."
+      },
+      {
+        "pair": "4b1b609837d30e21",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "4c8765f1c0f1656e",
+        "old": "no_conflict",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['select_052']; break evidence=1.00."
+      },
+      {
+        "pair": "4cc42a8ab174cc18",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "531dc75e1d8ccb5f",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "53ff39b28eeb17f8",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "563f2f6fbc2d529a",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "58750c71e21f2f6d",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "59a15b8c9fd82d99",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "5e6ba466fac58bb4",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "5fa6271192f6f710",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "61759bff6d55cee2",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "66d85ac83242e80c",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "66e8e93ae3b81e50",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "67a53d687eab0e24",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "69ebdaa9ef346f66",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "6a1d9070709192f7",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "71c2d46d2a443fdc",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "7251e8e4f4e4672b",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "7633a838f7a2aeb4",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "766305a942189e0f",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "77b2ed91d53f7ecb",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "78dfdaddbef0bf3f",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "7d76d7a3d82e0062",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "7d7d49b90dec7a9f",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['normalize_002']; break evidence=0.70."
+      },
+      {
+        "pair": "7d7e4f185b5f4ed2",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "7f6215c8c2d72ae8",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "849cf408f8c88bb2",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "85a3a2334aaadc49",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "87b9e5fa4ea20ad0",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "887f73ccec9cc7ad",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "8a116e208c673428",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "8d42dcd019ae2cd8",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "924e8b26f78a9f5b",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "939a9e411b3426ea",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['resolve_limit_099']; break evidence=0.70."
+      },
+      {
+        "pair": "98b8b1e4b584a88c",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "9aa87bae12174e4e",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "9eb578e52bfe06a0",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "9f317ad404d1247c",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "a2f0fcecacb1b988",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "a8b5a7f5078982b8",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "aa856882e3b900d7",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "aae23a1e0e3d29b7",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "ab213189ea513af0",
+        "old": "no_conflict",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "llama3.2:3b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['resolve_limit_087']; break evidence=0.70."
+      },
+      {
+        "pair": "ab59c9e47dbab097",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "ac3195522586cc84",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "acb4fdf2184e6c48",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "b1d20992039e157f",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "b42e858a8c5b0c4d",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "bd19fd91ce2303e3",
+        "old": "no_conflict",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['normalize_020']; break evidence=1.00."
+      },
+      {
+        "pair": "c357e9cc33faefde",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "ca49b44be4901428",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "cdd9ef567322ea35",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "d334b49ab37720a4",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "d364ec7df2339361",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "d37cd89109f0a264",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "d38cd6dd5fa2248b",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "d4497ba843eb5924",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "d4adbb34da588211",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "d5f10684ecf71d4d",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "d7b024344dac0e50",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "d84e32abe003073c",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "db0fa6fa0db53982",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "dbf4cf9d4d35a2df",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "e2b7e12af33c9763",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "e4d70c9fae7079f0",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "e6095ca42e19cebb",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "e89d0b04627e4bdd",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "eb83946c68b62faa",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "f1338fc1b2193f76",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "f37cfa0dad1e3d55",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "f3c705c55285920e",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "f522f7d24223b273",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['same_code_054']; break evidence=1.00."
+      },
+      {
+        "pair": "f7220ff3432eae57",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "f8b0f91a171bc40b",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "llama3.2:3b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['select_094']; break evidence=0.70."
+      },
+      {
+        "pair": "fe69e6e85b2bdbcf",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      }
+    ]
+  },
+  "hard_negatives": {
+    "n": 100,
+    "flip_summary": {
+      "wrong_to_correct": 13,
+      "unchanged_correct": 79,
+      "correct_to_wrong": 4,
+      "wrong_to_wrong": 4
+    },
+    "n_flips": 21,
+    "flips": [
+      {
+        "pair": "hard_aliasing_contract_0004",
+        "old": "no_conflict",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "llama3.2:3b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['select_004']; break evidence=1.00."
+      },
+      {
+        "pair": "hard_aliasing_contract_0046",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "correct_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['select_046']."
+      },
+      {
+        "pair": "hard_boundary_contract_0001",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['eligible_001']; break evidence=1.00."
+      },
+      {
+        "pair": "hard_boundary_contract_0013",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['eligible_013']; break evidence=0.70."
+      },
+      {
+        "pair": "hard_case_sensitivity_0012",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['same_code_012']; break evidence=0.70."
+      },
+      {
+        "pair": "hard_case_sensitivity_0018",
+        "old": "no_conflict",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['same_code_018']; break evidence=0.70."
+      },
+      {
+        "pair": "hard_case_sensitivity_0072",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['same_code_072']; break evidence=1.00."
+      },
+      {
+        "pair": "hard_error_contract_0005",
+        "old": "error",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_005']."
+      },
+      {
+        "pair": "hard_error_contract_0023",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['parse_count_023']; break evidence=0.70."
+      },
+      {
+        "pair": "hard_error_contract_0029",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['parse_count_029']; break evidence=0.70."
+      },
+      {
+        "pair": "hard_error_contract_0041",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "correct_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_041']."
+      },
+      {
+        "pair": "hard_error_contract_0047",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "correct_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_047']."
+      },
+      {
+        "pair": "hard_error_contract_0053",
+        "old": "error",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_053']."
+      },
+      {
+        "pair": "hard_error_contract_0059",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['parse_count_059']; break evidence=0.70."
+      },
+      {
+        "pair": "hard_error_contract_0065",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "correct_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_065']."
+      },
+      {
+        "pair": "hard_error_contract_0071",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['parse_count_071']; break evidence=0.70."
+      },
+      {
+        "pair": "hard_error_contract_0077",
+        "old": "error",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_077']."
+      },
+      {
+        "pair": "hard_error_contract_0095",
+        "old": "error",
+        "new": "no_conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_wrong",
+        "rule": "conflict_evidence_gate",
+        "reason": "speculative / incomplete conflict rejected (no causal break)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_095']."
+      },
+      {
+        "pair": "hard_ordering_default_0068",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['normalize_068']; break evidence=0.70."
+      },
+      {
+        "pair": "hard_ordering_default_0080",
+        "old": "no_conflict",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "llama3.2:3b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['normalize_080']; break evidence=1.00."
+      },
+      {
+        "pair": "hard_sentinel_default_0021",
+        "old": "error",
+        "new": "conflict",
+        "gt": "conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "grounded_behavior_break",
+        "reason": "causal chain detected on grounded cross-branch risk symbol",
+        "explanation": "gemma3:4b demonstrated a grounded cross-branch behavior break with a causal chain. Risk symbols: ['resolve_limit_021']; break evidence=0.70."
+      }
+    ]
+  },
+  "hard_compatible_partial": {
+    "n": 54,
+    "flip_summary": {
+      "wrong_to_correct": 35,
+      "unchanged_correct": 19
+    },
+    "n_flips": 35,
+    "flips": [
+      {
+        "pair": "twin_aliasing_contract_0001",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0002",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0003",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0004",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0005",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0006",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0007",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0008",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0009",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0011",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0012",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0013",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0014",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0015",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0016",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_aliasing_contract_0017",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0003",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0004",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0005",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0006",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0007",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0008",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0009",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0010",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0011",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0012",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0013",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0014",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0015",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0016",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_boundary_contract_0017",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_case_sensitivity_0013",
+        "old": "error",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_case_sensitivity_0017",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_error_contract_0002",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      },
+      {
+        "pair": "twin_error_contract_0003",
+        "old": "conflict",
+        "new": "no_conflict",
+        "gt": "no_conflict",
+        "bucket": "wrong_to_correct",
+        "rule": "conflict_evidence_gate",
+        "reason": "missing cross-branch dependency (no behavior-changed symbol shared)",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: []."
+      }
+    ]
+  }
+}

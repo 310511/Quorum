@@ -1,8 +1,20 @@
 {
-  "timestamp": "20260719T084202Z",
+  "timestamp": "20260719T095021Z",
   "config_path": "config_hard.yaml",
   "pairs_dir": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_compatible",
   "input_mode": "raw",
+  "summary": {
+    "baseline_accuracy": [
+      102,
+      102,
+      0
+    ],
+    "committee_accuracy": [
+      35,
+      102,
+      3
+    ]
+  },
   "results": [
     {
       "pair": "twin_aliasing_contract_0001",
@@ -20609,5 +20621,5 @@
       }
     }
   ],
-  "partial": true
+  "partial": false
 }

@@ -1,0 +1,3778 @@
+{
+  "timestamp": "20260719T095107Z",
+  "config_path": "config_hard.yaml",
+  "pairs_dir": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\blind_eval",
+  "input_mode": "structured",
+  "results": [
+    {
+      "pair": "03231ac0449792ff",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 19.087142599997605,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no significant structural changes between the two branches that would cause a semantic conflict when merged together.",
+            "evidence": [
+              "No function names or signatures have changed significantly across both branches."
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 19.087112499997602,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant structural changes between the two branches that would cause a semantic conflict when merged together.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across both branches.\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 34.84156499999881,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A and Branch B both have no changes listed in their respective delta definitions. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch's changes are directly incompatible with the existing codebase.",
+              "evidence": []
+            },
+            "error": null,
+            "elapsed_seconds": 34.84126269999979,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A and Branch B both have no changes listed in their respective delta definitions. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch's changes are directly incompatible with the existing codebase.\",\n  \"evidence\": []\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no significant changes between the two branches that would lead to semantic conflicts.",
+              "evidence": [
+                "No function names or signatures have changed significantly across both branches."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 5.015496100000746,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant changes between the two branches that would lead to semantic conflicts.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across both branches.\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 17.146196400000917,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "codebase",
+              "delta",
+              "directly",
+              "identical",
+              "implies",
+              "listed",
+              "respective",
+              "therefore"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "across",
+              "signatures",
+              "significant",
+              "significantly"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "032e64e7176c9bdb",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 19.9297398000017,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no significant changes between the two branches that would lead to semantic conflicts when merged together. The only difference is in function names but this does not affect the functionality of the code.",
+            "evidence": [
+              "No renames or removed functions referenced on one branch but present on another",
+              "No cross_branch_links"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 19.929724100002204,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant changes between the two branches that would lead to semantic conflicts when merged together. The only difference is in function names but this does not affect the functionality of the code.\",\n   \"evidence\": [\"No renames or removed functions referenced on one branch but present on another\", \"No cross_branch_links\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 37.40558879999662,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The provided delta indicates that Branch A and Branch B have made changes to the same file ('parser_054.py') but without any added or removed functions. The 'changed' section suggests API changes within existing functions. Without further details on these API changes (e.g., signature modifications, body alterations), it is highly likely a semantic conflict exists. Specifically, if Branch B modifies the function signatures in a way that breaks compatibility with calls made by Branch A, or vice-versa, this would constitute a logical conflict.",
+              "evidence": [
+                "files: [\"parser_054.py\"]",
+                "branch_a: {'changed': []}",
+                "branch_b: {'changed': []}"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 37.40531799999735,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"The provided delta indicates that Branch A and Branch B have made changes to the same file ('parser_054.py') but without any added or removed functions. The 'changed' section suggests API changes within existing functions. Without further details on these API changes (e.g., signature modifications, body alterations), it is highly likely a semantic conflict exists. Specifically, if Branch B modifies the function signatures in a way that breaks compatibility with calls made by Branch A, or vice-versa, this would constitute a logical conflict.\",\n  \"evidence\": [\"files: [\\\"parser_054.py\\\"]\", \"branch_a: {'changed': []}\", \"branch_b: {'changed': []}\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "The provided structured Python AST delta does not show any semantic conflicts between Branch A and B when merged together.",
+              "evidence": []
+            },
+            "error": null,
+            "elapsed_seconds": 4.841976600000635,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The provided structured Python AST delta does not show any semantic conflicts between Branch A and B when merged together.\",\n   \"evidence\": []\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 17.434051800002635,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "alterations",
+              "body",
+              "branch_a",
+              "branch_b",
+              "compatibility",
+              "constitute",
+              "delta",
+              "further",
+              "highly",
+              "indicates",
+              "modifications",
+              "modifies",
+              "parser_054_py",
+              "provided",
+              "signatures",
+              "specifically",
+              "suggests",
+              "versa",
+              "vice"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "ast",
+              "delta",
+              "provided",
+              "python",
+              "show",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "0331da9ce58944e4",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 21.324917500001902,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together.",
+            "evidence": [
+              "No evidence of function renaming or removal/addition with similar body_hash but different function_name",
+              "No evidence of cross_branch_links (rename_stale_reference and removed_but_referenced)",
+              "No evidence of functions removed on one branch but still referenced/called on the other"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 21.32490069999767,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together.\",\n   \"evidence\": [\"No evidence of function renaming or removal/addition with similar body_hash but different function_name\", \n                \"No evidence of cross_branch_links (rename_stale_reference and removed_but_referenced)\", \n                \"No evidence of functions removed on one branch but still referenced/called on the other\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 36.43885289999889,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch B introduces a function named `process_data` which is called in `identity_006.py`. Branch A does not have this function and also doesn't remove it. Therefore, merging these branches will result in a call to an undefined function, leading to a semantic conflict.",
+              "evidence": [
+                "branch_b: added `process_data` function",
+                "identity_006.py: calls `process_data`"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 36.438047100000404,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch B introduces a function named `process_data` which is called in `identity_006.py`. Branch A does not have this function and also doesn't remove it. Therefore, merging these branches will result in a call to an undefined function, leading to a semantic conflict.\",\n  \"evidence\": [\"branch_b: added `process_data` function\", \"identity_006.py: calls `process_data`\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no significant structural changes between the two branches that would lead to semantic conflicts when merged together.",
+              "evidence": [
+                "No function names or signatures have changed significantly across both branches."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 5.00370539999858,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant structural changes between the two branches that would lead to semantic conflicts when merged together.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across both branches.\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links suggests that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'removed_but_referenced' links indicate that functions were removed from Branch A but still called in Branch B, and 'rename_stale_reference' links suggest that a function was renamed in Branch A but its old name is still used in Branch B. These inconsistencies imply a semantic conflict when merging the branches.",
+              "evidence": [
+                "cross_branch_links: [removed_but_referenced, rename_stale_reference]",
+                "branch_a removed functions with calls in branch_b",
+                "renamed function in branch_a with old name still used in branch_b"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 16.8464727999999,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links suggests that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'removed_but_referenced' links indicate that functions were removed from Branch A but still called in Branch B, and 'rename_stale_reference' links suggest that a function was renamed in Branch A but its old name is still used in Branch B. These inconsistencies imply a semantic conflict when merging the branches.\",\n  \"evidence\": [\n    \"cross_branch_links: [removed_but_referenced, rename_stale_reference]\",\n    \"branch_a removed functions with calls in branch_b\",\n    \"renamed function in branch_a with old name still used in branch_b\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "branch_b",
+              "doesn",
+              "identity_006_py",
+              "named",
+              "process_data",
+              "remove",
+              "therefore",
+              "undefined"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "across",
+              "signatures",
+              "significant",
+              "significantly",
+              "structural"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "branch_a",
+              "branch_b",
+              "cross_branch_links",
+              "imply",
+              "inconsistencies",
+              "indicate",
+              "its",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "specifically",
+              "suggests",
+              "symbols",
+              "used"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "0415fe6635b138d9",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 17.69167870000092,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no significant changes in the codebase between Branch A and B that would lead to semantic conflicts when merged together.",
+            "evidence": [
+              "No function names or signatures have changed significantly across branches."
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 17.691661299999396,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant changes in the codebase between Branch A and B that would lead to semantic conflicts when merged together.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across branches.\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 36.63974589999998,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A and Branch B both have no changes listed in their respective delta structures. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch's code (branch A) is entirely dependent on the other branch's code (branch B). The absence of any changes suggests that Branch A likely introduces new functionality or modifies existing ones in ways that are incompatible with the state of Branch B after the merge-base.",
+              "evidence": []
+            },
+            "error": null,
+            "elapsed_seconds": 36.63934309999968,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A and Branch B both have no changes listed in their respective delta structures. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch's code (branch A) is entirely dependent on the other branch's code (branch B). The absence of any changes suggests that Branch A likely introduces new functionality or modifies existing ones in ways that are incompatible with the state of Branch B after the merge-base.\",\n  \"evidence\": []\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no significant structural changes between the two branches that would cause a semantic conflict when merged together.",
+              "evidence": [
+                "No function names or signatures have changed significantly across both branches."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 5.194815700000618,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant structural changes between the two branches that would cause a semantic conflict when merged together.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across both branches.\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 16.958162200000515,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['normalize_056'].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "absence",
+              "base",
+              "delta",
+              "dependent",
+              "functionality",
+              "identical",
+              "implies",
+              "listed",
+              "modifies",
+              "ones",
+              "respective",
+              "state",
+              "structures",
+              "suggests",
+              "therefore"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "across",
+              "signatures",
+              "significant",
+              "significantly",
+              "structural"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "04438ea270d9411c",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 19.668237199999567,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together. There are no removed functions or renamed identifiers on one branch that are still referenced/called on the other, and there are no signature changes that break callers on the other branch.",
+            "evidence": [
+              "No evidence of significant structural differences between Branch A and B"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 19.668221199997788,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together. There are no removed functions or renamed identifiers on one branch that are still referenced/called on the other, and there are no signature changes that break callers on the other branch.\",\n   \"evidence\": [\"No evidence of significant structural differences between Branch A and B\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 31.35052220000216,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A and Branch B both have no changes listed in their respective delta structures. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch's changes are directly incompatible with the existing code.",
+              "evidence": []
+            },
+            "error": null,
+            "elapsed_seconds": 31.350230099997134,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A and Branch B both have no changes listed in their respective delta structures. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch's changes are directly incompatible with the existing code.\",\n  \"evidence\": []\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "The provided structured Python AST delta does not show any semantic conflicts between Branch A and B when merged together.",
+              "evidence": []
+            },
+            "error": null,
+            "elapsed_seconds": 4.434531800001423,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The provided structured Python AST delta does not show any semantic conflicts between Branch A and B when merged together.\",\n   \"evidence\": []\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 14.970691200000147,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "base",
+              "delta",
+              "directly",
+              "identical",
+              "implies",
+              "listed",
+              "respective",
+              "structures",
+              "therefore"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "ast",
+              "delta",
+              "provided",
+              "python",
+              "show",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "044a7311799aace2",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 18.099851499999204,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no significant changes between the two branches that would lead to a semantic conflict when merged together. The only difference is in function names but this does not affect the functionality of the code.",
+            "evidence": [
+              "No renames or removed functions referenced on one branch but present on another",
+              "No cross_branch_links"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 18.09983160000047,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant changes between the two branches that would lead to a semantic conflict when merged together. The only difference is in function names but this does not affect the functionality of the code.\",\n   \"evidence\": [\"No renames or removed functions referenced on one branch but present on another\", \"No cross_branch_links\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 34.07442169999922,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A and Branch B both have no added or removed functions, but the delta indicates changes to `limits_094.py`. Without seeing the specific AST changes within that file, we can infer a semantic conflict is likely due to potential API incompatibilities introduced by the 'changed' operations. The absence of explicit cross-branch links suggests these changes are not simple renames or removals with references, but rather modifications to function bodies which could break existing calls.",
+              "evidence": [
+                "files: [\"limits_094.py\"]",
+                "branch_a",
+                "branch_b",
+                "changed"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 34.07408570000189,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A and Branch B both have no added or removed functions, but the delta indicates changes to `limits_094.py`. Without seeing the specific AST changes within that file, we can infer a semantic conflict is likely due to potential API incompatibilities introduced by the 'changed' operations. The absence of explicit cross-branch links suggests these changes are not simple renames or removals with references, but rather modifications to function bodies which could break existing calls.\",\n  \"evidence\": [\"files: [\\\"limits_094.py\\\"]\", \"branch_a\", \"branch_b\", \"changed\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no significant changes between the two branches that would lead to semantic conflicts.",
+              "evidence": [
+                "No renames or removed functions referenced on one branch but present on another"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 5.417269899997336,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant changes between the two branches that would lead to semantic conflicts.\",\n   \"evidence\": [\"No renames or removed functions referenced on one branch but present on another\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict when merging, as the combined result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 16.186756700000842,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict when merging, as the combined result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.36,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "absence",
+              "ast",
+              "bodies",
+              "branch_a",
+              "branch_b",
+              "cross",
+              "delta",
+              "due",
+              "explicit",
+              "incompatibilities",
+              "indicates",
+              "infer",
+              "limits_094_py",
+              "links",
+              "modifications",
+              "operations",
+              "potential",
+              "rather",
+              "removals",
+              "seeing",
+              "simple",
+              "suggests"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "another",
+              "significant"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "04715166d244100f",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 16.894592900000134,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no semantically significant changes between the two branches that would cause a conflict when merged.",
+            "evidence": []
+          },
+          "error": null,
+          "elapsed_seconds": 16.894583299999795,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no semantically significant changes between the two branches that would cause a conflict when merged.\",\n   \"evidence\": []\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 33.28523489999861,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The provided delta indicates that Branch A and Branch B have made changes to the same files, but there are no explicit additions or removals of functions. However, the `changed` section suggests API changes within existing functions. Without seeing the specific AST changes (the body hashes, call signatures, etc.) it's highly likely that these API changes introduce incompatibilities between the two branches. The delta format is designed to detect semantic conflicts precisely this way \u2013 a change in function signature or behavior that breaks callers on the other branch.",
+              "evidence": [
+                "branch_a",
+                "changed"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 33.28503709999859,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"The provided delta indicates that Branch A and Branch B have made changes to the same files, but there are no explicit additions or removals of functions. However, the `changed` section suggests API changes within existing functions. Without seeing the specific AST changes (the body hashes, call signatures, etc.) it's highly likely that these API changes introduce incompatibilities between the two branches. The delta format is designed to detect semantic conflicts precisely this way \u2013 a change in function signature or behavior that breaks callers on the other branch.\",\n  \"evidence\": [\"branch_a\", \"changed\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no semantically significant changes between the two branches that would cause a conflict when merged together.",
+              "evidence": [
+                "No semantic conflicts were detected in the provided structured Python AST delta."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 6.112016200000653,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no semantically significant changes between the two branches that would cause a conflict when merged together.\",\n   \"evidence\": [\"No semantic conflicts were detected in the provided structured Python AST delta.\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 15.913786100001744,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "additions",
+              "ast",
+              "body",
+              "branch_a",
+              "delta",
+              "designed",
+              "detect",
+              "explicit",
+              "format",
+              "hashes",
+              "highly",
+              "however",
+              "incompatibilities",
+              "indicates",
+              "precisely",
+              "provided",
+              "removals",
+              "seeing",
+              "signatures",
+              "suggests"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "ast",
+              "delta",
+              "detected",
+              "provided",
+              "python",
+              "significant",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "052aec629d626acc",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 19.44408359999943,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no significant changes between the two branches that would lead to a semantic conflict when merged.",
+            "evidence": [
+              "No function names or signatures have changed significantly across both branches."
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 19.444071599999006,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant changes between the two branches that would lead to a semantic conflict when merged.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across both branches.\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 41.17264929999874,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch B has removed the `calculate_total` function, while Branch A adds a new `calculate_total` function with a different signature and body hash. This represents a fundamental API change that will break any code relying on the original `calculate_total` function in Branch B. The AST delta explicitly flags this as a changed function with an API change.",
+              "evidence": [
+                "branch_b",
+                "changed",
+                "calculate_total"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 41.172171599999274,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch B has removed the `calculate_total` function, while Branch A adds a new `calculate_total` function with a different signature and body hash. This represents a fundamental API change that will break any code relying on the original `calculate_total` function in Branch B. The AST delta explicitly flags this as a changed function with an API change.\",\n  \"evidence\": [\"branch_b\", \"changed\", \"calculate_total\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no significant changes in the codebase between Branch A and Branch B that would lead to semantic conflicts when merged together. The structured delta shows no removed functions still referenced/called on one branch or renames with similar body_hash but different function names.",
+              "evidence": [
+                "No evidence of removed functions still referenced/called",
+                "No evidence of renames"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 8.994579499998508,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant changes in the codebase between Branch A and Branch B that would lead to semantic conflicts when merged together. The structured delta shows no removed functions still referenced/called on one branch or renames with similar body_hash but different function names.\",\n   \"evidence\": [\"No evidence of removed functions still referenced/called\", \"No evidence of renames\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 21.98024179999993,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "adds",
+              "ast",
+              "body",
+              "branch_b",
+              "calculate_total",
+              "delta",
+              "explicitly",
+              "flags",
+              "fundamental",
+              "hash",
+              "original",
+              "relying",
+              "represents",
+              "signature"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "body_hash",
+              "codebase",
+              "delta",
+              "shows",
+              "significant",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "091abc8c6a81d161",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 20.6153854999975,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together.",
+            "evidence": [
+              "No evidence of function renaming or removal/addition with similar body_hash but different function_name",
+              "No evidence of rename_stale_reference and removed_but_referenced",
+              "No evidence of signature changes that break callers on the other branch"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 20.6153747999997,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together.\",\n   \"evidence\": [\"No evidence of function renaming or removal/addition with similar body_hash but different function_name\", \n                \"No evidence of rename_stale_reference and removed_but_referenced\", \n                \"No evidence of signature changes that break callers on the other branch\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 45.017577400001755,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch B has removed the function `calculate_value` which is still called in Branch A. This represents a semantic conflict because the code will attempt to call a non-existent function, leading to an error. The AST delta indicates this removal and continued usage.",
+              "evidence": [
+                "branch_b",
+                "removed: calculate_value"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 45.01748959999895,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch B has removed the function `calculate_value` which is still called in Branch A. This represents a semantic conflict because the code will attempt to call a non-existent function, leading to an error. The AST delta indicates this removal and continued usage.\",\n  \"evidence\": [\"branch_b\", \"removed: calculate_value\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together.",
+              "evidence": [
+                "No evidence of function renaming or removal/addition with similar body_hash but different function_name",
+                "No evidence of cross_branch_links (rename_stale_reference and removed_but_referenced)",
+                "No evidence of functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 9.661076600001252,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together.\",\n   \"evidence\": [\"No evidence of function renaming or removal/addition with similar body_hash but different function_name\", \n                \"No evidence of cross_branch_links (rename_stale_reference and removed_but_referenced)\", \n                \"No evidence of functions removed on one branch but still referenced/called on the other\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 23.390357799999038,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "ast",
+              "attempt",
+              "branch_b",
+              "calculate_value",
+              "continued",
+              "delta",
+              "existent",
+              "indicates",
+              "non",
+              "removal",
+              "represents",
+              "usage"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "addition",
+              "body_hash",
+              "cross_branch_links",
+              "delta",
+              "function_name",
+              "removal",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "show",
+              "significant",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "09e047da636a13e3",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 14.249646799999027,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes that would cause a semantic conflict when merged together. The only difference is in the format of the codebase and some minor adjustments to existing functions.",
+            "evidence": [
+              "No major structural or functional differences between Branch A and B"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 14.24963619999835,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes that would cause a semantic conflict when merged together. The only difference is in the format of the codebase and some minor adjustments to existing functions.\",\n   \"evidence\": [\"No major structural or functional differences between Branch A and B\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 30.88338350000049,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch B introduces a function named `process_data` which is called in `identity_055.py`. Branch A does not have this function and also doesn't remove it. Therefore, merging these branches will result in a call to an undefined function, leading to a semantic conflict.",
+              "evidence": [
+                "branch_b: added `process_data` function",
+                "identity_055.py: calls `process_data`"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 30.88325370000166,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch B introduces a function named `process_data` which is called in `identity_055.py`. Branch A does not have this function and also doesn't remove it. Therefore, merging these branches will result in a call to an undefined function, leading to a semantic conflict.\",\n  \"evidence\": [\"branch_b: added `process_data` function\", \"identity_055.py: calls `process_data`\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no semantic conflicts based on the provided structured Python AST delta. The merged result will be logically correct as there are no function renaming or removal that would break existing code in Branch B when functions from Branch A are applied.",
+              "evidence": [
+                "No evidence of rename_stale_reference, removed_but_referenced, or signature changes breaking callers on the other branch"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 8.323492499999702,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no semantic conflicts based on the provided structured Python AST delta. The merged result will be logically correct as there are no function renaming or removal that would break existing code in Branch B when functions from Branch A are applied.\",\n   \"evidence\": [\"No evidence of rename_stale_reference, removed_but_referenced, or signature changes breaking callers on the other branch\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links suggests that symbols were removed/renamed on one branch but still referenced/called on the other, indicating a potential semantic conflict. Specifically, 'removed_but_referenced' links indicate that functions were removed from one branch but still called on the other, which could lead to logical inconsistencies.",
+              "evidence": [
+                "cross_branch_links: [\"removed_but_referenced\"]",
+                "\"removed\": [], \"added\": []"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 17.533510899997054,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links suggests that symbols were removed/renamed on one branch but still referenced/called on the other, indicating a potential semantic conflict. Specifically, 'removed_but_referenced' links indicate that functions were removed from one branch but still called on the other, which could lead to logical inconsistencies.\",\n  \"evidence\": [\n    \"cross_branch_links: [\\\"removed_but_referenced\\\"]\",\n    \"\\\"removed\\\": [], \\\"added\\\": []\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "branch_b",
+              "doesn",
+              "identity_055_py",
+              "named",
+              "process_data",
+              "remove",
+              "therefore",
+              "undefined"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "applied",
+              "ast",
+              "based",
+              "breaking",
+              "delta",
+              "logically",
+              "provided",
+              "python",
+              "removal",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "signature",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "inconsistencies",
+              "indicate",
+              "indicating",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "specifically",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "0bb7a23eba7ec2d0",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 12.845206300000427,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no semantically significant changes between the two branches that would cause a conflict when merged together.",
+            "evidence": []
+          },
+          "error": null,
+          "elapsed_seconds": 12.845198600000003,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no semantically significant changes between the two branches that would cause a conflict when merged together.\",\n   \"evidence\": []\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 28.57668100000228,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The provided delta indicates that Branch A and Branch B have made changes to the same file ('records_004.py') but without any added or removed functions. However, the 'changed' section suggests API changes within the function definitions. Without seeing the specific AST changes (the body hashes, signatures, etc.) it is highly likely that these API changes are incompatible and will cause semantic conflicts when merged. The delta format implies a change in function behavior which would break callers on the other branch.",
+              "evidence": [
+                "files: [\"records_004.py\"]",
+                "branch_a/changed: []",
+                "branch_b/changed: []"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 28.576586099999986,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"The provided delta indicates that Branch A and Branch B have made changes to the same file ('records_004.py') but without any added or removed functions. However, the 'changed' section suggests API changes within the function definitions. Without seeing the specific AST changes (the body hashes, signatures, etc.) it is highly likely that these API changes are incompatible and will cause semantic conflicts when merged. The delta format implies a change in function behavior which would break callers on the other branch.\",\n  \"evidence\": [\"files: [\\\"records_004.py\\\"]\", \"branch_a/changed: []\", \"branch_b/changed: []\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no significant changes between the two branches that would lead to semantic conflicts when merged together. The only difference is in function names but this does not affect the functionality of the code.",
+              "evidence": [
+                "No renames or removed functions referenced on one branch but present on another",
+                "No signature changes breaking callers"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 6.134790500000236,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant changes between the two branches that would lead to semantic conflicts when merged together. The only difference is in function names but this does not affect the functionality of the code.\",\n   \"evidence\": [\"No renames or removed functions referenced on one branch but present on another\", \"No signature changes breaking callers\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 15.171749299999647,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['select_004'].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "ast",
+              "body",
+              "branch_a",
+              "branch_b",
+              "delta",
+              "format",
+              "hashes",
+              "highly",
+              "however",
+              "implies",
+              "indicates",
+              "provided",
+              "records_004_py",
+              "seeing",
+              "signatures",
+              "suggests"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "affect",
+              "another",
+              "breaking",
+              "difference",
+              "functionality",
+              "signature",
+              "significant"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "0da69b87dc8492a5",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 16.776991000002454,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no significant changes in the codebase between Branch A and Branch B that would result in a semantic conflict when merged together. The only difference is in function names but this does not affect the functionality of the program.",
+            "evidence": [
+              "No renames or removed functions referenced on one branch but present on another",
+              "No significant changes to API"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 16.77698059999966,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant changes in the codebase between Branch A and Branch B that would result in a semantic conflict when merged together. The only difference is in function names but this does not affect the functionality of the program.\",\n   \"evidence\": [\"No renames or removed functions referenced on one branch but present on another\", \"No significant changes to API\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 27.972781000000396,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A and Branch B both have no changes listed in their respective delta definitions. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch has added functions while the other does not.",
+              "evidence": [
+                "branch_a",
+                "branch_b"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 27.972668800000974,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A and Branch B both have no changes listed in their respective delta definitions. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch has added functions while the other does not.\",\n  \"evidence\": [\"branch_a\", \"branch_b\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no significant structural changes between the two branches that would lead to a semantic conflict when merged.",
+              "evidence": [
+                "No function names or signatures have changed significantly across both branches."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 5.50937740000154,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant structural changes between the two branches that would lead to a semantic conflict when merged.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across both branches.\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'rename_stale_reference' and 'removed_but_referenced' suggest that a function was renamed on Branch A but still called on Branch B. This could lead to logical inconsistencies in the combined codebase.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference (Branch A) -> removed_but_referenced (Branch B)",
+                "branch_a changed: function 'old_name' -> new_name with similar body_hash but different function_name",
+                "branch_b references 'new_name' which was previously 'old_name'"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 15.40822660000049,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'rename_stale_reference' and 'removed_but_referenced' suggest that a function was renamed on Branch A but still called on Branch B. This could lead to logical inconsistencies in the combined codebase.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference (Branch A) -> removed_but_referenced (Branch B)\",\n    \"branch_a changed: function 'old_name' -> new_name with similar body_hash but different function_name\",\n    \"branch_b references 'new_name' which was previously 'old_name'\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_059'].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "base",
+              "branch_a",
+              "branch_b",
+              "delta",
+              "identical",
+              "implies",
+              "listed",
+              "respective",
+              "therefore"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "across",
+              "signatures",
+              "significant",
+              "significantly",
+              "structural"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "body_hash",
+              "branch_a",
+              "branch_b",
+              "codebase",
+              "cross_branch_links",
+              "function_name",
+              "inconsistencies",
+              "indicates",
+              "new_name",
+              "old_name",
+              "presence",
+              "previously",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "specifically",
+              "suggest",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "0fe0eaba9c36e594",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 16.379408599997987,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no removed functions referenced by added or changed functions on either branch, and there are no renames where one function is renamed while another still references it.",
+            "evidence": [
+              "No evidence of semantic conflicts based on provided structured delta"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 16.379400400001032,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no removed functions referenced by added or changed functions on either branch, and there are no renames where one function is renamed while another still references it.\",\n   \"evidence\": [\"No evidence of semantic conflicts based on provided structured delta\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 26.771301299999323,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The provided delta indicates that Branch B has removed a function named 'calculate_value' while Branch A still calls this function. This represents a semantic conflict because the code will attempt to call a non-existent function, leading to an error. The absence of any `changed` entries suggests no API changes were made in Branch B, further reinforcing the issue.",
+              "evidence": [
+                "Branch B removed 'calculate_value'",
+                "Branch A still calls 'calculate_value'"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 26.771203600001172,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"The provided delta indicates that Branch B has removed a function named 'calculate_value' while Branch A still calls this function. This represents a semantic conflict because the code will attempt to call a non-existent function, leading to an error. The absence of any `changed` entries suggests no API changes were made in Branch B, further reinforcing the issue.\",\n  \"evidence\": [\"Branch B removed 'calculate_value'\", \"Branch A still calls 'calculate_value'\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no significant structural changes between the two branches that would result in a semantic conflict when merged together.",
+              "evidence": [
+                "No function names or signatures have changed significantly across both branches."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 5.047483300000749,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant structural changes between the two branches that would result in a semantic conflict when merged together.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across both branches.\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'rename_stale_reference' and 'removed_but_referenced' suggest that functions were renamed or removed but their references remained intact. This could lead to logical inconsistencies if not addressed.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference",
+                "cross_branch_links: removed_but_referenced"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 14.03043709999838,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'rename_stale_reference' and 'removed_but_referenced' suggest that functions were renamed or removed but their references remained intact. This could lead to logical inconsistencies if not addressed.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference\",\n    \"cross_branch_links: removed_but_referenced\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['resolve_limit_075'].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "absence",
+              "attempt",
+              "calculate_value",
+              "delta",
+              "entries",
+              "existent",
+              "further",
+              "indicates",
+              "named",
+              "non",
+              "provided",
+              "reinforcing",
+              "represents",
+              "suggests"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "across",
+              "signatures",
+              "significant",
+              "significantly",
+              "structural"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "addressed",
+              "cross_branch_links",
+              "inconsistencies",
+              "indicates",
+              "intact",
+              "presence",
+              "remained",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "specifically",
+              "suggest",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "10a788790300ae8e",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 14.879567199997837,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no functions removed from one branch but still referenced/called on the other, and there are no renames with similar body_hash but different function names.",
+            "evidence": [
+              "No evidence of semantic conflicts based on the structured delta"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 14.879559599998174,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no functions removed from one branch but still referenced/called on the other, and there are no renames with similar body_hash but different function names.\",\n   \"evidence\": [\"No evidence of semantic conflicts based on the structured delta\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 30.553137999999308,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A and Branch B both have no added or removed functions, but the delta indicates changes to `ordering_009.py`. The absence of explicit API changes suggests a rename operation is likely occurring. Without further information about the specific AST modifications within `ordering_009.py`, it's highly probable that one branch renames a function while the other still calls the old name, leading to a semantic conflict.",
+              "evidence": [
+                "files\": [\"ordering_009.py\"]"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 30.552988999999798,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A and Branch B both have no added or removed functions, but the delta indicates changes to `ordering_009.py`. The absence of explicit API changes suggests a rename operation is likely occurring. Without further information about the specific AST modifications within `ordering_009.py`, it's highly probable that one branch renames a function while the other still calls the old name, leading to a semantic conflict.\",\n  \"evidence\": [\"files\\\": [\\\"ordering_009.py\\\"]\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no functions removed from one branch but still referenced/called on the other, and there are no renames with similar body_hash but different function names.",
+              "evidence": [
+                "No evidence of semantic conflicts based on the structured delta"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 6.927874100001645,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no functions removed from one branch but still referenced/called on the other, and there are no renames with similar body_hash but different function names.\",\n   \"evidence\": [\"No evidence of semantic conflicts based on the structured delta\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 16.593489300001238,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "absence",
+              "ast",
+              "delta",
+              "explicit",
+              "further",
+              "highly",
+              "indicates",
+              "information",
+              "modifications",
+              "occurring",
+              "operation",
+              "ordering_009_py",
+              "probable",
+              "suggests"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "based",
+              "body_hash",
+              "delta",
+              "show",
+              "significant",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "113742ad0fe44d42",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 14.923094099998707,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together.",
+            "evidence": [
+              "No renames or removed functions referenced by other branch",
+              "No cross_branch_links",
+              "No signature changes breaking callers on the other branch"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 14.923085599999467,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together.\",\n   \"evidence\": [\"No renames or removed functions referenced by other branch\", \"No cross_branch_links\", \"No signature changes breaking callers on the other branch\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 32.24462660000063,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "The provided delta indicates that Branch B has removed functions while Branch A continues to call those same functions. This represents a semantic conflict because the code will attempt to use a function that no longer exists, leading to runtime errors or unexpected behavior. The absence of `cross_branch_links` suggests this isn't a simple rename issue; it\u2019s a removal with continued references.",
+              "evidence": [
+                "Branch B removed functions from 'metrics_021.py'",
+                "Branch A continues to call those same removed functions in 'billing_021.py' and potentially 'util_021.py' (due to the files listed, but no specific evidence is provided within this delta)",
+                "The absence of `cross_branch_links` further reinforces that these are not simple rename conflicts."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 32.24445700000069,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"The provided delta indicates that Branch B has removed functions while Branch A continues to call those same functions. This represents a semantic conflict because the code will attempt to use a function that no longer exists, leading to runtime errors or unexpected behavior. The absence of `cross_branch_links` suggests this isn't a simple rename issue; it\u2019s a removal with continued references.\",\n  \"evidence\": [\n    \"Branch B removed functions from 'metrics_021.py'\",\n    \"Branch A continues to call those same removed functions in 'billing_021.py' and potentially 'util_021.py' (due to the files listed, but no specific evidence is provided within this delta)\",\n    \"The absence of `cross_branch_links` further reinforces that these are not simple rename conflicts.\"\n  ]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "The structured delta does not show any significant changes that would cause a semantic conflict when merged together. There are no functions removed from one branch but still referenced/called on the other, and there are no renames with similar body_hash but different function names. The only potential issue could be due to cross-branch links or signature changes, which have not been identified in this delta.",
+              "evidence": [
+                "No evidence of semantic conflicts based on provided structured delta"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 7.941650700002356,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes that would cause a semantic conflict when merged together. There are no functions removed from one branch but still referenced/called on the other, and there are no renames with similar body_hash but different function names. The only potential issue could be due to cross-branch links or signature changes, which have not been identified in this delta.\",\n   \"evidence\": [\"No evidence of semantic conflicts based on provided structured delta\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'rename_stale_reference' and 'removed_but_referenced' suggest that a function was renamed on Branch A but still called on Branch B, indicating a semantic conflict.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference (113742ad0fe44d42)",
+                "cross_branch_links: removed_but_referenced (113742ad0fe44d42)"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 17.436779899999237,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'rename_stale_reference' and 'removed_but_referenced' suggest that a function was renamed on Branch A but still called on Branch B, indicating a semantic conflict.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference (113742ad0fe44d42)\",\n    \"cross_branch_links: removed_but_referenced (113742ad0fe44d42)\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "absence",
+              "attempt",
+              "billing_021_py",
+              "continued",
+              "continues",
+              "cross_branch_links",
+              "delta",
+              "due",
+              "further",
+              "indicates",
+              "isn",
+              "listed",
+              "longer",
+              "metrics_021_py",
+              "potentially",
+              "provided",
+              "reinforces",
+              "removal",
+              "represents",
+              "runtime",
+              "simple",
+              "suggests",
+              "use",
+              "util_021_py"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "based",
+              "body_hash",
+              "cross",
+              "delta",
+              "due",
+              "identified",
+              "links",
+              "potential",
+              "provided",
+              "show",
+              "signature",
+              "significant",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "indicating",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "specifically",
+              "suggest",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "142ef78b5920351a",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 17.32307740000033,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together. There are no function removals from one branch that are still referenced/called on the other, and there are no renames with similar body_hash but different function names. The only potential issue could be due to cross-branch links or signature changes, which have not been shown in the provided delta.",
+            "evidence": [
+              "No significant changes were identified between the two branches that would result in a semantic conflict when merged together."
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 17.323069699999905,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together. There are no function removals from one branch that are still referenced/called on the other, and there are no renames with similar body_hash but different function names. The only potential issue could be due to cross-branch links or signature changes, which have not been shown in the provided delta.\",\n   \"evidence\": [\"No significant changes were identified between the two branches that would result in a semantic conflict when merged together.\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 30.935986799999228,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch B has removed the function 'calculate_total' which is still called in Branch A. This represents a semantic conflict because the removal of a function while it remains referenced creates an undefined behavior and breaks existing code that relies on this function.",
+              "evidence": [
+                "function 'calculate_total' was removed in branch b",
+                "function 'calculate_total' is called in parser_005.py within branch a"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 30.93585570000141,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch B has removed the function 'calculate_total' which is still called in Branch A. This represents a semantic conflict because the removal of a function while it remains referenced creates an undefined behavior and breaks existing code that relies on this function.\",\n  \"evidence\": [\"function 'calculate_total' was removed in branch b\", \"function 'calculate_total' is called in parser_005.py within branch a\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no removed functions referenced by added ones, no renamed functions with different bodies but same signatures, and no cross-branch links indicating renames or stale references.",
+              "evidence": [
+                "No evidence of function removals/additions from one branch that would break the other",
+                "No evidence of renaming a function while its body remains unchanged on the other branch",
+                "No evidence of changes to function signatures breaking calls in the other branch"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 8.655488300002617,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no removed functions referenced by added ones, no renamed functions with different bodies but same signatures, and no cross-branch links indicating renames or stale references.\",\n   \"evidence\": [\"No evidence of function removals/additions from one branch that would break the other\", \"No evidence of renaming a function while its body remains unchanged on the other branch\", \"No evidence of changes to function signatures breaking calls in the other branch\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 18.227992700001778,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['parse_count_005'].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "calculate_total",
+              "creates",
+              "parser_005_py",
+              "relies",
+              "remains",
+              "removal",
+              "represents",
+              "undefined"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "additions",
+              "bodies",
+              "body",
+              "breaking",
+              "cross",
+              "delta",
+              "indicating",
+              "its",
+              "links",
+              "ones",
+              "remains",
+              "removals",
+              "show",
+              "signatures",
+              "significant",
+              "structured",
+              "unchanged"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "143522ba595f8171",
+      "input_mode": "structured",
+      "ground_truth": "conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 14.37199580000015,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no significant structural changes between the two branches that would lead to semantic conflicts when merged together.",
+            "evidence": [
+              "No function names or signatures have changed significantly across both branches."
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 14.371988200000487,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant structural changes between the two branches that would lead to semantic conflicts when merged together.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across both branches.\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 27.2625990000015,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A and Branch B both have no changes listed in their respective delta structures. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch's code will be directly overwritten by the other, leading to broken functionality due to incompatible API changes or function name discrepancies.",
+              "evidence": []
+            },
+            "error": null,
+            "elapsed_seconds": 27.262522099998023,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A and Branch B both have no changes listed in their respective delta structures. This implies that the merge-base is identical to both branches. Therefore, merging these branches will result in a logical conflict because one branch's code will be directly overwritten by the other, leading to broken functionality due to incompatible API changes or function name discrepancies.\",\n  \"evidence\": []\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together.",
+              "evidence": [
+                "No evidence of function renaming or removal/addition with similar body_hash but different function_name",
+                "No evidence of cross_branch_links (rename_stale_reference and removed_but_referenced)",
+                "No evidence of functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 7.628036599999177,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together.\",\n   \"evidence\": [\"No evidence of function renaming or removal/addition with similar body_hash but different function_name\", \n                \"No evidence of cross_branch_links (rename_stale_reference and removed_but_referenced)\", \n                \"No evidence of functions removed on one branch but still referenced/called on the other\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 16.08595029999924,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: ['select_064'].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "base",
+              "delta",
+              "directly",
+              "discrepancies",
+              "due",
+              "functionality",
+              "identical",
+              "implies",
+              "listed",
+              "overwritten",
+              "respective",
+              "structures",
+              "therefore"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "addition",
+              "body_hash",
+              "cross_branch_links",
+              "delta",
+              "function_name",
+              "removal",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "show",
+              "significant",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "14b5debb01ede9aa",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 15.701876499999344,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together.",
+            "evidence": [
+              "No evidence of function renaming or removal/addition with similar body_hash but different function_name",
+              "No evidence of cross_branch_links (rename_stale_reference and removed_but_referenced)",
+              "No evidence of functions removed on one branch but still referenced/called on the other"
+            ]
+          },
+          "error": null,
+          "elapsed_seconds": 15.701869200001966,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together.\",\n   \"evidence\": [\"No evidence of function renaming or removal/addition with similar body_hash but different function_name\", \n                \"No evidence of cross_branch_links (rename_stale_reference and removed_but_referenced)\", \n                \"No evidence of functions removed on one branch but still referenced/called on the other\"]\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 25.77422779999688,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A and Branch B both have no changes listed in their respective delta definitions. This implies that the merge-base is unchanged between the two branches. However, since we are looking for semantic conflicts, it's possible that the merge-base contains a function that is removed on branch A but still referenced/called on branch B. Without any actual code changes to examine, this represents a high confidence conflict.",
+              "evidence": []
+            },
+            "error": null,
+            "elapsed_seconds": 25.77403950000007,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A and Branch B both have no changes listed in their respective delta definitions. This implies that the merge-base is unchanged between the two branches. However, since we are looking for semantic conflicts, it's possible that the merge-base contains a function that is removed on branch A but still referenced/called on branch B. Without any actual code changes to examine, this represents a high confidence conflict.\",\n  \"evidence\": []\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no semantic conflicts based on the provided structured Python AST delta.",
+              "evidence": []
+            },
+            "error": null,
+            "elapsed_seconds": 3.3964704999998503,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no semantic conflicts based on the provided structured Python AST delta.\",\n   \"evidence\": []\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'removed_but_referenced' links suggest that functions were removed from Branch A but still called in Branch B, and 'rename_stale_reference' links indicate that a function was renamed in Branch A but its old name is still used in Branch B. These inconsistencies suggest a semantic conflict.",
+              "evidence": [
+                "cross_branch_links: ['removed_but_referenced', 'rename_stale_reference']",
+                "branch_a: removed function 'old_function' called in branch_b",
+                "branch_b: added function 'new_function' with same body_hash as old_function"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 13.195457500001794,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'removed_but_referenced' links suggest that functions were removed from Branch A but still called in Branch B, and 'rename_stale_reference' links indicate that a function was renamed in Branch A but its old name is still used in Branch B. These inconsistencies suggest a semantic conflict.\",\n  \"evidence\": [\n    \"cross_branch_links: ['removed_but_referenced', 'rename_stale_reference']\",\n    \"branch_a: removed function 'old_function' called in branch_b\",\n    \"branch_b: added function 'new_function' with same body_hash as old_function\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "actual",
+              "base",
+              "contains",
+              "delta",
+              "examine",
+              "high",
+              "however",
+              "implies",
+              "listed",
+              "looking",
+              "represents",
+              "respective",
+              "unchanged"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "ast",
+              "based",
+              "delta",
+              "provided",
+              "python",
+              "structured"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "body_hash",
+              "branch_a",
+              "branch_b",
+              "cross_branch_links",
+              "inconsistencies",
+              "indicates",
+              "its",
+              "new_function",
+              "old_function",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "specifically",
+              "suggest",
+              "symbols",
+              "used"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "16cf22bb1287ec59",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 11.51314320000165,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "There are no semantic conflicts based on the provided structured Python AST delta.",
+            "evidence": []
+          },
+          "error": null,
+          "elapsed_seconds": 11.513128900001902,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no semantic conflicts based on the provided structured Python AST delta.\",\n   \"evidence\": []\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 25.56627750000189,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch A and Branch B both have no added or removed functions, but the delta indicates changes to `ordering_065.py`. The absence of explicit API changes suggests a rename operation is occurring. Without further information about the specific AST modifications within `ordering_065.py`, it's highly likely that one branch renames a function while the other still calls the old name, leading to a semantic conflict.",
+              "evidence": [
+                "files: [\"ordering_065.py\"]",
+                "branch_a",
+                "branch_b",
+                "cross_branch_links: []"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 25.566063599999325,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch A and Branch B both have no added or removed functions, but the delta indicates changes to `ordering_065.py`. The absence of explicit API changes suggests a rename operation is occurring. Without further information about the specific AST modifications within `ordering_065.py`, it's highly likely that one branch renames a function while the other still calls the old name, leading to a semantic conflict.\",\n  \"evidence\": [\"files: [\\\"ordering_065.py\\\"]\", \"branch_a\", \"branch_b\", \"cross_branch_links: []\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "There are no significant structural changes between the two branches that would lead to semantic conflicts.",
+              "evidence": [
+                "No function names or signatures have changed significantly across both branches."
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 4.060227900001337,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"There are no significant structural changes between the two branches that would lead to semantic conflicts.\",\n   \"evidence\": [\"No function names or signatures have changed significantly across both branches.\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference and removed_but_referenced",
+                "functions removed on one branch but still referenced/called on the other"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 12.38668830000097,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still imported or called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference and removed_but_referenced\",\n    \"functions removed on one branch but still referenced/called on the other\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "absence",
+              "ast",
+              "branch_a",
+              "branch_b",
+              "cross_branch_links",
+              "delta",
+              "explicit",
+              "further",
+              "highly",
+              "indicates",
+              "information",
+              "modifications",
+              "occurring",
+              "operation",
+              "ordering_065_py",
+              "suggests"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "across",
+              "signatures",
+              "significant",
+              "significantly",
+              "structural"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "1842c001f679b2f3",
+      "input_mode": "structured",
+      "ground_truth": "no_conflict",
+      "baseline_verdict": "no_conflict",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 13.43752989999848,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "ok",
+          "verdict": {
+            "verdict": "no_conflict",
+            "original_verdict": "compatible",
+            "confidence": 1.0,
+            "reasoning": "The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no functions removed from one branch but still referenced/called on the other, and there are no renames with similar body_hash but different function names.",
+            "evidence": []
+          },
+          "error": null,
+          "elapsed_seconds": 13.437515300000086,
+          "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would lead to a semantic conflict when merged together. There are no functions removed from one branch but still referenced/called on the other, and there are no renames with similar body_hash but different function names.\",\n   \"evidence\": []\n}"
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 27.673402699998405,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.95,
+              "reasoning": "Branch B has removed the function `calculate_value` which is still called in Branch A. This represents a semantic conflict because the code will attempt to call a non-existent function, leading to an error or unexpected behavior. The AST delta indicates this removal and continued usage.",
+              "evidence": [
+                "branch_b: removed 'calculate_value'"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 27.673171899998124,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.95,\n  \"reasoning\": \"Branch B has removed the function `calculate_value` which is still called in Branch A. This represents a semantic conflict because the code will attempt to call a non-existent function, leading to an error or unexpected behavior. The AST delta indicates this removal and continued usage.\",\n  \"evidence\": [\"branch_b: removed 'calculate_value'\"]\n}"
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "no_conflict",
+              "original_verdict": "compatible",
+              "confidence": 1.0,
+              "reasoning": "The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together. There are no removed functions referenced by other functions on one branch or renamed symbols still referenced elsewhere, and there are no signature changes breaking callers on the other branch.",
+              "evidence": [
+                "No evidence of structural differences between Branch A and B",
+                "No evidence of renames that could break semantics",
+                "No evidence of removed/renamed functions that would cause semantic conflicts"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 7.6319762000021,
+            "raw_content": "{\n   \"verdict\": \"compatible\",\n   \"confidence\": 1.0,\n   \"reasoning\": \"The structured delta does not show any significant changes between the two branches that would result in a semantic conflict when merged together. There are no removed functions referenced by other functions on one branch or renamed symbols still referenced elsewhere, and there are no signature changes breaking callers on the other branch.\",\n   \"evidence\": [\"No evidence of structural differences between Branch A and B\", \"No evidence of renames that could break semantics\", \"No evidence of removed/renamed functions that would cause semantic conflicts\"]\n}"
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.",
+              "evidence": [
+                "cross_branch_links: rename_stale_reference (1842c001f679b2f3) and removed_but_referenced (1842c001f679b2f3)"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 15.440032200000132,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. This suggests a potential semantic conflict, as the merged result may not be logically correct.\",\n  \"evidence\": [\n    \"cross_branch_links: rename_stale_reference (1842c001f679b2f3) and removed_but_referenced (1842c001f679b2f3)\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [
+          "deepseek-coder:6.7b"
+        ],
+        "dissenting_models": [
+          "gemma3:4b",
+          "llama3.2:3b"
+        ],
+        "failed_models": [],
+        "weak_evidence_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b",
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "gemma3:4b",
+            "verdict": "conflict",
+            "confidence": 0.95,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "ast",
+              "attempt",
+              "branch_b",
+              "calculate_value",
+              "continued",
+              "delta",
+              "existent",
+              "indicates",
+              "non",
+              "removal",
+              "represents",
+              "usage"
+            ]
+          },
+          {
+            "model": "deepseek-coder:6.7b",
+            "verdict": "no_conflict",
+            "confidence": 1.0,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.12,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "breaking",
+              "delta",
+              "differences",
+              "elsewhere",
+              "semantics",
+              "show",
+              "signature",
+              "significant",
+              "structural",
+              "structured",
+              "symbols"
+            ]
+          },
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.0,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.24,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "indicates",
+              "logically",
+              "potential",
+              "presence",
+              "removed_but_referenced",
+              "rename_stale_reference",
+              "suggests",
+              "symbols"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    }
+  ],
+  "partial": true
+}

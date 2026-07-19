@@ -1,0 +1,17 @@
+--- a/notifier_ok17_beta.py
++++ b/notifier_ok17_beta.py
+@@ -0,0 +1,2 @@
++def beta_notifier_ok17(value):
++    return value * 2
+--- a/test_notifier_ok17_beta.py
++++ b/test_notifier_ok17_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from notifier_ok17_beta import beta_notifier_ok17
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_notifier_ok17(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()

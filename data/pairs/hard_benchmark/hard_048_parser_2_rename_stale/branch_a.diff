@@ -1,0 +1,23 @@
+--- a/parser_2_core.py
++++ b/parser_2_core.py
+@@ -1,5 +1,5 @@
+-def compute_parser_2_total(items):
++def compute_parser_2_total_v2(items):
+     return sum(int(x) for x in items)
+ 
+ def format_total(items):
+-    return "total=" + str(compute_parser_2_total(items))
++    return "total=" + str(compute_parser_2_total_v2(items))
+--- a/test_parser_2_core.py
++++ b/test_parser_2_core.py
+@@ -1,9 +1,9 @@
+ import unittest
+-from parser_2_core import compute_parser_2_total, format_total
++from parser_2_core import compute_parser_2_total_v2, format_total
+ 
+ class CoreTests(unittest.TestCase):
+     def test_total(self):
+-        self.assertEqual(compute_parser_2_total([1, 2, 3]), 6)
++        self.assertEqual(compute_parser_2_total_v2([1, 2, 3]), 6)
+     def test_format(self):
+         self.assertIn("6", format_total([1, 2, 3]))

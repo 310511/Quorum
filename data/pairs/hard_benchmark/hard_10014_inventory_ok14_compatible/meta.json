@@ -1,0 +1,6 @@
+{
+  "pair": "hard_10014_inventory_ok14_compatible",
+  "conflict_type": "orthogonal_features",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_benchmark"
+}

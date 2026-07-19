@@ -1,0 +1,6 @@
+{
+  "pair": "hard_009_pricing_return_contract",
+  "conflict_type": "return_contract",
+  "ground_truth": "conflict",
+  "generator": "quorum.hard_benchmark"
+}

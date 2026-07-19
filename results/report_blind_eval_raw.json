@@ -1,0 +1,59 @@
+{
+  "corpus": "blind_eval_raw",
+  "run": "run_blind_eval_raw_final.json",
+  "n": 200,
+  "labels": {
+    "no_conflict": 100,
+    "conflict": 100
+  },
+  "systems": {
+    "Baseline": {
+      "TP": 0,
+      "FP": 0,
+      "TN": 100,
+      "FN": 100,
+      "escalate": 0,
+      "accuracy": 0.5,
+      "precision": 0,
+      "recall": 0.0,
+      "specificity": 1.0,
+      "f1": 0,
+      "balanced_accuracy": 0.5,
+      "mcc": 0,
+      "coverage": 1.0,
+      "escalation_rate": 0.0
+    },
+    "Majority": {
+      "TP": 100,
+      "FP": 100,
+      "TN": 0,
+      "FN": 0,
+      "escalate": 0,
+      "accuracy": 0.5,
+      "precision": 0.5,
+      "recall": 1.0,
+      "specificity": 0.0,
+      "f1": 0.6666666666666666,
+      "balanced_accuracy": 0.5,
+      "mcc": 0,
+      "coverage": 1.0,
+      "escalation_rate": 0.0
+    },
+    "Committee": {
+      "TP": 88,
+      "FP": 100,
+      "TN": 0,
+      "FN": 12,
+      "escalate": 9,
+      "accuracy": 0.44,
+      "precision": 0.46808510638297873,
+      "recall": 0.88,
+      "specificity": 0.0,
+      "f1": 0.6111111111111112,
+      "balanced_accuracy": 0.44,
+      "mcc": -0.2526455763199557,
+      "coverage": 0.955,
+      "escalation_rate": 0.045
+    }
+  }
+}

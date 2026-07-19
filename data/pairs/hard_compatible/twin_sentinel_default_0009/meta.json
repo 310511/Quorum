@@ -1,0 +1,7 @@
+{
+  "pair": "twin_sentinel_default_0009",
+  "family": "sentinel_default",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_compatible",
+  "twin_of_family": "sentinel_default"
+}

@@ -1,0 +1,23 @@
+--- a/test_warehouse_2_handler.py
++++ b/test_warehouse_2_handler.py
+@@ -0,0 +1,10 @@
++import unittest
++from warehouse_2_handler import safe_warehouse_2
++
++class HandlerTests(unittest.TestCase):
++    def test_safe(self):
++        self.assertEqual(safe_warehouse_2(0), 0)
++        self.assertEqual(safe_warehouse_2(4), 4)
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/warehouse_2_handler.py
++++ b/warehouse_2_handler.py
+@@ -0,0 +1,7 @@
++from warehouse_2_guard import ensure_warehouse_2_positive, Warehouse_2Error
++
++def safe_warehouse_2(value):
++    try:
++        return ensure_warehouse_2_positive(value)
++    except Warehouse_2Error:
++        return 0

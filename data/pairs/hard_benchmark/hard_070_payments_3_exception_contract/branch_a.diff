@@ -1,0 +1,28 @@
+--- a/payments_3_guard.py
++++ b/payments_3_guard.py
+@@ -1,7 +1,7 @@
+-class Payments_3Error(ValueError):
++class Payments_3Gone(LookupError):
+     pass
+ 
+ def ensure_payments_3_positive(value):
+     if value <= 0:
+-        raise Payments_3Error("non-positive")
++        raise Payments_3Gone("non-positive")
+     return value
+--- a/test_payments_3_guard.py
++++ b/test_payments_3_guard.py
+@@ -1,11 +1,11 @@
+ import unittest
+-from payments_3_guard import ensure_payments_3_positive, Payments_3Error
++from payments_3_guard import ensure_payments_3_positive, Payments_3Gone
+ 
+ class GuardTests(unittest.TestCase):
+     def test_ok(self):
+         self.assertEqual(ensure_payments_3_positive(2), 2)
+     def test_bad(self):
+-        with self.assertRaises(Payments_3Error):
++        with self.assertRaises(Payments_3Gone):
+             ensure_payments_3_positive(0)
+ 
+ if __name__ == "__main__":

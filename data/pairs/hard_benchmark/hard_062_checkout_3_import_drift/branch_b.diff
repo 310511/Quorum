@@ -1,0 +1,19 @@
+--- a/checkout_3_pipeline.py
++++ b/checkout_3_pipeline.py
+@@ -0,0 +1,4 @@
++from checkout_3_utils import normalize_checkout_3_token
++
++def pipeline_key(value):
++    return "key:" + normalize_checkout_3_token(value)
+--- a/test_checkout_3_pipeline.py
++++ b/test_checkout_3_pipeline.py
+@@ -0,0 +1,9 @@
++import unittest
++from checkout_3_pipeline import pipeline_key
++
++class PipelineTests(unittest.TestCase):
++    def test_key(self):
++        self.assertEqual(pipeline_key(" X "), "key:x")
++
++if __name__ == "__main__":
++    unittest.main()

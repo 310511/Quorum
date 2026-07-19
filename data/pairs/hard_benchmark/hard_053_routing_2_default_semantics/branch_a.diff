@@ -1,0 +1,19 @@
+--- a/routing_2_config.py
++++ b/routing_2_config.py
+@@ -1,4 +1,4 @@
+-DEFAULT_LIMIT = 10
++DEFAULT_LIMIT = 3
+ 
+ def page_routing_2(items, limit=DEFAULT_LIMIT):
+     return list(items)[:limit]
+--- a/test_routing_2_config.py
++++ b/test_routing_2_config.py
+@@ -3,7 +3,7 @@
+ 
+ class ConfigTests(unittest.TestCase):
+     def test_page(self):
+-        self.assertEqual(page_routing_2(range(20)), list(range(10)))
++        self.assertEqual(page_routing_2(range(20)), list(range(3)))
+ 
+ if __name__ == "__main__":
+     unittest.main()

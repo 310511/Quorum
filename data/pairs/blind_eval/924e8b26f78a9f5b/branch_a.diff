@@ -1,0 +1,11 @@
+diff --git a/limits_080.py b/limits_080.py
+index e710863..fa18838 100644
+--- a/limits_080.py
++++ b/limits_080.py
+@@ -1,2 +1,6 @@
+ def resolve_limit_080(value: int | None) -> int:
+     return 160 if value is None else value
++
++
++def resolve_limit_or_zero_080(value: int | None) -> int:
++    return 0 if value is None else value

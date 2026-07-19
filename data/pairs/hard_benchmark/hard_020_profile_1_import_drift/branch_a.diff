@@ -1,0 +1,20 @@
+--- a/profile_1_tokens.py
++++ b/profile_1_tokens.py
+@@ -0,0 +1,2 @@
++def normalize_profile_1_token(value):
++    return str(value).strip().lower()
+--- a/profile_1_utils.py
++++ b/profile_1_utils.py
+@@ -1,2 +1 @@
+-def normalize_profile_1_token(value):
+-    return str(value).strip().lower()
++# Moved to profile_1_tokens.py
+--- a/test_profile_1_utils.py
++++ b/test_profile_1_utils.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from profile_1_utils import normalize_profile_1_token
++from profile_1_tokens import normalize_profile_1_token
+ 
+ class UtilsTests(unittest.TestCase):
+     def test_normalize(self):

@@ -1,0 +1,24 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "records1_semantic_conflict",
+  "conflict_type": "boundary_contract",
+  "difficulty": "hard",
+  "record_id": "9e91a10a-fe1e-4376-abba-ff5cf68f25b3",
+  "notes": "The new caller silently inherits a changed boundary convention.",
+  "hidden_invariant": "A score exactly at the cutoff remains standard.",
+  "surface_characteristics": [
+    "compilation_passes",
+    "public_tests_pass",
+    "textual_merge_is_clean",
+    "diff_is_small"
+  ],
+  "validation": {
+    "compile": "pass",
+    "public_tests": "pass",
+    "semantic_oracle": "fail",
+    "final": "negative",
+    "oracle_command": "python -m unittest oracle_semantic",
+    "oracle_exit_code": 1
+  }
+}

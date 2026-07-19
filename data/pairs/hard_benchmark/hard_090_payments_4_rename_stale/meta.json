@@ -1,0 +1,6 @@
+{
+  "pair": "hard_090_payments_4_rename_stale",
+  "conflict_type": "rename_stale_reference",
+  "ground_truth": "conflict",
+  "generator": "quorum.hard_benchmark"
+}

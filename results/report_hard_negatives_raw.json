@@ -1,0 +1,58 @@
+{
+  "corpus": "hard_negatives_raw",
+  "run": "run_20260718T224427Z.json",
+  "n": 100,
+  "labels": {
+    "conflict": 100
+  },
+  "systems": {
+    "Baseline": {
+      "TP": 0,
+      "FP": 0,
+      "TN": 0,
+      "FN": 100,
+      "escalate": 0,
+      "accuracy": 0.0,
+      "precision": 0,
+      "recall": 0.0,
+      "specificity": 0,
+      "f1": 0,
+      "balanced_accuracy": 0.0,
+      "mcc": 0,
+      "coverage": 1.0,
+      "escalation_rate": 0.0
+    },
+    "Majority": {
+      "TP": 100,
+      "FP": 0,
+      "TN": 0,
+      "FN": 0,
+      "escalate": 0,
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "specificity": 0,
+      "f1": 1.0,
+      "balanced_accuracy": 0.5,
+      "mcc": 0,
+      "coverage": 1.0,
+      "escalation_rate": 0.0
+    },
+    "Committee": {
+      "TP": 83,
+      "FP": 0,
+      "TN": 0,
+      "FN": 17,
+      "escalate": 14,
+      "accuracy": 0.83,
+      "precision": 1.0,
+      "recall": 0.83,
+      "specificity": 0,
+      "f1": 0.9071038251366119,
+      "balanced_accuracy": 0.415,
+      "mcc": 0,
+      "coverage": 0.86,
+      "escalation_rate": 0.14
+    }
+  }
+}

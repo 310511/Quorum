@@ -1,0 +1,14 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "hard_benchmark_verified",
+  "conflict_type": "exception_contract",
+  "notes": "Branch A changes exception type; Branch B still catches the old type",
+  "validation": {
+    "branch_a_tests": "pass",
+    "branch_b_tests": "pass",
+    "merged_tests": "fail",
+    "compilation": "pass",
+    "merged_test_output": "test_bad (test_warehouse_2_guard.GuardTests) ... ok\ntest_ok (test_warehouse_2_guard.GuardTests) ... ok\ntest_warehouse_2_handler (unittest.loader._FailedTest) ... ERROR\n\n======================================================================\nERROR: test_warehouse_2_handler (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_warehouse_2_handler\nTraceback (most recent call last):\n  File \"C:\\Users\\punya mittal\\AppData\\Local\\Programs\\Python\\Python310\\lib\\unittest\\loader.py\", line 436, in _find_test_path\n    module = self._get_module_from_name(name)\n  File \"C:\\Users\\punya mittal\\AppData\\Local\\Programs\\Python\\Python310\\lib\\unittest\\loader.py\", line 377, in _get_module_from_name\n    __import__(name)\n  File \"C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-bm6m1uum\\repo\\test_warehouse_2_handler.py\", line 2, in <module>\n    from warehouse_2_handler import safe_warehouse_2\n  File \"C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-bm6m1uum\\repo\\warehouse_2_handler.py\", line 1, in <module>\n    from warehouse_2_guard import ensure_warehouse_2_positive, Warehouse_2Error\nImportError: cannot import name 'Warehouse_2Error' from 'warehouse_2_guard' (C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-bm6m1uum\\repo\\warehouse_2_guard.py)\n\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (errors=1)"
+  }
+}

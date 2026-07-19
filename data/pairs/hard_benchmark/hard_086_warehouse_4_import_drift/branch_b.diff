@@ -1,0 +1,19 @@
+--- a/test_warehouse_4_pipeline.py
++++ b/test_warehouse_4_pipeline.py
+@@ -0,0 +1,9 @@
++import unittest
++from warehouse_4_pipeline import pipeline_key
++
++class PipelineTests(unittest.TestCase):
++    def test_key(self):
++        self.assertEqual(pipeline_key(" X "), "key:x")
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/warehouse_4_pipeline.py
++++ b/warehouse_4_pipeline.py
+@@ -0,0 +1,4 @@
++from warehouse_4_utils import normalize_warehouse_4_token
++
++def pipeline_key(value):
++    return "key:" + normalize_warehouse_4_token(value)

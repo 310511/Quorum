@@ -1,0 +1,19 @@
+--- a/search_1_scorecard.py
++++ b/search_1_scorecard.py
+@@ -0,0 +1,4 @@
++from search_1_service import fetch_search_1_record
++
++def score_for(item_id):
++    return fetch_search_1_record(item_id)["score"] + 10
+--- a/test_search_1_scorecard.py
++++ b/test_search_1_scorecard.py
+@@ -0,0 +1,9 @@
++import unittest
++from search_1_scorecard import score_for
++
++class ScorecardTests(unittest.TestCase):
++    def test_score(self):
++        self.assertEqual(score_for(3), 11)
++
++if __name__ == "__main__":
++    unittest.main()

@@ -1,0 +1,8 @@
+diff --git a/limits_003.py b/limits_003.py
+index dfd4cc5..8ae0cd4 100644
+--- a/limits_003.py
++++ b/limits_003.py
+@@ -1,2 +1,2 @@
+ def resolve_limit_003(value: int | None) -> int:
+-    return 83 if value is None else value
++    return 0 if value is None else value

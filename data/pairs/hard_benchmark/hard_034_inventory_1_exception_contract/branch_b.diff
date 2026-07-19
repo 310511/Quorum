@@ -1,0 +1,23 @@
+--- a/inventory_1_handler.py
++++ b/inventory_1_handler.py
+@@ -0,0 +1,7 @@
++from inventory_1_guard import ensure_inventory_1_positive, Inventory_1Error
++
++def safe_inventory_1(value):
++    try:
++        return ensure_inventory_1_positive(value)
++    except Inventory_1Error:
++        return 0
+--- a/test_inventory_1_handler.py
++++ b/test_inventory_1_handler.py
+@@ -0,0 +1,10 @@
++import unittest
++from inventory_1_handler import safe_inventory_1
++
++class HandlerTests(unittest.TestCase):
++    def test_safe(self):
++        self.assertEqual(safe_inventory_1(0), 0)
++        self.assertEqual(safe_inventory_1(4), 4)
++
++if __name__ == "__main__":
++    unittest.main()

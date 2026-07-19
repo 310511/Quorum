@@ -1,0 +1,2041 @@
+[
+  {
+    "benchmark_id": "hard_000_profile_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test cases in Branch B fail because they expect compute_profile_total while the merged codebase calls compute_profile_total_v2."
+    ],
+    "reasoning": "The merge of Branch A (renaming compute_profile_total to compute_profile_total_v2) and Branch B (adding a function report_line that calls compute_profile_total) would result in a semantic conflict because the caller of compute_profile_total is now different. This could lead to incorrect results when calling format_total, as it expects compute_profile_total to be present but it's actually being called with compute_profile_total_v2.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_001_metrics_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A modifies `build_metrics_payload` with keyword-only arguments, but Branch B calls this function using positional arguments."
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because Branch A changes the function signature to use keyword-only arguments while Branch B still uses positional arguments.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_002_checkout_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff of Branch A shows that it moves the function definition from `checkout_utils.py` to `checkout_tokens.py`",
+      "The diff of Branch B still imports the function from its original location (`checkout_utils.py`)",
+      "Running tests in Branch B fails because it expects `normalize_checkout_token` to be defined in `checkout_utils.py`"
+    ],
+    "reasoning": "Branch A moves the function `normalize_checkout_token` to a different file (`checkout_tokens.py`) while Branch B still imports it from its original location (`checkout_utils.py`). This is a semantic conflict because the merged code will fail when run, as the tests in Branch B expect `normalize_checkout_token` to be defined in `checkout_utils.py`.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_003_cache_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A changes the return contract of fetch_cache_record and Branch B adds a new function score_for which uses the same item_id as fetch_cache_record but accesses 'score' from the returned payload instead of directly."
+    ],
+    "reasoning": "The merge of Branch A (nested score) and Branch B (top-level score) would result in a semantic conflict because the tests for `test_record` in Branch A expect to find 'score' while the tests for `test_status` in Branch B expect to find 'meta.score'. This is not compatible with each other.",
+    "rules_that_fired": [
+      "cited_conflict_type:return_contract"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_004_ledger_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A modifies an exception class (LedgerError -> LedgerGone) used in Branch B's tests."
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because Branch A changes the exception type that Branch B catches.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_005_analytics_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A changes DEFAULT_LIMIT from 10 to 3 in `analytics_config.py`",
+      "Branch B depends on the old default limit of 10 in `preview_analytics()` function in `analytics_ui.py`"
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 in `analytics_config.py` while Branch B depends on the old default limit of 10 in `preview_analytics()` function in `analytics_ui.py`. This semantic conflict means that when both branches are merged, the combined result will not work as expected because the test cases expect a list with length 3 (the new default limit) but it gets a list of length 10 (old default limit).",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_006_warehouse_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A renames `compute_warehouse_total` to `compute_warehouse_total_v2`",
+      "Branch B adds `report_line` that uses `compute_warehouse_total`"
+    ],
+    "reasoning": "Branch A renames `compute_warehouse_total` to `compute_warehouse_total_v2` in the test file but calls the old name `compute_warehouse_total` in the implementation of `format_total`. Branch B adds a new function `report_line` that uses `compute_warehouse_total`, which is not present in Branch A's codebase. Therefore, there is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_007_search_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch B, 'client_order' is using the old 'build_search_payload' with a positional argument that was present in Branch A but not in Branch B. This would lead to a semantic conflict if merged together."
+    ],
+    "reasoning": "The merged codebase would have a semantic conflict because Branch B still uses the old positional argument order in `build_search_payload` function while Branch A changes its signature to use keyword-only arguments.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_008_parser_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch B imports parser_utils while Branch A moves the function to parser_tokens.py",
+      "Merged tests fail (semantic conflict)"
+    ],
+    "reasoning": "Branch B imports parser_utils while Branch A moves the function to parser_tokens.py. This means that when Branch B is merged into the codebase, there will be no longer a definition of normalize_parser_token in scope for Branch A's tests. As such, this results in a semantic conflict.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_009_pricing_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch B adds a new function score_for which expects the 'score' field directly from fetch_pricing_record(item_id), while Branch A changes the return value of fetch_pricing_record(item_id) to include it under a nested 'meta' object."
+    ],
+    "reasoning": "The merge of Branch A (nested score under meta) and Branch B (score + 10) would result in a semantic conflict because the tests for Branch B expect to get the 'score' field directly from fetch_pricing_record(item_id), while Branch A returns it as part of a nested 'meta' object. This discrepancy is logically incorrect and will cause the merged tests to fail.",
+    "rules_that_fired": [
+      "cited_validation_paraphrase"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_010_payments_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A changes the exception class being raised, while Branch B still catches PaymentsError from ensure_payments_positive. This is a semantic conflict as they do not overlap on the same lines but the merged result would be logically broken."
+    ],
+    "reasoning": "The changes in Branch A (renaming of exception type) and Branch B (catching the new exception type) conflict semantically with each other. The tests for Branch A pass but fail for Branch B because it catches exceptions that are not thrown by ensure_payments_positive anymore.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_011_catalog_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A modifies DEFAULT_LIMIT and Branch B uses this value in its test cases."
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 while Branch B still assumes the old default of 10. This results in a semantic conflict as the tests for Branch B will fail when run with the merged codebase.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_012_shipping_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A renames `compute_shipping_total` to `compute_shipping_total_v2`",
+      "Branch B adds `report_line` function that calls `compute_shipping_total`"
+    ],
+    "reasoning": "Branch A renames `compute_shipping_total` to `compute_shipping_total_v2` in the core module and Branch B adds a new function that calls `compute_shipping_total`. This is a semantic conflict because the tests for `compute_shipping_total` will fail when both branches are merged.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_013_routing_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In routing_api.py, Branch A modifies build_routing_payload() to take two keyword-only arguments: 'quantity' and 'priority', while Branch B's client_order() call in test_routing_client.py still uses positional argument passing for the same function."
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because Branch A changes the function signature to use keyword-only arguments while Branch B still uses positional arguments in its calls.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_014_inventory_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff of Branch B includes a new file (inventory_pipeline.py) and its associated test file (test_inventory_pipeline.py). This is not present in the diff for Branch A."
+    ],
+    "reasoning": "Branch B adds new functionality that Branch A does not have. The tests for Branch A pass but the merged tests fail because they are expecting the `normalize_inventory_token` function from Branch B's codebase.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_015_tickets_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The function `fetch_tickets_record` has different return contracts in both branches."
+    ],
+    "reasoning": "The merged codebase would have a semantic conflict because the function `fetch_tickets_record` in Branch A returns a dictionary with key 'meta' and its value being another dictionary containing the score whereas in Branch B it directly returns the score under the top-level. This is a semantic difference which leads to logically incorrect results when tests are run on merged codebase.",
+    "rules_that_fired": [
+      "cited_conflict_type:return_contract"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_016_scheduler_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A changes exception type; Branch B still catches the old type",
+      "Branch A tests pass, Branch B tests pass, but merged tests fail (semantic conflict)"
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because the exception type used in Branch A (SchedulerGone) is not caught by the tests in Branch B (which still catch SchedulerError). This means that if both branches are merged together, the combined result will fail its own test suite.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_017_notifier_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A modifies DEFAULT_LIMIT and Branch B adds a test case using the old default length."
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3, while Branch B still uses the old default of 10 in its tests. This results in a semantic conflict as the merged code will fail when run with the new default limit.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_018_billing_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff shows that Branch A renames `compute_billing_total` while Branch B adds a new function `report_line` which calls `compute_billing_total`."
+    ],
+    "reasoning": "Branch A renames `compute_billing_total` to `compute_billing_total_v2` in `billing_core.py` and Branch B adds a new function `report_line` that calls `compute_billing_total`, which is not present in the renamed version of `compute_billing_total`. This creates a semantic conflict as the tests for `test_format` in Branch A will fail when it tries to call `compute_billing_total_v2` instead of `compute_billing_total`.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_019_auth_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that the functions have different signatures, which leads to a semantic conflict."
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because the function `build_auth_payload` in Branch A now requires a keyword argument 'priority' while the function `client_order` in Branch B still uses positional arguments and defaults for this parameter. This is a clear semantic break.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_020_profile_1_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff of Branch A shows that the function `normalize_profile_1_token` has been renamed. The diff of Branch B uses this renamed function in its tests."
+    ],
+    "reasoning": "The merge of Branch A (renaming `normalize_profile_1_token`) and Branch B (using `normalize_profile_1_token` from the renamed function in `pipeline_key`) would result in a semantic conflict. The tests for Branch B will fail because they expect `normalize_profile_1_token` to be defined, but it is moved to Branch A and not present in Branch B.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_021_metrics_1_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff shows that the return contract of fetch_metrics_1_record has changed from returning a simple score to returning a nested meta-score",
+      "The test cases in Branch B expect a flat dictionary structure while Branch A returns a nested one"
+    ],
+    "reasoning": "The merged codebase would have a semantic conflict because the function `fetch_metrics_1_record` in Branch A returns a nested dictionary structure while the function `score_for` in Branch B expects a flat dictionary structure. This is a clear semantic difference and can lead to runtime errors.",
+    "rules_that_fired": [
+      "cited_conflict_type:return_contract"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_022_checkout_1_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The exception types in both branches are different",
+      "Branch A's tests fail when merged into a codebase where Branch B passes",
+      "Branch B's tests pass when merged into a codebase where Branch A fails"
+    ],
+    "reasoning": "The exception types in both branches are different, which leads to a semantic conflict when the code is merged. The tests for Branch B pass because they catch and handle the new type of exceptions correctly, but the tests for Branch A fail because they expect to catch the old type of exceptions.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_023_cache_1_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A modifies DEFAULT_LIMIT and its usage, while Branch B has no changes to this variable but still calls page_cache_1() with an assumed default limit of 10. This is the only semantic difference between the two branches."
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 while Branch B still assumes the old default of 10. This results in a semantic conflict as the tests for Branch B will fail when merged with Branch A.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_024_ledger_1_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A renames `compute_ledger_1_total`",
+      "Branch B adds a caller of `compute_ledger_1_total`"
+    ],
+    "reasoning": "Branch A renames `compute_ledger_1_total` to `compute_ledger_1_total_v2` and Branch B adds a caller of `compute_ledger_1_total`. This semantic conflict means that the merged code will not work as expected because it tries to use both versions of `compute_ledger_1_total` at once.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_025_analytics_1_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test cases in Branch B fail because they expect the 'quantity' argument to be passed positionally, which has been removed in Branch A."
+    ],
+    "reasoning": "Branch A changes the function signature to use keyword-only arguments while Branch B still uses positional arguments. This is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_026_warehouse_1_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch B imports 'normalize_warehouse_1_token' from 'warehouse_1_utils.py' in its test file",
+      "This function is used in the main code of Branch B ('pipeline_key')",
+      "There is no equivalent function in Branch A"
+    ],
+    "reasoning": "Branch B imports `normalize_warehouse_1_token` from `warehouse_1_utils` in its test file and uses it in the main code of Branch B (`pipeline_key`). This function is not present in Branch A, which only renames this function to `normalize_warehouse_1_token` in a different module. Therefore, there's no way for Branch A to run without encountering an error when trying to use the renamed version of the function from Branch B.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_027_search_1_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff shows that the return contract of `fetch_search_1_record` function has changed from a flat structure to a nested one under 'meta' key."
+    ],
+    "reasoning": "The merged codebase would have a semantic conflict because the function `fetch_search_1_record` in Branch A returns a nested payload under 'meta' key while the test cases in Branch B expect to find the score at top level. This is not compatible with how the tests are written in Branch B.",
+    "rules_that_fired": [
+      "cited_conflict_type:return_contract"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_028_parser_1_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch B uses Parser_1Error, but Branch A uses Parser_1Gone",
+      "Merged codebase will fail tests if not handled correctly"
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because Branch B is catching exceptions of type Parser_1Error while Branch A throws exceptions of type Parser_1Gone. This mismatch in exception handling can lead to runtime errors.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_029_pricing_1_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch A, DEFAULT_LIMIT is changed from 10 to 3",
+      "In Branch B, test_preview still uses default limit of 10"
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 while Branch B still uses the old default of 10 in its tests. This results in a semantic conflict as the merged code will fail when run with the new configuration.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_030_payments_1_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch B adds a function that calls `compute_payments_1_total`, but both tests pass for Branch A",
+      "The merged codebase will fail its own tests because the call to `compute_payments_1_total` is not renamed in `format_total` method of Branch A"
+    ],
+    "reasoning": "Branch A renames `compute_payments_1_total` to `compute_payments_1_total_v2` in `payments_1_core.py` and Branch B adds a function that calls `compute_payments_1_total`, but both tests pass for Branch A. The merged codebase will fail its own tests because the call to `compute_payments_1_total` is not renamed in `format_total` method of Branch A.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_031_catalog_1_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch B, `client_order(name)` calls `build_catalog_1_payload(name, 5)` with positional argument",
+      "In Branch A, `build_catalog_1_payload(name, *, quantity, priority)` is used"
+    ],
+    "reasoning": "Branch B uses the old positional argument signature in `build_catalog_1_payload` function while Branch A changes it to use keyword-only arguments. This semantic conflict will cause a failure of tests that depend on the old behavior.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_032_shipping_1_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The function `normalize_shipping_1_token` was moved in Branch A, so it's no longer available to be imported by Branch B",
+      "Branch B has tests that depend on the original location of `normalize_shipping_1_token`"
+    ],
+    "reasoning": "Branch A moves the function `normalize_shipping_1_token` to a different file (`shipping_1_tokens.py`) while Branch B still imports it from its original location (`shipping_1_utils.py`). This is a semantic conflict because the merged code will fail tests that were passing for Branch A but not for Branch B.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_033_routing_1_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The return contracts of `fetch_routing_1_record` have changed",
+      "A new function `score_for(item_id)` is added"
+    ],
+    "reasoning": "The changes in Branch A modify the return contract of `fetch_routing_1_record` to include a nested 'meta' field and remove the top-level 'score'. This change is not reflected in the tests for `status_of(item_id)`. The change in Branch B, on the other hand, adds a new function `score_for(item_id)` that uses the old contract to access the 'score' field. These two changes are semantically incompatible because they use different parts of the codebase.",
+    "rules_that_fired": [
+      "cited_conflict_type:return_contract"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_034_inventory_1_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A modifies an exception class, but Branch B has not been updated accordingly",
+      "Merged codebase would fail semantic tests"
+    ],
+    "reasoning": "The merged codebase would have a semantic conflict because Branch A changes the exception type from `Inventory_1Error` to `Inventory_1Gone` and Branch B still catches this old exception type in its tests.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_035_tickets_1_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch A: `tickets_1_config.py`, DEFAULT_LIMIT is changed from 10 to 3.",
+      "In Branch B: `test_preview()` in `tickets_1_ui.py` still uses the old default length of 10."
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 in `tickets_1_config.py` while Branch B still asserts that the old default length of 10 is used in `test_preview()` method of `tickets_1_ui.py`, which leads to a semantic conflict because the test case expects the output list to be of length 10 (the old default limit) but gets a list of length 3 (the new default limit).",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_036_scheduler_1_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A renames `compute_scheduler_1_total` to `compute_scheduler_1_total_v2`",
+      "Branch B adds a caller of the renamed function"
+    ],
+    "reasoning": "Branch A renames `compute_scheduler_1_total` to `compute_scheduler_1_total_v2` and Branch B adds a caller of the renamed function. This semantic conflict means that when both branches are merged together, there will be two different functions with the same name in the codebase.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_037_notifier_1_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test cases in Branch B fail because it expects 'quantity' and 'priority' as named parameters, but they are passed positionally."
+    ],
+    "reasoning": "Branch A changes the function signature to use keyword-only arguments while Branch B still uses positional arguments. This is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_038_billing_1_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff of Branch A shows that it moves the function definition from `billing_1_utils.py` to `billing_1_tokens.py`",
+      "The diff of Branch B still imports the function from its original location (`billing_1_utils.py`)",
+      "Running tests in Branch B fails because it expects `normalize_billing_1_token` to be defined in `billing_1_utils.py`"
+    ],
+    "reasoning": "Branch A moves the function `normalize_billing_1_token` to a new file (`billing_1_tokens.py`) while Branch B still imports it from its original location (`billing_1_utils.py`). This is a semantic conflict because the merged code will fail when run, as the tests in Branch B expect `normalize_billing_1_token` to be defined in `billing_1_utils.py`.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_039_auth_1_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The change to 'fetch_auth_1_record' in Branch A breaks the test in Branch B",
+      "The addition of 'score_for' function in Branch B breaks the test in Branch A"
+    ],
+    "reasoning": "The changes in Branch A (nested score under meta) and Branch B (score_for function) are semantically conflicting with each other. The tests of Branch A still pass if we ignore the change to 'fetch_auth_1_record' but when Branch B is merged, it will break the test in Branch A because 'status_of' now calls 'fetch_auth_1_record' with a key 'score', which does not exist anymore. Therefore, there is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_040_profile_2_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A modifies an exception class used by another branch (Branch B) that it does not handle."
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because Branch A changes the exception type being thrown in one function while Branch B still catches and handles the old exception type.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_041_metrics_2_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch A, DEFAULT_LIMIT is changed from 10 to 3",
+      "In Branch B, test_preview still uses default limit of 10"
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 while Branch B still uses the old default of 10 in its tests. This results in a semantic conflict because the merged code will fail when run with the new configuration.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_042_checkout_2_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A renames a function",
+      "Branch B uses renamed function"
+    ],
+    "reasoning": "Branch A renames `compute_checkout_2_total` to `compute_checkout_2_total_v2` and Branch B calls the old name in its tests. This semantic conflict means that if both branches are merged together, the combined result will be logically incorrect.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_043_cache_2_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A modifies `build_cache_2_payload` with keyword-only arguments, which Branch B does not handle correctly in its tests."
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because Branch A changes the function signature to use keyword arguments while Branch B still uses positional arguments.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_044_ledger_2_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The function definition in Branch A has moved from `ledger_2_utils.py` to `ledger_2_tokens.py`",
+      "Branch B still imports the function from its original location (`ledger_2_utils.py`)",
+      "The test cases in Branch A are not updated to use the new definition of `normalize_ledger_2_token`"
+    ],
+    "reasoning": "Branch A moves the function `normalize_ledger_2_token` to a different file (`ledger_2_tokens.py`) and Branch B still imports it from its original location (`ledger_2_utils.py`). This is a semantic conflict because the merged code will have two definitions of `normalize_ledger_2_token`, which could lead to unexpected behavior at runtime.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_045_analytics_2_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test cases in Branch B fail because they expect to get the 'score' key from `fetch_analytics_2_record`. The changes in Branch A return different keys: 'meta' -> 'score'. This semantic difference affects how data is accessed and used, leading to a semantic conflict."
+    ],
+    "reasoning": "The changes in Branch A affect the way `fetch_analytics_2_record` returns data, which is used by both tests in Branch B and those in Branch A. Therefore, a merge of these two branches would result in a semantic conflict because the test cases in Branch B will fail when they expect to get the 'score' key from `fetch_analytics_2_record` instead of getting the 'meta' -> 'score'. This is not just a syntactical change, but also affects how data is accessed and used.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_046_warehouse_2_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test cases in Branch B are designed to catch and handle Warehouse_2Error, but the new exception type introduced by Branch A (Warehouse_2Gone) is not caught in any of the tests."
+    ],
+    "reasoning": "Branch B modifies the behavior of the codebase by introducing a new exception type (Warehouse_2Gone) that is not caught in Branch A's tests. This semantic conflict would occur if both branches were merged together.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_047_search_2_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A changes DEFAULT_LIMIT from 10 to 3 and Branch B asserts old default length",
+      "The test cases in Branch A expect a list with 3 elements while those in Branch B expect a list with 10 elements"
+    ],
+    "reasoning": "The changes in Branch A (changing the default limit from 10 to 3) and Branch B (asserting that the old default length is still used) are semantically conflicting because they both affect the behavior of the same function `page_search_2`. The test case for `ConfigTests.test_page` in Branch A expects the output to be a list with 3 elements, while the test case for `UiTests.test_preview` in Branch B expects the output to be a list with 10 elements. This semantic conflict means that if both branches are merged together, the combined result will fail the tests.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_048_parser_2_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The rename of `compute_parser_2_total` to `compute_parser_2_total_v2` in Branch A",
+      "The addition of a caller of `compute_parser_2_total` in Branch B"
+    ],
+    "reasoning": "Branch A renames `compute_parser_2_total` to `compute_parser_2_total_v2` in `parser_2_core.py` and Branch B adds a caller of `compute_parser_2_total` in `parser_2_report.py`, which would cause semantic conflict because the tests for `compute_parser_2_total` are only defined in one place (Branch A). Merging these two branches together will result in a broken codebase where the renamed function is not called anywhere else.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_049_pricing_2_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test cases in Branch B fail because they are expecting keyword arguments that do not exist in Branch A."
+    ],
+    "reasoning": "Branch A changes the function signature to use keyword-only arguments while Branch B still uses positional arguments. This is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_050_payments_2_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A moves a function while Branch B still imports it from its original location."
+    ],
+    "reasoning": "Branch A moves the function `normalize_payments_2_token` to a new file (`payments_2_tokens.py`) while Branch B still imports it from its original location (`payments_2_utils.py`). This is a semantic conflict because the merged code will fail when run, as the tests in `test_payments_2_utils.py` expect `normalize_payments_2_token` to be defined in `payments_2_utils.py`.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_051_catalog_2_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A modifies `fetch_catalog_2_record` to return a nested dictionary, while Branch B uses the top-level score from this function in its tests."
+    ],
+    "reasoning": "The merge of Branch A (nested score under meta) and Branch B (top-level score) would result in a semantic conflict because the tests for Branch B expect top-level 'score' while Branch A returns nested 'meta' with 'score'. This is not compatible semantically.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_052_shipping_2_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A changes the exception type, while Branch B's tests are expecting the old exception type."
+    ],
+    "reasoning": "Branch A changes the exception type from `Shipping_2Error` to `Shipping_2Gone` in both the definition and usage of this function. Branch B still catches the old exception type in its test cases. This is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_053_routing_2_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch A, DEFAULT_LIMIT is changed from 10 to 3",
+      "In Branch B, test_preview checks for a list of length 10",
+      "Merging these two branches will result in a failure"
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3, while Branch B depends on the old default limit of 10 in its tests. This results in a semantic conflict when both branches are merged.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_054_inventory_2_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A renames `compute_inventory_2_total` to `compute_inventory_2_total_v2`",
+      "Branch B uses the old name in its tests"
+    ],
+    "reasoning": "Branch A renames `compute_inventory_2_total` to `compute_inventory_2_total_v2` and Branch B uses the old name in its tests. This semantic conflict means that when both branches are merged, the combined code will not behave as expected because it is using an outdated reference to a function.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_055_tickets_2_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test in Branch A passes, but the test in Branch B fails because it uses the old signature of `build_tickets_2_payload`."
+    ],
+    "reasoning": "Branch A changes the function signature of `build_tickets_2_payload` to include a keyword-only argument 'priority', while Branch B still calls this function with positional arguments. This is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_056_scheduler_2_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff of Branch B shows its addition of 'normalize_scheduler_2_token' function in scheduler_2_pipeline.py and test cases in test_scheduler_2_pipeline.py which are not present in Branch A."
+    ],
+    "reasoning": "Branch B adds new functionality that Branch A does not have. The tests for the combined codebase will fail because it expects a different behavior than what is provided by Branch A.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_057_notifier_2_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A modifies return contract of `fetch_notifier_2_record`",
+      "Branch B's tests fail because it expects the top-level 'score'"
+    ],
+    "reasoning": "The changes in Branch A modify the return contract of `fetch_notifier_2_record` to include a nested 'meta' field and remove the top-level 'score'. This change is not reflected in the tests in Branch B that expect the top-level 'score'. Therefore, there is a semantic conflict. The evidence points directly to the diffs.",
+    "rules_that_fired": [
+      "cited_conflict_type:return_contract"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_058_billing_2_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff shows that Branch A changes the exception type from `Billing_2Error` to `Billing_2Gone`",
+      "Branch B's test case still uses `Billing_2Error`"
+    ],
+    "reasoning": "Branch A changes the exception type from `Billing_2Error` to `Billing_2Gone` in both the definition and usage of this function. Branch B still catches the old exception type in its tests, leading to a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_059_auth_2_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch A diff, DEFAULT_LIMIT is changed from 10 to 3",
+      "In Branch B diff, it still asserts the old default length of 10"
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 while Branch B still asserts the old default length of 10. This semantic conflict means that when both branches are merged together, the combined result will be logically incorrect.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_060_profile_3_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The function name change and caller of `compute_profile_3_total` in Branch B would cause semantic conflict."
+    ],
+    "reasoning": "Branch A renames `compute_profile_3_total` to `compute_profile_3_total_v2` in `profile_3_core.py` and Branch B adds a caller of `compute_profile_3_total` in `profile_3_report.py`, which would cause semantic conflict because the tests for `compute_profile_3_total` are only defined in one place (Branch A). Merging these two branches together will result in a test failure.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_061_metrics_3_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test cases in Branch B fail because they are expecting keyword arguments that do not exist in Branch A."
+    ],
+    "reasoning": "Branch A changes the function signature to use keyword-only arguments while Branch B still uses positional arguments. This is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_062_checkout_3_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The function `normalize_checkout_3_token` has been moved from one location to another in Branch A and still imported from its old location in Branch B."
+    ],
+    "reasoning": "Branch A moves the function `normalize_checkout_3_token` to a new file (`checkout_3_tokens.py`) and Branch B still imports it from its old location (`checkout_3_utils.py`). This is a semantic conflict because the two branches have different ways of handling the same problem, leading to inconsistent behavior when both are merged together.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_063_cache_3_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test_record method of ServiceTests expects 'score', but fetch_cache_3_record(item_id)['meta']['score'] is returned in Branch A",
+      "The score_for method of ScorecardTests expects a top-level 'score' (not nested), but fetch_cache_3_record(item_id)['score'] is returned in Branch B"
+    ],
+    "reasoning": "The merge of Branch A (nested score) and Branch B (top-level score) would result in a semantic conflict because the tests for Branch B expect the top-level 'score' while Branch A returns nested 'meta.score'. This is not compatible with how the tests are currently written.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_064_ledger_3_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch B's test cases do not cover the new exception type",
+      "Merging Branch A and Branch B results in failed tests"
+    ],
+    "reasoning": "Branch A changes the exception type from `Ledger_3Error` to `Ledger_3Gone` in ledger_3_guard.py and uses this new exception type in ensure_ledger_3_positive function. Branch B still catches the old exception type, Ledger_3Error, but it does not handle the new exception type, Ledger_3Gone. As a result, when both branches are merged together, the combined code will fail to pass tests that were passing for branch A alone.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_065_analytics_3_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A changes DEFAULT_LIMIT from 10 to 3",
+      "Branch B relies on old default limit of 10 in its tests"
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 in `analytics_3_config.py` while Branch B relies on the old default limit of 10 in its tests for `preview_analytics_3()` function in `test_analytics_3_ui.py`. This semantic conflict means that when both branches are merged, the combined result will not work as expected because the test case expects a list with length 10 but gets a list with length 3.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_066_warehouse_3_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A renames a function",
+      "Branch B calls the renamed function"
+    ],
+    "reasoning": "Branch A renames the function `compute_warehouse_3_total` to `compute_warehouse_3_total_v2` and Branch B uses this renamed function in its tests. This semantic conflict means that if both branches are merged together, the combined result will not be logically correct.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_067_search_3_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch A, `build_search_3_payload` has been updated to require a keyword argument 'priority'. In Branch B, the function `client_order` calls `build_search_3_payload` with positional arguments. This is a semantic conflict because the two branches have different ways of calling the same function."
+    ],
+    "reasoning": "The function `build_search_3_payload` in Branch A now requires a keyword argument 'priority' while the function `client_order` in Branch B still uses positional arguments to call this function. This is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_068_parser_3_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff of Branch A shows that the function `normalize_parser_3_token` is renamed to `normalize_parser_3_token` in parser_3_tokens.py, but its usage remains in parser_3_utils.py and tests.",
+      "The diff of Branch B shows that it adds a new function (`pipeline_key`) which uses the renamed function `normalize_parser_3_token` from Branch A."
+    ],
+    "reasoning": "Branch B adds a new function (`pipeline_key`) that uses `normalize_parser_3_token` from Branch A's renamed function. This is a semantic conflict because the original code in parser_3_utils.py still expects this function to be named 'normalize_parser_3_token', not 'normalize_parser_3_token'. The tests for parser_3_utils.py will fail if Branch B's changes are merged.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_069_pricing_3_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [],
+    "reasoning": "The changes in Branch A modify the return contract of `fetch_pricing_3_record` to include a nested 'meta' field and remove the top-level 'score'. This change is not reflected in the tests for `status_of(item_id)`. The change in Branch B adds a new function, `score_for(item_id)`, which uses the old contract of `fetch_pricing_3_record(item_id)[",
+    "rules_that_fired": [
+      "cited_conflict_type:return_contract"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_070_payments_3_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A changes the exception handling",
+      "Branch B still catches the old exception type"
+    ],
+    "reasoning": "Branch A changes the exception type from Payments_3Error to Payments_3Gone in payments_3_guard.py and tests in test_payments_3_guard.py. Branch B still catches this old exception type in its handler code. As a result, when both branches are merged together, the combined result will fail semantically because the new exception type Payments_3Gone is not caught by any of the tests.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_071_catalog_3_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test cases in Branch B expect the length of the returned list to be 10, but this is not covered by changes made in Branch A."
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 while Branch B relies on the old default of 10 in its tests. This results in a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_072_shipping_3_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch A, the function name is changed from 'compute_shipping_3_total' to 'compute_shipping_3_total_v2'. In Branch B, it calls this renamed function. This semantic conflict would cause a failure in the merged tests."
+    ],
+    "reasoning": "Branch A renames the function `compute_shipping_3_total` to `compute_shipping_3_total_v2` and Branch B calls this renamed function. This semantic conflict would cause a failure in the merged tests.",
+    "rules_that_fired": [
+      "cited_validation_paraphrase"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_073_routing_3_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The function signatures in both branches are different"
+    ],
+    "reasoning": "Branch A changes the function signature to use keyword-only arguments while Branch B still uses positional arguments. This is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_074_inventory_3_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The function signature of `normalize_inventory_3_token` has changed location",
+      "Tests in Branch B now import from a different file than what they were originally written for"
+    ],
+    "reasoning": "Branch A moves the function `normalize_inventory_3_token` to a different file (`inventory_3_tokens.py`) while Branch B still imports it from its original location (`inventory_3_utils.py`). This results in a semantic conflict because the tests that were written for `normalize_inventory_3_token` will fail when run with the merged codebase.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_075_tickets_3_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A modifies the return of fetch_tickets_3_record to include meta, and Branch B uses the top level score."
+    ],
+    "reasoning": "The branches contain conflicting changes that would lead to a semantic conflict when merged together. Branch A modifies the way `fetch_tickets_3_record` returns data by nesting it under 'meta', while Branch B relies on the top-level score from `fetch_tickets_3_record`. This is a clear semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_076_scheduler_3_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A changes the exception type; Branch B still catches the old type"
+    ],
+    "reasoning": "The exception type in Branch A is different from the one used in Branch B. This semantic conflict could lead to runtime errors when trying to catch exceptions of a different class.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_077_notifier_3_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A modifies DEFAULT_LIMIT and Branch B has test cases that depend on this value."
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 while Branch B depends on the old default limit of 10 in its tests. This results in a semantic conflict when both branches are merged together.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_078_billing_3_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch A diff, `compute_billing_3_total` is renamed to `compute_billing_3_total_v2`",
+      "In Branch B diff, the test in `test_format` calls `compute_billing_3_total` instead of `compute_billing_3_total_v2`"
+    ],
+    "reasoning": "Branch A renames `compute_billing_3_total` to `compute_billing_3_total_v2` and Branch B uses the old name in its tests. This semantic conflict means that when both branches are merged together, the code will fail because it's trying to call a function with an incorrect name.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_079_auth_3_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In the diff of Branch A, 'quantity' is changed from being a positional argument to a keyword-only argument. In the diff of Branch B, 'quantity' is still passed as a positional argument even though it was defined with keyword-only arguments in Branch A.",
+      "In the test for `test_payload` in Branch B, it calls `build_auth_3_payload` without specifying the 'priority' parameter. This will result in an error because the function definition in Branch A requires this parameter to be specified as a keyword argument.",
+      "In the test for `test_summarize` in Branch B, it calls `summarize` with no arguments and expects the return value to be 1. However, since `build_auth_3_payload` has been changed to use keyword-only arguments in Branch A, this will result in an error."
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because Branch A changes the function signature to use keyword-only arguments while Branch B still uses positional arguments in its calls.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_080_profile_4_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The test cases in `test_profile_4_utils` and `test_profile_4_pipeline` of Branch B expect `normalize_profile_4_token` to be imported from `profile_4_utils`. If it is moved to `profile_4_tokens`, these tests will fail."
+    ],
+    "reasoning": "The merge of Branch A (renaming `normalize_profile_4_token`) and Branch B (importing `profile_4_utils`) would result in a semantic conflict because the renamed function is used in tests from Branch B which are expected to pass with the original import from Branch A. This means that if both branches were merged, the tests would fail.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_081_metrics_4_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch B modifies the API by adding a new function",
+      "Branch A's test cases do not cover this new function"
+    ],
+    "reasoning": "The changes in Branch B (addition of a new function `score_for`) would break the existing tests in Branch A (modification of `fetch_metrics_4_record` to return nested payload). This is a semantic conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_082_checkout_4_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A changes the exception type; Branch B still catches the old type"
+    ],
+    "reasoning": "The exception type in Branch A (Checkout_4Gone) is different from the one caught by Branch B (Checkout_4Error). This semantic conflict could lead to runtime errors when the merged code tries to catch exceptions of a different class.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_083_cache_4_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that the DEFAULT_LIMIT in Branch A is changed from 10 to 3, and the default length used in Branch B remains at 10.",
+      "The test cases for Branch A (ConfigTests.test_page) expect a list of first 3 elements while those for Branch B (UiTests.test_preview) expect a list of first 10 elements."
+    ],
+    "reasoning": "The changes in Branch A (changing the default limit) and Branch B (asserting old default length) are semantically conflicting with each other. The test cases for Branch A expect a list of first 3 elements while those for Branch B expect a list of first 10 elements.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_084_ledger_4_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A renames `compute_ledger_4_total` to `compute_ledger_4_total_v2`",
+      "Branch B adds a caller of `compute_ledger_4_total`"
+    ],
+    "reasoning": "Branch A renames `compute_ledger_4_total` to `compute_ledger_4_total_v2` and Branch B adds a caller of `compute_ledger_4_total`. This semantic conflict means that the merged code will have two different implementations for the same function, which is not logically correct.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_085_analytics_4_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In the test_payload method of class ApiTests in analytics_4_api.py, the call to build_analytics_4_payload has changed from using only a single argument 'name' to two keyword-only arguments: 'quantity' and 'priority'. This is a semantic conflict because Branch B still uses positional arguments.",
+      "In the test_order method of class ClientTests in analytics_4_client.py, the call to build_analytics_4_payload has changed from using only a single argument 'name' to two keyword-only arguments: 'quantity' and 'priority'. This is a semantic conflict because Branch B still uses positional arguments."
+    ],
+    "reasoning": "The merged codebase would have a semantic conflict because Branch A changes the function signature to use keyword-only arguments while Branch B still uses positional arguments.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_086_warehouse_4_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff shows that Branch B uses the function `normalize_warehouse_4_token` in its own file, while Branch A has moved it to another location."
+    ],
+    "reasoning": "Branch B imports `normalize_warehouse_4_token` from `warehouse_4_utils` which Branch A moves to `warehouse_4_tokens`. This semantic drift is causing a conflict.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_087_search_4_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A returns a payload with a nested 'meta' object, while Branch B expects a flat score in the return value."
+    ],
+    "reasoning": "The merge of Branch A (nested score) and Branch B (top-level score) would result in a semantic conflict because the tests for Branch B expect to find the top-level 'score' key while the tests for Branch A expect to find the nested 'meta.score'. This is not compatible with each other.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_088_parser_4_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff of Branch B shows a new file (`parser_4_handler.py`) introducing `safe_parser_4` function that uses `ensure_parser_4_positive` from Branch A, which is not handled in the same way as before",
+      "The test for this case (`test_bad` in `test_parser_4_guard.py` on Branch B) fails because it expects a `Parser_4Error` to be raised but gets a `Parser_4Gone`"
+    ],
+    "reasoning": "The merged codebase will have a semantic conflict because Branch B modifies the behavior of the system by introducing a new function (`safe_parser_4`) that uses `ensure_parser_4_positive` from Branch A to handle exceptions thrown by this function. This means that if an exception is raised, it's not handled in the same way as before and will propagate upwards causing tests on Branch B to fail.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_089_pricing_4_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch A, DEFAULT_LIMIT is changed from 10 to 3",
+      "In Branch B, test_preview still uses the old default of 10"
+    ],
+    "reasoning": "Branch A changes the default limit from 10 to 3 while Branch B still uses the old default of 10 in its tests. This results in a semantic conflict as the merged code will fail when run with the new default limit.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_090_payments_4_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The function names are different in both branches",
+      "Tests from Branch B fail because they expect calls to compute_payments_4_total"
+    ],
+    "reasoning": "The function names in Branch A (compute_payments_4_total_v2) are different from the ones used in Branch B (compute_payments_4_total). This semantic conflict could lead to a failure of tests if they were expecting calls to compute_payments_4_total. The merged codebase would not be logically correct.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_091_catalog_4_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch B, `build_catalog_4_payload` is called with positional argument '5' while in Branch A it is keyword-only argument",
+      "Branch B test case `test_order` fails because the expected result does not match the actual result"
+    ],
+    "reasoning": "Branch B uses the old positional argument signature in `build_catalog_4_payload` function while Branch A changes it to use keyword-only arguments. This semantic conflict means that when both branches are merged together, the resulting code will not work as expected because the tests for Branch B will fail.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_092_shipping_4_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diff of Branch A shows that it moves the function definition from `shipping_4_utils.py` to `shipping_4_tokens.py`",
+      "The diff of Branch B still imports the function from its original location (`shipping_4_utils.py`)",
+      "The test cases in `test_shipping_4_utils.py` expect `normalize_shipping_4_token` to be defined in `shipping_4_utils.py`"
+    ],
+    "reasoning": "Branch A moves the function `normalize_shipping_4_token` to a different file (`shipping_4_tokens.py`) while Branch B still imports it from its original location (`shipping_4_utils.py`). This is a semantic conflict because the merged code will fail when tests are run, as the test cases in `test_shipping_4_utils.py` expect `normalize_shipping_4_token` to be defined in `shipping_4_utils.py`.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_093_routing_4_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A modifies the return of fetch_routing_4_record",
+      "Branch B introduces a new function score_for"
+    ],
+    "reasoning": "The changes in Branch A affect the way data is returned from `fetch_routing_4_record` function while Branch B adds a new function that uses this return value. This semantic conflict means the merged codebase will not behave as expected.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_094_inventory_4_exception_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A modifies an exception class, while Branch B has tests that expect a different exception."
+    ],
+    "reasoning": "The merged codebase would have a semantic conflict because Branch A changes the exception type from `Inventory_4Error` to `Inventory_4Gone` and Branch B still catches this old exception type in its tests.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_095_tickets_4_default_semantics",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A changes DEFAULT_LIMIT from 10 to 3",
+      "Branch B still uses the old default length of 10 in preview_tickets_4"
+    ],
+    "reasoning": "Branch A changes the default limit of page_tickets_4 from 10 to 3, while Branch B still uses the old default length of 10 in preview_tickets_4. This semantic conflict means that when both branches are merged together, the combined result will be logically incorrect because the test case in Branch A is expecting a list with 3 elements (the new default limit) but it's getting a list with 20 elements (the old default limit).",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_096_scheduler_4_rename_stale",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A renames a function while Branch B adds a caller of that renamed function."
+    ],
+    "reasoning": "Branch A renames `compute_scheduler_4_total` to `compute_scheduler_4_total_v2` while Branch B adds a caller of `compute_scheduler_4_total`. This semantic conflict means the merged code will fail its tests, as the test cases in Branch A are expecting `compute_scheduler_4_total` to be present and not `compute_scheduler_4_total_v2`.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_097_notifier_4_signature_break",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "In Branch B, client_order(name) calls build_notifier_4_payload with 5 as the 'quantity' argument, which is not defined in the function signature of Branch A."
+    ],
+    "reasoning": "Branch B still uses the old positional argument 'quantity' in function build_notifier_4_payload while Branch A has changed it to a keyword-only argument. This semantic conflict could lead to runtime errors.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_098_billing_4_import_drift",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The tests for `normalize_billing_4_token` fail when run with the merged code",
+      "The function `normalize_billing_4_token` is not present in the combined codebase after merging"
+    ],
+    "reasoning": "The merge of Branch A (renaming `normalize_billing_4_token`) and Branch B (importing `billing_4_utils`) would result in a semantic conflict because the tests for `normalize_billing_4_token` in Branch B will fail when run with the merged code. The function `normalize_billing_4_token` does not exist in the combined codebase after merging, as it has been moved to `billing_4_tokens.py`.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_099_auth_4_return_contract",
+    "ground_truth": "conflict",
+    "baseline_prediction": "conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The diffs show that Branch A modifies the return contract of fetch_auth_4_record in auth_4_service.py, which is a nested object {'id': item_id, 'status': 'ok', 'meta': {'score': 1}}, while Branch B adds a new function score_for in auth_4_scorecard.py that directly accesses the 'score' from fetch_auth_4_record.",
+      "The test cases show that tests of ServiceTests in Branch A are accessing 'score', while those in ScorecardTests in Branch B are accessing 'meta']['score'."
+    ],
+    "reasoning": "The merge of Branch A (return_contract) and Branch B (scorecard) would lead to a semantic conflict because the return contract in Branch A is different from that in Branch B. Specifically, Branch A returns a nested 'meta' object while Branch B directly accesses the 'score'. This difference could cause issues when trying to merge these two branches together.",
+    "rules_that_fired": [
+      "cited_conflict_type:return_contract"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10000_profile_ok0_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no overlapping lines of code",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities without affecting existing ones. Therefore, the merged result should be logically correct.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10001_metrics_ok1_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no overlapping lines of code",
+      "Both Branch A and Branch B's functionalities are entirely new to the system"
+    ],
+    "reasoning": "Based on the provided diffs, Branch A (alpha) and Branch B (beta) are independent new modules that add entirely new functionalities to the codebase without any overlap in functionality or API changes. The tests for both branches pass independently, so we can confidently say that merging these two branches will not cause semantic issues.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10002_checkout_ok2_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B each have their own tests that pass independently",
+      "Validation: Merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities without affecting existing ones. Therefore, the merged result should be logically correct.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10003_cache_ok3_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no functional overlap",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add functions to the codebase without affecting existing functionality or changing function signatures. The tests pass for all three versions of the code.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10004_ledger_ok4_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A adds a function `alpha_ledger_ok4` which increases input by 1, Branch B adds a function `beta_ledger_ok4` that multiplies the input by 2. Both changes are independent new modules and do not affect existing functionality.",
+      "The tests for both branches pass independently and merged tests also pass."
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality. The tests pass for each branch and merged tests also pass.",
+    "rules_that_fired": [
+      "cited_validation_paraphrase"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10005_analytics_ok5_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The provided diffs show the two functions being added to separate files in Branch A and B respectively",
+      "The test cases are passing independently for each branch"
+    ],
+    "reasoning": "Based on the provided diffs, Branch A adds a new function `alpha_analytics_ok5` to the codebase while Branch B adds another new function `beta_analytics_ok5`. These are independent changes and do not overlap in functionality or API. The tests pass for both branches separately and after merging, so we can confidently say that they will be compatible.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10006_warehouse_ok6_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no overlapping lines of codes",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality. Therefore, merging them should be compatible.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10007_search_ok7_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no textual line overlap",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add functions to the codebase without affecting existing functionality. The tests pass for all three versions of the code.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10008_parser_ok8_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no textual line overlap",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality or changing APIs. The tests pass for all three versions of the code.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10009_pricing_ok9_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Tests pass for Branch A and B.",
+      "No textual line overlap between branches."
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality or changing APIs. The tests pass for all three versions (Branch A, Branch B and their merge).",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10010_payments_ok10_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Tests pass for both Branch A and Branch B.",
+      "Both Branch A and Branch B add new functionalities to the codebase without affecting existing functionality or changing APIs."
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality or changing APIs. The tests pass for all three versions (Branch A, Branch B and their merge).",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10011_catalog_ok11_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A diff adds a function `alpha_catalog_ok11` which is tested in `test_catalog_ok11_alpha`, Branch B diff adds a function `beta_catalog_ok11` which is tested in `test_catalog_ok11_beta`. The merge tests pass.",
+      "The changes are independent new modules without affecting existing functionality."
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add functions to the codebase without affecting existing functionality. The tests pass for each branch separately and also when they are merged together.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10012_shipping_ok12_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The provided diffs show clear separation of concerns: Branch A adds a new function to the codebase while Branch B adds another one.",
+      "All unit tests in both branches are passing after merging."
+    ],
+    "reasoning": "Based on the provided diffs, Branch A (alpha) and Branch B (beta) are independent new modules that add new functionalities to the codebase without any overlap in functionality or API changes. The tests pass for both branches separately and after merging, all tests still pass. Therefore, we can conclude that there is no semantic conflict between these two branches.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10013_routing_ok13_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "The code in Branch A adds a function `alpha_routing_ok13` and the corresponding test cases",
+      "The code in Branch B adds a function `beta_routing_ok13` and the corresponding test cases"
+    ],
+    "reasoning": "Based on the provided diffs, Branch A (alpha) and Branch B (beta) are independent new modules that add new functions to their respective files without modifying existing ones. The tests pass for both branches which indicates they do not have any semantic conflicts.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10014_inventory_ok14_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no textual line overlap",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality. Therefore, merging them should be compatible.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10015_tickets_ok15_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A adds a new module `alpha_tickets_ok15` with one test case, Branch B adds another new module `beta_tickets_ok15` with one test case."
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality. The tests pass for both branches and merged tests also pass.",
+    "rules_that_fired": [
+      "cited_validation_paraphrase"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10016_scheduler_ok16_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no textual line overlap",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality or changing APIs. Therefore, merging them should be compatible.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10017_notifier_ok17_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no textual line overlap",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add functions to the codebase without affecting existing functionality. The tests pass for all three versions of the code.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10018_billing_ok18_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A (alpha) adds a new function `alpha_billing_ok18` with no impact on existing functionality or API",
+      "Branch B (beta) also adds a new function `beta_billing_ok18` without any overlap in functionality or API"
+    ],
+    "reasoning": "Based on the provided diffs, Branch A (alpha) and Branch B (beta) are independent new modules that add entirely new functionalities to the codebase without any overlap in functionality or API changes. The tests pass for both branches separately and after merging, all tests still pass. Therefore, we can confidently say that these two branches will not conflict semantically when merged.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10019_auth_ok19_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Both diffs have no textual line overlap.",
+      "All three versions of the code are passing tests."
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality or changing APIs. The tests pass for all three versions (Branch A, Branch B and their merge).",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10020_profile_ok20_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no textual line overlap",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add entirely new functionalities to the codebase without affecting existing functionality or changing any function names. The tests pass for all three versions of the code.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10021_metrics_ok21_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no textual line overlap",
+      "All versions (merge base, Branch A, Branch B) pass their respective test suites"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add functions to the codebase without affecting existing functionality or changing function signatures. The tests pass for all three versions of the code.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10022_checkout_ok22_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no textual line overlap",
+      "Validation: Branch A tests pass, Branch B tests pass, merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add functions to the codebase without affecting existing functionality. The tests pass for all three versions of the code.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10023_cache_ok23_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no overlap on the same lines",
+      "Both Branch A and Branch B's changes do not affect other parts of the codebase",
+      "Merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add functions to the codebase without affecting existing functionality. The tests pass for each branch separately but also when they are merged together.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10024_ledger_ok24_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A diff adds a function `alpha_ledger_ok24` which is tested in `test_ledger_ok24_alpha`, Branch B diff adds a function `beta_ledger_ok24` which is tested in `test_ledger_ok24_beta`. The changes are independent and do not affect existing functionality.",
+      "The tests pass for each branch separately and also when they are merged together."
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add functions to the codebase without affecting existing functionality. The tests pass for each branch separately and also when they are merged together.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10025_analytics_ok25_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Tests pass for Branch A and Branch B.",
+      "No textual line overlap between branches."
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality or changing APIs. The tests pass for all three versions (Branch A, Branch B and their merge).",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10026_warehouse_ok26_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Both diffs only contain new modules, no textual line overlap",
+      "All tests pass in each branch and after the merge"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality. The tests pass for all three versions (Branch A, Branch B and their merge) indicating they will work correctly when merged.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10027_search_ok27_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no overlapping lines of code",
+      "Validation shows that merged tests pass"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add new functionalities to the codebase without affecting existing functionality. Therefore, merging them should be semantically compatible.",
+    "rules_that_fired": [
+      "cited_context_validation_line"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10028_parser_ok28_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no textual line overlap",
+      "All versions (merge base, Branch A, Branch B) pass their respective test suites"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add entirely new functionalities to the codebase without affecting existing functionality or changing any function names. The tests pass for all three versions of the code.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  },
+  {
+    "benchmark_id": "hard_10029_pricing_ok29_compatible",
+    "ground_truth": "no_conflict",
+    "baseline_prediction": "no_conflict",
+    "confidence": 1.0,
+    "evidence": [
+      "Branch A and Branch B have no overlap on the same lines",
+      "Both Branch A and Branch B's changes do not affect other parts of the codebase"
+    ],
+    "reasoning": "The changes in both branches are independent new modules that add functions to the codebase without affecting existing functionality. The tests pass for each branch separately but not when they are merged together.",
+    "rules_that_fired": [
+      "semantic_diff_reasoning_or_implicit_leak"
+    ],
+    "model": "deepseek-coder:6.7b",
+    "correct": true
+  }
+]

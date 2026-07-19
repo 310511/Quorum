@@ -18,6 +18,7 @@ from quorum.adjudicate import AdjudicationResult
 from quorum.adjudicate_v2 import EvidenceAdjudication, adjudicate_v2
 from quorum.dataset import audit_dataset
 from quorum.import_cooperbench import import_cooperbench_zip
+from quorum.import_semantic_records import import_semantic_records
 from quorum.metrics import (
     comparison_markdown,
     concise_comparison_report,
@@ -321,6 +322,8 @@ async def run_eval(
     config_path: Path,
     input_mode: InputMode | None = None,
     compare_inputs: bool = False,
+    resume_from: Path | None = None,
+    checkpoint_path: Path | None = None,
 ) -> Path:
     pairs = discover_pairs(pairs_dir)
     if not pairs:
@@ -356,9 +359,22 @@ async def run_eval(
         input_label = "compare"
     else:
         mode = resolve_input_mode(config, input_mode)
-        results = []
+        results: list[dict] = []
+        done: set[str] = set()
+        if resume_from and Path(resume_from).exists():
+            prior = json.loads(Path(resume_from).read_text(encoding="utf-8"))
+            results = list(prior.get("results") or [])
+            done = {row["pair"] for row in results}
+            print(f"Resuming from {resume_from} ({len(done)} pairs already done)", flush=True)
+
+        RESULTS_DIR.mkdir(exist_ok=True)
+        timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        ckpt = checkpoint_path or (RESULTS_DIR / f"run_{timestamp}_{mode}_checkpoint.json")
+
         for pair_dir in pairs:
-            print(f"\nRunning {pair_dir.name} ({mode})...", flush=True)
+            if pair_dir.name in done:
+                continue
+            print(f"\nRunning {pair_dir.name} ({mode})... [{len(results)+1}/{len(pairs)}]", flush=True)
             try:
                 row = await _run_pair(pair_dir, config, mode)
             except Exception as exc:
@@ -368,6 +384,21 @@ async def run_eval(
             row.pop("_committee_run", None)
             row.pop("_adjudication", None)
             results.append(row)
+            # Incremental checkpoint so long hard-benchmark runs can resume.
+            ckpt.write_text(
+                json.dumps(
+                    {
+                        "timestamp": timestamp,
+                        "config_path": str(config_path),
+                        "pairs_dir": str(pairs_dir),
+                        "input_mode": mode,
+                        "results": results,
+                        "partial": True,
+                    },
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
         print_eval_summary(results, title=f"EVAL SUMMARY — {mode.upper()} INPUT")
         results_payload = results
         input_label = mode
@@ -400,6 +431,7 @@ async def run_eval(
                 "committee_accuracy": _accuracy(results, "committee_verdict"),
             },
             "results": results_payload,
+            "partial": False,
         }
     out_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     print(f"\nFull results saved to {out_path}")
@@ -622,6 +654,108 @@ def main(argv: list[str] | None = None) -> None:
         action="store_true",
         help="Run each pair with raw and structured input; print side-by-side accuracy",
     )
+    eval_parser.add_argument(
+        "--resume-from",
+        type=Path,
+        default=None,
+        help="Resume a partial evaluation JSON (skips pairs already present)",
+    )
+    eval_parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        default=None,
+        help="Path for incremental checkpoint JSON during long runs",
+    )
+
+    twin_parser = sub.add_parser(
+        "generate-hard-compatible",
+        help="Generate verified hard COMPATIBLE twin pairs (true negatives)",
+    )
+    twin_parser.add_argument(
+        "--dest",
+        type=Path,
+        default=Path("data/pairs/hard_compatible"),
+        help="Destination directory (default: data/pairs/hard_compatible)",
+    )
+    twin_parser.add_argument(
+        "--per-family",
+        type=int,
+        default=17,
+        help="Twins per family across 6 families (default: 17 -> ~102 pairs)",
+    )
+
+    hard_parser = sub.add_parser(
+        "generate-hard-benchmark",
+        help="Generate verified hard semantic-conflict mini-repos",
+    )
+    hard_parser.add_argument(
+        "--dest",
+        type=Path,
+        default=Path("data/pairs/hard_benchmark"),
+        help="Destination directory (default: data/pairs/hard_benchmark)",
+    )
+    hard_parser.add_argument("--conflicts", type=int, default=100)
+    hard_parser.add_argument("--compatible", type=int, default=30)
+    hard_parser.add_argument("--seed", type=int, default=42)
+
+    import_sem_parser = sub.add_parser(
+        "import-semantic-records",
+        help="Import schema-v2 semantic_conflict JSONL (e.g. dataset/records1.json)",
+    )
+    import_sem_parser.add_argument(
+        "records_path",
+        type=Path,
+        nargs="?",
+        default=Path("dataset/records1.json"),
+        help="JSONL records path (default: dataset/records1.json)",
+    )
+    import_sem_parser.add_argument(
+        "--dest",
+        type=Path,
+        default=Path("data/pairs/hard_negatives"),
+        help="Destination directory (default: data/pairs/hard_negatives)",
+    )
+    import_sem_parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Optional max number of pairs to import",
+    )
+
+    pub_parser = sub.add_parser(
+        "publication-eval",
+        help="Build publication stats/tables/figures from saved raw+structured runs",
+    )
+    pub_parser.add_argument(
+        "--cooper-raw",
+        type=Path,
+        required=True,
+        help="CooperBench raw evaluation JSON",
+    )
+    pub_parser.add_argument(
+        "--cooper-structured",
+        type=Path,
+        required=True,
+        help="CooperBench structured evaluation JSON",
+    )
+    pub_parser.add_argument(
+        "--hard-raw",
+        type=Path,
+        default=None,
+        help="Optional hard-benchmark raw evaluation JSON",
+    )
+    pub_parser.add_argument(
+        "--hard-structured",
+        type=Path,
+        default=None,
+        help="Optional hard-benchmark structured evaluation JSON",
+    )
+    pub_parser.add_argument(
+        "--pairs-dir",
+        type=Path,
+        default=Path("data/pairs"),
+        help="Root pairs directory (default: data/pairs)",
+    )
 
     cooper_parser = sub.add_parser(
         "eval-cooperbench",
@@ -698,15 +832,29 @@ def main(argv: list[str] | None = None) -> None:
                     f"{usable['synthetic_single_patch']}"
                 )
                 print(f"Usable agent records: {usable['agent_records']}")
+                print(f"Usable semantic conflicts: {usable['semantic_conflicts']}")
                 print(f"Candidate agent pairs: {usable['candidate_agent_pairs']}")
                 print(f"Pending manual review: {audit.pending_manual_review}")
                 print(f"Rejected records: {audit.rejected_records}")
+                if audit.conflict_families:
+                    print("Conflict families:")
+                    for family, count in audit.conflict_families.items():
+                        print(f"  {family}: {count}")
                 if audit.rejection_reasons:
                     print("Rejections:")
                     for reason, count in audit.rejection_reasons.items():
                         print(f"  {reason}: {count}")
                 for warning in audit.warnings:
                     print(f"Warning: {warning}")
+        elif args.command == "import-semantic-records":
+            imported = import_semantic_records(
+                args.records_path,
+                args.dest,
+                limit=args.limit,
+            )
+            print(f"Imported {len(imported)} pairs into {args.dest}")
+            for name in imported:
+                print(f"  - {name}")
         elif args.command == "generate-semantic-pairs":
             from quorum.generate_pairs import generate_verified_pairs
 
@@ -729,8 +877,45 @@ def main(argv: list[str] | None = None) -> None:
                     args.config,
                     input_mode=args.input_mode,
                     compare_inputs=args.compare_inputs,
+                    resume_from=args.resume_from,
+                    checkpoint_path=args.checkpoint,
                 )
             )
+        elif args.command == "generate-hard-compatible":
+            from quorum.hard_compatible import generate_hard_compatible
+
+            names = generate_hard_compatible(args.dest, per_family=args.per_family)
+            print(f"Generated {len(names)} verified compatible twins in {args.dest}")
+        elif args.command == "generate-hard-benchmark":
+            from quorum.hard_benchmark import generate_hard_benchmark
+
+            names = generate_hard_benchmark(
+                args.dest,
+                n_conflicts=args.conflicts,
+                n_compatible=args.compatible,
+                seed=args.seed,
+            )
+            n_conflict = sum(1 for n in names if "compatible" not in n)
+            n_compat = len(names) - n_conflict
+            print(
+                f"Generated {len(names)} pairs in {args.dest} "
+                f"({n_conflict} conflicts, {n_compat} compatible)"
+            )
+        elif args.command == "publication-eval":
+            from quorum.publication import run_publication_pipeline
+
+            paths = run_publication_pipeline(
+                cooper_raw=args.cooper_raw,
+                cooper_structured=args.cooper_structured,
+                hard_raw=args.hard_raw,
+                hard_structured=args.hard_structured,
+                pairs_root=args.pairs_dir,
+                results_dir=Path("results"),
+            )
+            print(f"Publication JSON:     {paths['json']}")
+            print(f"Publication report:   {paths['markdown']}")
+            print(f"Publication LaTeX:    {paths['latex']}")
+            print(f"Publication figures:  {paths['figures']}")
         elif args.command == "eval-cooperbench":
             asyncio.run(
                 run_cooperbench_comparison(

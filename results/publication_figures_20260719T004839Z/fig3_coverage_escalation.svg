@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="300">
+<rect width="100%" height="100%" fill="white"/>
+<text x="24" y="28" font-family="Georgia, serif" font-size="16">Coverage vs escalation (C/D/E)</text>
+<rect x="80" y="248.27586206896552" width="40" height="1.7241379310344827" fill="#079187"/>
+<rect x="125" y="51.72413793103448" width="40" height="198.27586206896552" fill="#c45c26"/>
+<text x="120" y="270" text-anchor="middle" font-family="Helvetica, sans-serif" font-size="12">C</text>
+<rect x="230" y="225.86206896551724" width="40" height="24.137931034482758" fill="#079187"/>
+<rect x="275" y="74.13793103448276" width="40" height="175.86206896551724" fill="#c45c26"/>
+<text x="270" y="270" text-anchor="middle" font-family="Helvetica, sans-serif" font-size="12">D</text>
+<rect x="380" y="222.41379310344828" width="40" height="27.586206896551722" fill="#079187"/>
+<rect x="425" y="77.58620689655174" width="40" height="172.41379310344826" fill="#c45c26"/>
+<text x="420" y="270" text-anchor="middle" font-family="Helvetica, sans-serif" font-size="12">E</text>
+<rect x="80" y="285" width="12" height="12" fill="#079187"/><text x="96" y="295" font-size="11" font-family="Helvetica,sans-serif">Coverage</text>
+<rect x="180" y="285" width="12" height="12" fill="#c45c26"/><text x="196" y="295" font-size="11" font-family="Helvetica,sans-serif">Escalation</text>
+</svg>

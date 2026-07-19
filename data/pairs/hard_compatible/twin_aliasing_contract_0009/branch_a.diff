@@ -1,0 +1,6 @@
+--- a/records_009.py
++++ b/records_009.py
+@@ -1,2 +1,3 @@
+ def select_9(values):
++    """Return a copy of values."""
+     return list(values)

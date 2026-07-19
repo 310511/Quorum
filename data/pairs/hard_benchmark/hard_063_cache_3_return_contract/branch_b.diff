@@ -1,0 +1,19 @@
+--- a/cache_3_scorecard.py
++++ b/cache_3_scorecard.py
+@@ -0,0 +1,4 @@
++from cache_3_service import fetch_cache_3_record
++
++def score_for(item_id):
++    return fetch_cache_3_record(item_id)["score"] + 10
+--- a/test_cache_3_scorecard.py
++++ b/test_cache_3_scorecard.py
+@@ -0,0 +1,9 @@
++import unittest
++from cache_3_scorecard import score_for
++
++class ScorecardTests(unittest.TestCase):
++    def test_score(self):
++        self.assertEqual(score_for(3), 11)
++
++if __name__ == "__main__":
++    unittest.main()

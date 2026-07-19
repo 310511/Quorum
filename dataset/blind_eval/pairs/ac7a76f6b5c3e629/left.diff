@@ -1,0 +1,8 @@
+diff --git a/ordering_068.py b/ordering_068.py
+index 4f374b7..038d62c 100644
+--- a/ordering_068.py
++++ b/ordering_068.py
+@@ -1,2 +1,2 @@
+-def normalize_068(items: list[int], reverse: bool = False) -> list[int]:
++def normalize_068(items: list[int], reverse: bool = True) -> list[int]:
+     return sorted(items, reverse=reverse)

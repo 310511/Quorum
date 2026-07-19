@@ -1,0 +1,32 @@
+--- a/identity_007.py
++++ b/identity_007.py
+@@ -1,2 +1,6 @@
+ def same_code_7(left, right):
+     return left == right
++
++
++def authorized_7(presented, required):
++    return same_code_7(presented, required)
+--- a/oracle_semantic.py
++++ b/oracle_semantic.py
+@@ -0,0 +1,6 @@
++import unittest
++from identity_007 import authorized_7
++
++class SemanticOracle(unittest.TestCase):
++    def test_security_codes_remain_case_sensitive(self):
++        self.assertFalse(authorized_7("admin42", "Admin42"))
+--- a/test_public.py
++++ b/test_public.py
+@@ -0,0 +1,11 @@
++import unittest
++from identity_007 import authorized_7
++
++class IdentityTests(unittest.TestCase):
++    def test_exact_identity(self):
++        self.assertTrue(authorized_7("Admin42", "Admin42"))
++    def test_different_identity(self):
++        self.assertFalse(authorized_7("User42", "Admin42"))
++
++if __name__ == "__main__":
++    unittest.main()

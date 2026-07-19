@@ -1,0 +1,19 @@
+--- a/shipping_report.py
++++ b/shipping_report.py
+@@ -0,0 +1,4 @@
++from shipping_core import compute_shipping_total
++
++def report_line(items):
++    return compute_shipping_total(items) * 2
+--- a/test_shipping_report.py
++++ b/test_shipping_report.py
+@@ -0,0 +1,9 @@
++import unittest
++from shipping_report import report_line
++
++class ReportTests(unittest.TestCase):
++    def test_report(self):
++        self.assertEqual(report_line([1, 2, 3]), 12)
++
++if __name__ == "__main__":
++    unittest.main()

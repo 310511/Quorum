@@ -1,0 +1,27 @@
+{
+  "ground_truth": "no_conflict",
+  "language": "python",
+  "source": "hard_compatible_twin_verified",
+  "conflict_type": "error_contract",
+  "difficulty": "hard",
+  "notes": "Left adds a docstring only (parse still raises ValueError, no silent fallback); right's validator still catches it, so invalid input is still rejected after merge.",
+  "hidden_invariant": "Non-numeric input is still reported as invalid.",
+  "surface_characteristics": [
+    "compilation_passes",
+    "public_tests_pass",
+    "textual_merge_is_clean",
+    "diff_is_small",
+    "same_function_touched_by_both_branches",
+    "left_change_is_behavior_preserving_refactor"
+  ],
+  "validation": {
+    "compile": "pass",
+    "public_tests": "pass",
+    "semantic_oracle": "pass",
+    "final": "compatible",
+    "oracle_command": "python -m unittest oracle_semantic",
+    "oracle_exit_code": 0,
+    "merged_test_output": "test_valid_number (test_public.ParserTests) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK",
+    "merged_oracle_output": "test_invalid_number_is_rejected (oracle_semantic.SemanticOracle) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK"
+  }
+}

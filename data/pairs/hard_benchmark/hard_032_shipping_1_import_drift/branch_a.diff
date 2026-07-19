@@ -1,0 +1,20 @@
+--- a/shipping_1_tokens.py
++++ b/shipping_1_tokens.py
+@@ -0,0 +1,2 @@
++def normalize_shipping_1_token(value):
++    return str(value).strip().lower()
+--- a/shipping_1_utils.py
++++ b/shipping_1_utils.py
+@@ -1,2 +1 @@
+-def normalize_shipping_1_token(value):
+-    return str(value).strip().lower()
++# Moved to shipping_1_tokens.py
+--- a/test_shipping_1_utils.py
++++ b/test_shipping_1_utils.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from shipping_1_utils import normalize_shipping_1_token
++from shipping_1_tokens import normalize_shipping_1_token
+ 
+ class UtilsTests(unittest.TestCase):
+     def test_normalize(self):

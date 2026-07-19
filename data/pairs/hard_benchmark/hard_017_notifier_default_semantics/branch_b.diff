@@ -1,0 +1,20 @@
+--- a/notifier_ui.py
++++ b/notifier_ui.py
+@@ -0,0 +1,5 @@
++from notifier_config import page_notifier
++
++def preview_notifier():
++    # Depends on historical default of 10.
++    return page_notifier(range(20))
+--- a/test_notifier_ui.py
++++ b/test_notifier_ui.py
+@@ -0,0 +1,9 @@
++import unittest
++from notifier_ui import preview_notifier
++
++class UiTests(unittest.TestCase):
++    def test_preview(self):
++        self.assertEqual(len(preview_notifier()), 10)
++
++if __name__ == "__main__":
++    unittest.main()

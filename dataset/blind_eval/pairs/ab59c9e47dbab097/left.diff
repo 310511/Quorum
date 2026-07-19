@@ -1,0 +1,11 @@
+diff --git a/ordering_100.py b/ordering_100.py
+index 0939359..5206b98 100644
+--- a/ordering_100.py
++++ b/ordering_100.py
+@@ -1,2 +1,6 @@
+ def normalize_100(items: list[int], reverse: bool = False) -> list[int]:
+     return sorted(items, reverse=reverse)
++
++
++def normalize_desc_100(items: list[int]) -> list[int]:
++    return normalize_100(items, reverse=True)

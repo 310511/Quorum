@@ -1,0 +1,19 @@
+--- a/billing_4_pipeline.py
++++ b/billing_4_pipeline.py
+@@ -0,0 +1,4 @@
++from billing_4_utils import normalize_billing_4_token
++
++def pipeline_key(value):
++    return "key:" + normalize_billing_4_token(value)
+--- a/test_billing_4_pipeline.py
++++ b/test_billing_4_pipeline.py
+@@ -0,0 +1,9 @@
++import unittest
++from billing_4_pipeline import pipeline_key
++
++class PipelineTests(unittest.TestCase):
++    def test_key(self):
++        self.assertEqual(pipeline_key(" X "), "key:x")
++
++if __name__ == "__main__":
++    unittest.main()

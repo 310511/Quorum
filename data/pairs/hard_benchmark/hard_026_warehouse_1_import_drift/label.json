@@ -1,0 +1,14 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "hard_benchmark_verified",
+  "conflict_type": "import_drift",
+  "notes": "Branch A moves normalize_warehouse_1_token; Branch B still imports warehouse_1_utils",
+  "validation": {
+    "branch_a_tests": "pass",
+    "branch_b_tests": "pass",
+    "merged_tests": "fail",
+    "compilation": "pass",
+    "merged_test_output": "test_warehouse_1_pipeline (unittest.loader._FailedTest) ... ERROR\ntest_normalize (test_warehouse_1_utils.UtilsTests) ... ok\n\n======================================================================\nERROR: test_warehouse_1_pipeline (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_warehouse_1_pipeline\nTraceback (most recent call last):\n  File \"C:\\Users\\punya mittal\\AppData\\Local\\Programs\\Python\\Python310\\lib\\unittest\\loader.py\", line 436, in _find_test_path\n    module = self._get_module_from_name(name)\n  File \"C:\\Users\\punya mittal\\AppData\\Local\\Programs\\Python\\Python310\\lib\\unittest\\loader.py\", line 377, in _get_module_from_name\n    __import__(name)\n  File \"C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-hth3uss1\\repo\\test_warehouse_1_pipeline.py\", line 2, in <module>\n    from warehouse_1_pipeline import pipeline_key\n  File \"C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-hth3uss1\\repo\\warehouse_1_pipeline.py\", line 1, in <module>\n    from warehouse_1_utils import normalize_warehouse_1_token\nImportError: cannot import name 'normalize_warehouse_1_token' from 'warehouse_1_utils' (C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-hth3uss1\\repo\\warehouse_1_utils.py)\n\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nFAILED (errors=1)"
+  }
+}

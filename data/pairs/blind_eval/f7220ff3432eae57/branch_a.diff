@@ -1,0 +1,11 @@
+diff --git a/metrics_091.py b/metrics_091.py
+index e350a5f..a85b772 100644
+--- a/metrics_091.py
++++ b/metrics_091.py
+@@ -2,3 +2,6 @@ from util_091 import clamp_091
+ 
+ def score_091(raw: int) -> int:
+     return clamp_091(raw, 0, 100)
++
++def boosted_score_091(raw: int, boost: int) -> int:
++    return clamp_091(raw + boost, 0, 100)

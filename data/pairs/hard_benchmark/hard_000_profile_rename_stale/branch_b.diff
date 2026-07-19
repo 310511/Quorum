@@ -1,0 +1,19 @@
+--- a/profile_report.py
++++ b/profile_report.py
+@@ -0,0 +1,4 @@
++from profile_core import compute_profile_total
++
++def report_line(items):
++    return compute_profile_total(items) * 2
+--- a/test_profile_report.py
++++ b/test_profile_report.py
+@@ -0,0 +1,9 @@
++import unittest
++from profile_report import report_line
++
++class ReportTests(unittest.TestCase):
++    def test_report(self):
++        self.assertEqual(report_line([1, 2, 3]), 12)
++
++if __name__ == "__main__":
++    unittest.main()

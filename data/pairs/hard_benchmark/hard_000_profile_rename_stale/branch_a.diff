@@ -1,0 +1,23 @@
+--- a/profile_core.py
++++ b/profile_core.py
+@@ -1,5 +1,5 @@
+-def compute_profile_total(items):
++def compute_profile_total_v2(items):
+     return sum(int(x) for x in items)
+ 
+ def format_total(items):
+-    return "total=" + str(compute_profile_total(items))
++    return "total=" + str(compute_profile_total_v2(items))
+--- a/test_profile_core.py
++++ b/test_profile_core.py
+@@ -1,9 +1,9 @@
+ import unittest
+-from profile_core import compute_profile_total, format_total
++from profile_core import compute_profile_total_v2, format_total
+ 
+ class CoreTests(unittest.TestCase):
+     def test_total(self):
+-        self.assertEqual(compute_profile_total([1, 2, 3]), 6)
++        self.assertEqual(compute_profile_total_v2([1, 2, 3]), 6)
+     def test_format(self):
+         self.assertIn("6", format_total([1, 2, 3]))

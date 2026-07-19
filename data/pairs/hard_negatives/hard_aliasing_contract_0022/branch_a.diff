@@ -1,0 +1,8 @@
+diff --git a/records_022.py b/records_022.py
+index a023dc3..12c5685 100644
+--- a/records_022.py
++++ b/records_022.py
+@@ -1,2 +1,2 @@
+ def select_022(values: list[int]) -> list[int]:
+-    return list(values)
++    return values

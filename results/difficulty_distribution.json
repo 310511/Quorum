@@ -1,0 +1,1185 @@
+{
+  "corpus": "hard_benchmark",
+  "n": 130,
+  "distribution": {
+    "Easy": 81,
+    "Medium": 49
+  },
+  "distribution_pct": {
+    "Easy": 0.6230769230769231,
+    "Medium": 0.3769230769230769
+  },
+  "examples": [
+    {
+      "id": "hard_000_profile_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_001_metrics_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_002_checkout_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_003_cache_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_004_ledger_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_005_analytics_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_006_warehouse_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_007_search_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_008_parser_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_009_pricing_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_010_payments_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_011_catalog_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_012_shipping_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_013_routing_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_014_inventory_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_015_tickets_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_016_scheduler_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_017_notifier_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_018_billing_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_019_auth_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_020_profile_1_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_021_metrics_1_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_022_checkout_1_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_023_cache_1_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_024_ledger_1_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_025_analytics_1_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_026_warehouse_1_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_027_search_1_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_028_parser_1_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_029_pricing_1_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_030_payments_1_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_031_catalog_1_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_032_shipping_1_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_033_routing_1_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_034_inventory_1_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_035_tickets_1_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_036_scheduler_1_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_037_notifier_1_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_038_billing_1_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_039_auth_1_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_040_profile_2_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_041_metrics_2_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_042_checkout_2_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_043_cache_2_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_044_ledger_2_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_045_analytics_2_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_046_warehouse_2_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_047_search_2_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_048_parser_2_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_049_pricing_2_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_050_payments_2_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_051_catalog_2_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_052_shipping_2_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_053_routing_2_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_054_inventory_2_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_055_tickets_2_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_056_scheduler_2_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_057_notifier_2_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_058_billing_2_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_059_auth_2_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_060_profile_3_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_061_metrics_3_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_062_checkout_3_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_063_cache_3_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_064_ledger_3_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_065_analytics_3_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_066_warehouse_3_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_067_search_3_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_068_parser_3_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_069_pricing_3_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_070_payments_3_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_071_catalog_3_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_072_shipping_3_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_073_routing_3_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_074_inventory_3_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_075_tickets_3_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_076_scheduler_3_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_077_notifier_3_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_078_billing_3_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_079_auth_3_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_080_profile_4_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_081_metrics_4_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_082_checkout_4_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_083_cache_4_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_084_ledger_4_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_085_analytics_4_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_086_warehouse_4_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_087_search_4_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_088_parser_4_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_089_pricing_4_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_090_payments_4_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_091_catalog_4_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_092_shipping_4_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_093_routing_4_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_094_inventory_4_exception_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "exception_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: exception_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_095_tickets_4_default_semantics",
+      "ground_truth": "conflict",
+      "conflict_type": "default_semantics",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: default_semantics",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_096_scheduler_4_rename_stale",
+      "ground_truth": "conflict",
+      "conflict_type": "rename_stale_reference",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: rename_stale_reference",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_097_notifier_4_signature_break",
+      "ground_truth": "conflict",
+      "conflict_type": "signature_break",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: signature_break",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_098_billing_4_import_drift",
+      "ground_truth": "conflict",
+      "conflict_type": "import_drift",
+      "difficulty": "Easy",
+      "rationale": "API/contract evolution or cross-file dependency: import_drift",
+      "n_touched_files": 5,
+      "cross_file": true
+    },
+    {
+      "id": "hard_099_auth_4_return_contract",
+      "ground_truth": "conflict",
+      "conflict_type": "return_contract",
+      "difficulty": "Medium",
+      "rationale": "API/contract evolution or cross-file dependency: return_contract",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10000_profile_ok0_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10001_metrics_ok1_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10002_checkout_ok2_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10003_cache_ok3_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10004_ledger_ok4_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10005_analytics_ok5_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10006_warehouse_ok6_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10007_search_ok7_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10008_parser_ok8_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10009_pricing_ok9_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10010_payments_ok10_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10011_catalog_ok11_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10012_shipping_ok12_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10013_routing_ok13_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10014_inventory_ok14_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10015_tickets_ok15_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10016_scheduler_ok16_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10017_notifier_ok17_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10018_billing_ok18_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10019_auth_ok19_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10020_profile_ok20_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10021_metrics_ok21_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10022_checkout_ok22_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10023_cache_ok23_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10024_ledger_ok24_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10025_analytics_ok25_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10026_warehouse_ok26_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10027_search_ok27_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10028_parser_ok28_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    },
+    {
+      "id": "hard_10029_pricing_ok29_compatible",
+      "ground_truth": "no_conflict",
+      "conflict_type": "orthogonal_features",
+      "difficulty": "Easy",
+      "rationale": "Orthogonal new modules; no shared symbols; compatible by construction",
+      "n_touched_files": 4,
+      "cross_file": true
+    }
+  ],
+  "note": "Synthetic hard_benchmark has NO true Hard business-logic cases; templates are Easy/Medium mechanical mutations. True Hard cases live in records1/hard_negatives (boundary/aliasing/oracle-hidden invariants)."
+}

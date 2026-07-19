@@ -1,0 +1,20 @@
+--- a/notifier_1_client.py
++++ b/notifier_1_client.py
+@@ -0,0 +1,5 @@
++from notifier_1_api import build_notifier_1_payload
++
++def client_order(name):
++    # Relies on old positional/default signature.
++    return build_notifier_1_payload(name, 5)
+--- a/test_notifier_1_client.py
++++ b/test_notifier_1_client.py
+@@ -0,0 +1,9 @@
++import unittest
++from notifier_1_client import client_order
++
++class ClientTests(unittest.TestCase):
++    def test_order(self):
++        self.assertEqual(client_order("sku")["quantity"], 5)
++
++if __name__ == "__main__":
++    unittest.main()

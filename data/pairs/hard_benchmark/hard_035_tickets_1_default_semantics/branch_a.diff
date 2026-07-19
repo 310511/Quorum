@@ -1,0 +1,19 @@
+--- a/test_tickets_1_config.py
++++ b/test_tickets_1_config.py
+@@ -3,7 +3,7 @@
+ 
+ class ConfigTests(unittest.TestCase):
+     def test_page(self):
+-        self.assertEqual(page_tickets_1(range(20)), list(range(10)))
++        self.assertEqual(page_tickets_1(range(20)), list(range(3)))
+ 
+ if __name__ == "__main__":
+     unittest.main()
+--- a/tickets_1_config.py
++++ b/tickets_1_config.py
+@@ -1,4 +1,4 @@
+-DEFAULT_LIMIT = 10
++DEFAULT_LIMIT = 3
+ 
+ def page_tickets_1(items, limit=DEFAULT_LIMIT):
+     return list(items)[:limit]

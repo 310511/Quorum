@@ -1,0 +1,14 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "hard_benchmark_verified",
+  "conflict_type": "default_semantics",
+  "notes": "Branch A changes DEFAULT_LIMIT 10->3; Branch B asserts old default length",
+  "validation": {
+    "branch_a_tests": "pass",
+    "branch_b_tests": "pass",
+    "merged_tests": "fail",
+    "compilation": "pass",
+    "merged_test_output": "test_page (test_notifier_config.ConfigTests) ... ok\ntest_preview (test_notifier_ui.UiTests) ... FAIL\n\n======================================================================\nFAIL: test_preview (test_notifier_ui.UiTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-9vu3lz9s\\repo\\test_notifier_ui.py\", line 6, in test_preview\n    self.assertEqual(len(preview_notifier()), 10)\nAssertionError: 3 != 10\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (failures=1)"
+  }
+}

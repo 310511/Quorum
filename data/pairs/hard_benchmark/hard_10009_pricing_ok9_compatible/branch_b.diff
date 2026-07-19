@@ -1,0 +1,17 @@
+--- a/pricing_ok9_beta.py
++++ b/pricing_ok9_beta.py
+@@ -0,0 +1,2 @@
++def beta_pricing_ok9(value):
++    return value * 2
+--- a/test_pricing_ok9_beta.py
++++ b/test_pricing_ok9_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from pricing_ok9_beta import beta_pricing_ok9
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_pricing_ok9(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()

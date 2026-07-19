@@ -1,0 +1,20 @@
+--- a/checkout_tokens.py
++++ b/checkout_tokens.py
+@@ -0,0 +1,2 @@
++def normalize_checkout_token(value):
++    return str(value).strip().lower()
+--- a/checkout_utils.py
++++ b/checkout_utils.py
+@@ -1,2 +1 @@
+-def normalize_checkout_token(value):
+-    return str(value).strip().lower()
++# Moved to checkout_tokens.py
+--- a/test_checkout_utils.py
++++ b/test_checkout_utils.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from checkout_utils import normalize_checkout_token
++from checkout_tokens import normalize_checkout_token
+ 
+ class UtilsTests(unittest.TestCase):
+     def test_normalize(self):

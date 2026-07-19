@@ -1,0 +1,6 @@
+{
+  "pair": "hard_10028_parser_ok28_compatible",
+  "conflict_type": "orthogonal_features",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_benchmark"
+}

@@ -1,0 +1,17 @@
+--- a/analytics_ok25_beta.py
++++ b/analytics_ok25_beta.py
+@@ -0,0 +1,2 @@
++def beta_analytics_ok25(value):
++    return value * 2
+--- a/test_analytics_ok25_beta.py
++++ b/test_analytics_ok25_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from analytics_ok25_beta import beta_analytics_ok25
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_analytics_ok25(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()

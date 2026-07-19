@@ -1,0 +1,20 @@
+--- a/cache_4_ui.py
++++ b/cache_4_ui.py
+@@ -0,0 +1,5 @@
++from cache_4_config import page_cache_4
++
++def preview_cache_4():
++    # Depends on historical default of 10.
++    return page_cache_4(range(20))
+--- a/test_cache_4_ui.py
++++ b/test_cache_4_ui.py
+@@ -0,0 +1,9 @@
++import unittest
++from cache_4_ui import preview_cache_4
++
++class UiTests(unittest.TestCase):
++    def test_preview(self):
++        self.assertEqual(len(preview_cache_4()), 10)
++
++if __name__ == "__main__":
++    unittest.main()

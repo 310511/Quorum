@@ -1,0 +1,17 @@
+--- a/search_ok27_alpha.py
++++ b/search_ok27_alpha.py
+@@ -0,0 +1,2 @@
++def alpha_search_ok27(value):
++    return value + 1
+--- a/test_search_ok27_alpha.py
++++ b/test_search_ok27_alpha.py
+@@ -0,0 +1,9 @@
++import unittest
++from search_ok27_alpha import alpha_search_ok27
++
++class AlphaTests(unittest.TestCase):
++    def test_alpha(self):
++        self.assertEqual(alpha_search_ok27(1), 2)
++
++if __name__ == "__main__":
++    unittest.main()

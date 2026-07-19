@@ -1,0 +1,20 @@
+--- a/ledger_2_tokens.py
++++ b/ledger_2_tokens.py
+@@ -0,0 +1,2 @@
++def normalize_ledger_2_token(value):
++    return str(value).strip().lower()
+--- a/ledger_2_utils.py
++++ b/ledger_2_utils.py
+@@ -1,2 +1 @@
+-def normalize_ledger_2_token(value):
+-    return str(value).strip().lower()
++# Moved to ledger_2_tokens.py
+--- a/test_ledger_2_utils.py
++++ b/test_ledger_2_utils.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from ledger_2_utils import normalize_ledger_2_token
++from ledger_2_tokens import normalize_ledger_2_token
+ 
+ class UtilsTests(unittest.TestCase):
+     def test_normalize(self):

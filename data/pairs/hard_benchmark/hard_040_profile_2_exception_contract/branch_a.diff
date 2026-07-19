@@ -1,0 +1,28 @@
+--- a/profile_2_guard.py
++++ b/profile_2_guard.py
+@@ -1,7 +1,7 @@
+-class Profile_2Error(ValueError):
++class Profile_2Gone(LookupError):
+     pass
+ 
+ def ensure_profile_2_positive(value):
+     if value <= 0:
+-        raise Profile_2Error("non-positive")
++        raise Profile_2Gone("non-positive")
+     return value
+--- a/test_profile_2_guard.py
++++ b/test_profile_2_guard.py
+@@ -1,11 +1,11 @@
+ import unittest
+-from profile_2_guard import ensure_profile_2_positive, Profile_2Error
++from profile_2_guard import ensure_profile_2_positive, Profile_2Gone
+ 
+ class GuardTests(unittest.TestCase):
+     def test_ok(self):
+         self.assertEqual(ensure_profile_2_positive(2), 2)
+     def test_bad(self):
+-        with self.assertRaises(Profile_2Error):
++        with self.assertRaises(Profile_2Gone):
+             ensure_profile_2_positive(0)
+ 
+ if __name__ == "__main__":

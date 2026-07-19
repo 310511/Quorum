@@ -1,0 +1,26 @@
+diff --git a/identity_012.py b/identity_012.py
+index c9f6ccd..933d1d9 100644
+--- a/identity_012.py
++++ b/identity_012.py
+@@ -1,2 +1,6 @@
+ def same_code_012(left: str, right: str) -> bool:
+     return left == right
++
++
++def authorized_012(presented: str, required: str) -> bool:
++    return same_code_012(presented, required)
+diff --git a/test_identity.py b/test_identity.py
+new file mode 100644
+index 0000000..120620c
+--- /dev/null
++++ b/test_identity.py
+@@ -0,0 +1,9 @@
++import unittest
++from identity_012 import authorized_012
++
++class IdentityTests(unittest.TestCase):
++    def test_exact_identity(self):
++        self.assertTrue(authorized_012("Admin12", "Admin12"))
++
++    def test_different_identity(self):
++        self.assertFalse(authorized_012("User12", "Admin12"))

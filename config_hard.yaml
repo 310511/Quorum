@@ -1,0 +1,13 @@
+ollama_base_url: "http://localhost:11434/v1"
+# Hard-benchmark diffs are tiny; shorter timeout speeds the publication sweep.
+time_budget_seconds: 90
+committee_parallel: true
+models:
+  - name: "gemma3:4b"
+    role: "general-reasoning"
+  - name: "deepseek-coder:6.7b"
+    role: "coder"
+  - name: "llama3.2:3b"
+    role: "general-reasoning"
+baseline_model: "deepseek-coder:6.7b"
+input_mode: "raw"

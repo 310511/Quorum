@@ -1,0 +1,35 @@
+--- a/oracle_semantic.py
++++ b/oracle_semantic.py
+@@ -0,0 +1,6 @@
++import unittest
++from parser_002 import valid_count_2
++
++class SemanticOracle(unittest.TestCase):
++    def test_invalid_number_is_rejected(self):
++        self.assertFalse(valid_count_2("not-a-number-12"))
+--- a/parser_002.py
++++ b/parser_002.py
+@@ -1,2 +1,10 @@
+ def parse_count_2(raw):
+     return int(raw)
++
++
++def valid_count_2(raw):
++    try:
++        parse_count_2(raw)
++        return True
++    except ValueError:
++        return False
+--- a/test_public.py
++++ b/test_public.py
+@@ -0,0 +1,10 @@
++import unittest
++from parser_002 import parse_count_2, valid_count_2
++
++class ParserTests(unittest.TestCase):
++    def test_valid_number(self):
++        self.assertEqual(parse_count_2("20"), 20)
++        self.assertTrue(valid_count_2("20"))
++
++if __name__ == "__main__":
++    unittest.main()

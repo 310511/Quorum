@@ -1,0 +1,11 @@
+diff --git a/limits_045.py b/limits_045.py
+index 6d4d7d5..f6685ff 100644
+--- a/limits_045.py
++++ b/limits_045.py
+@@ -1,2 +1,6 @@
+ def resolve_limit_045(value: int | None) -> int:
+     return 125 if value is None else value
++
++
++def resolve_limit_or_zero_045(value: int | None) -> int:
++    return 0 if value is None else value

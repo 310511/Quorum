@@ -1,0 +1,11 @@
+diff --git a/limits_059.py b/limits_059.py
+index c78581d..1a3818c 100644
+--- a/limits_059.py
++++ b/limits_059.py
+@@ -1,2 +1,6 @@
+ def resolve_limit_059(value: int | None) -> int:
+     return 139 if value is None else value
++
++
++def resolve_limit_or_zero_059(value: int | None) -> int:
++    return 0 if value is None else value

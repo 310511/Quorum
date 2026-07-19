@@ -1,0 +1,6 @@
+{
+  "pair": "hard_10015_tickets_ok15_compatible",
+  "conflict_type": "orthogonal_features",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_benchmark"
+}

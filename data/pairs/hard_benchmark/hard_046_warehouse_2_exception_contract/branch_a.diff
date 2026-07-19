@@ -1,0 +1,28 @@
+--- a/test_warehouse_2_guard.py
++++ b/test_warehouse_2_guard.py
+@@ -1,11 +1,11 @@
+ import unittest
+-from warehouse_2_guard import ensure_warehouse_2_positive, Warehouse_2Error
++from warehouse_2_guard import ensure_warehouse_2_positive, Warehouse_2Gone
+ 
+ class GuardTests(unittest.TestCase):
+     def test_ok(self):
+         self.assertEqual(ensure_warehouse_2_positive(2), 2)
+     def test_bad(self):
+-        with self.assertRaises(Warehouse_2Error):
++        with self.assertRaises(Warehouse_2Gone):
+             ensure_warehouse_2_positive(0)
+ 
+ if __name__ == "__main__":
+--- a/warehouse_2_guard.py
++++ b/warehouse_2_guard.py
+@@ -1,7 +1,7 @@
+-class Warehouse_2Error(ValueError):
++class Warehouse_2Gone(LookupError):
+     pass
+ 
+ def ensure_warehouse_2_positive(value):
+     if value <= 0:
+-        raise Warehouse_2Error("non-positive")
++        raise Warehouse_2Gone("non-positive")
+     return value

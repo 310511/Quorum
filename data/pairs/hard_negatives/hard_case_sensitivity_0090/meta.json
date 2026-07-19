@@ -1,0 +1,19 @@
+{
+  "record_id": "a4fef783-2c22-4e15-81a6-9904663d4397",
+  "repository": "C:\\Users\\punya mittal\\data\\examples\\hard_negatives\\case_sensitivity_0090",
+  "merge_base": "fdae599665480d6c6d7b8df9879096c26165eceb",
+  "parents": {
+    "left": {
+      "commit": "84756527f2e48005a8946f59d7c620dcc67eefd4",
+      "intent": "Normalize identifier comparisons for user convenience.",
+      "patch_sha256": "f76292a011881302fd71e3a0e08bede0f9717d212991fd0dcfd40dd69ad0b513"
+    },
+    "right": {
+      "commit": "ccbcf041289fa136c2ee913ba0d0d899939cdbc0",
+      "intent": "Reuse identifier comparison for an authorization check.",
+      "patch_sha256": "26c5616ef02910bd156114bd8ead1d3135f9e20857940a27a7b2e272186823f8"
+    }
+  },
+  "kind": "semantic_conflict",
+  "schema_version": 2
+}

@@ -1,0 +1,19 @@
+--- a/metrics_1_scorecard.py
++++ b/metrics_1_scorecard.py
+@@ -0,0 +1,4 @@
++from metrics_1_service import fetch_metrics_1_record
++
++def score_for(item_id):
++    return fetch_metrics_1_record(item_id)["score"] + 10
+--- a/test_metrics_1_scorecard.py
++++ b/test_metrics_1_scorecard.py
+@@ -0,0 +1,9 @@
++import unittest
++from metrics_1_scorecard import score_for
++
++class ScorecardTests(unittest.TestCase):
++    def test_score(self):
++        self.assertEqual(score_for(3), 11)
++
++if __name__ == "__main__":
++    unittest.main()

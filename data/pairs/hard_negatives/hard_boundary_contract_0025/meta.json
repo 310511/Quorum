@@ -1,0 +1,19 @@
+{
+  "record_id": "9e91a10a-fe1e-4376-abba-ff5cf68f25b3",
+  "repository": "C:\\Users\\punya mittal\\data\\examples\\hard_negatives\\boundary_contract_0025",
+  "merge_base": "07a6570b0d29363ead9254a08c993ab317b13d1f",
+  "parents": {
+    "left": {
+      "commit": "d84bcc6c6ff4360aeb04f9bc0c7800e36729319b",
+      "intent": "Include exact-threshold scores in eligibility.",
+      "patch_sha256": "0d5f64784683a237088ead224455dcdcfdb3245d5d33d6f0db5614530c341eb0"
+    },
+    "right": {
+      "commit": "ff5550d6e15403efaf1dc5332a6fe25a87317422",
+      "intent": "Add routing that relies on the established strict threshold.",
+      "patch_sha256": "15fea73114d4255a4c9dfe4cb626a88e011c64a1a3c9ada439c20556b5aaaa22"
+    }
+  },
+  "kind": "semantic_conflict",
+  "schema_version": 2
+}

@@ -1,0 +1,28 @@
+--- a/billing_2_guard.py
++++ b/billing_2_guard.py
+@@ -1,7 +1,7 @@
+-class Billing_2Error(ValueError):
++class Billing_2Gone(LookupError):
+     pass
+ 
+ def ensure_billing_2_positive(value):
+     if value <= 0:
+-        raise Billing_2Error("non-positive")
++        raise Billing_2Gone("non-positive")
+     return value
+--- a/test_billing_2_guard.py
++++ b/test_billing_2_guard.py
+@@ -1,11 +1,11 @@
+ import unittest
+-from billing_2_guard import ensure_billing_2_positive, Billing_2Error
++from billing_2_guard import ensure_billing_2_positive, Billing_2Gone
+ 
+ class GuardTests(unittest.TestCase):
+     def test_ok(self):
+         self.assertEqual(ensure_billing_2_positive(2), 2)
+     def test_bad(self):
+-        with self.assertRaises(Billing_2Error):
++        with self.assertRaises(Billing_2Gone):
+             ensure_billing_2_positive(0)
+ 
+ if __name__ == "__main__":

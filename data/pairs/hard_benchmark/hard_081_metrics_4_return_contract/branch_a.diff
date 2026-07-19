@@ -1,0 +1,20 @@
+--- a/metrics_4_service.py
++++ b/metrics_4_service.py
+@@ -1,5 +1,6 @@
+ def fetch_metrics_4_record(item_id):
+-    return {"id": item_id, "status": "ok", "score": 1}
++    # New contract: nested payload, no top-level score.
++    return {"id": item_id, "status": "ok", "meta": {"score": 1}}
+ 
+ def status_of(item_id):
+     return fetch_metrics_4_record(item_id)["status"]
+--- a/test_metrics_4_service.py
++++ b/test_metrics_4_service.py
+@@ -3,7 +3,7 @@
+ 
+ class ServiceTests(unittest.TestCase):
+     def test_record(self):
+-        self.assertEqual(fetch_metrics_4_record(7)["score"], 1)
++        self.assertEqual(fetch_metrics_4_record(7)["meta"]["score"], 1)
+     def test_status(self):
+         self.assertEqual(status_of(7), "ok")

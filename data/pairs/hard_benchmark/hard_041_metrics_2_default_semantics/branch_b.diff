@@ -1,0 +1,20 @@
+--- a/metrics_2_ui.py
++++ b/metrics_2_ui.py
+@@ -0,0 +1,5 @@
++from metrics_2_config import page_metrics_2
++
++def preview_metrics_2():
++    # Depends on historical default of 10.
++    return page_metrics_2(range(20))
+--- a/test_metrics_2_ui.py
++++ b/test_metrics_2_ui.py
+@@ -0,0 +1,9 @@
++import unittest
++from metrics_2_ui import preview_metrics_2
++
++class UiTests(unittest.TestCase):
++    def test_preview(self):
++        self.assertEqual(len(preview_metrics_2()), 10)
++
++if __name__ == "__main__":
++    unittest.main()

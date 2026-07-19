@@ -1,0 +1,28 @@
+--- a/checkout_4_guard.py
++++ b/checkout_4_guard.py
+@@ -1,7 +1,7 @@
+-class Checkout_4Error(ValueError):
++class Checkout_4Gone(LookupError):
+     pass
+ 
+ def ensure_checkout_4_positive(value):
+     if value <= 0:
+-        raise Checkout_4Error("non-positive")
++        raise Checkout_4Gone("non-positive")
+     return value
+--- a/test_checkout_4_guard.py
++++ b/test_checkout_4_guard.py
+@@ -1,11 +1,11 @@
+ import unittest
+-from checkout_4_guard import ensure_checkout_4_positive, Checkout_4Error
++from checkout_4_guard import ensure_checkout_4_positive, Checkout_4Gone
+ 
+ class GuardTests(unittest.TestCase):
+     def test_ok(self):
+         self.assertEqual(ensure_checkout_4_positive(2), 2)
+     def test_bad(self):
+-        with self.assertRaises(Checkout_4Error):
++        with self.assertRaises(Checkout_4Gone):
+             ensure_checkout_4_positive(0)
+ 
+ if __name__ == "__main__":

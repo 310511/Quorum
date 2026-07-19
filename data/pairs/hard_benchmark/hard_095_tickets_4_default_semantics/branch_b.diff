@@ -1,0 +1,20 @@
+--- a/test_tickets_4_ui.py
++++ b/test_tickets_4_ui.py
+@@ -0,0 +1,9 @@
++import unittest
++from tickets_4_ui import preview_tickets_4
++
++class UiTests(unittest.TestCase):
++    def test_preview(self):
++        self.assertEqual(len(preview_tickets_4()), 10)
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/tickets_4_ui.py
++++ b/tickets_4_ui.py
+@@ -0,0 +1,5 @@
++from tickets_4_config import page_tickets_4
++
++def preview_tickets_4():
++    # Depends on historical default of 10.
++    return page_tickets_4(range(20))

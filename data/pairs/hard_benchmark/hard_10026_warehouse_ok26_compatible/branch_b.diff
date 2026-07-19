@@ -1,0 +1,17 @@
+--- a/test_warehouse_ok26_beta.py
++++ b/test_warehouse_ok26_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from warehouse_ok26_beta import beta_warehouse_ok26
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_warehouse_ok26(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/warehouse_ok26_beta.py
++++ b/warehouse_ok26_beta.py
+@@ -0,0 +1,2 @@
++def beta_warehouse_ok26(value):
++    return value * 2

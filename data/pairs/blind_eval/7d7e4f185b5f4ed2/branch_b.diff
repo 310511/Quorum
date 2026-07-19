@@ -1,0 +1,24 @@
+diff --git a/limits_045.py b/limits_045.py
+index 6d4d7d5..395bf33 100644
+--- a/limits_045.py
++++ b/limits_045.py
+@@ -1,2 +1,6 @@
+ def resolve_limit_045(value: int | None) -> int:
+     return 125 if value is None else value
++
++
++def can_accept_045(current: int, limit: int | None = None) -> bool:
++    return current < resolve_limit_045(limit)
+diff --git a/test_limits.py b/test_limits.py
+new file mode 100644
+index 0000000..369b0fe
+--- /dev/null
++++ b/test_limits.py
+@@ -0,0 +1,7 @@
++import unittest
++from limits_045 import can_accept_045
++
++class LimitTests(unittest.TestCase):
++    def test_explicit_limit(self):
++        self.assertTrue(can_accept_045(4, 10))
++        self.assertFalse(can_accept_045(10, 10))

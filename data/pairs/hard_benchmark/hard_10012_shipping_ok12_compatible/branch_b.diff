@@ -1,0 +1,17 @@
+--- a/shipping_ok12_beta.py
++++ b/shipping_ok12_beta.py
+@@ -0,0 +1,2 @@
++def beta_shipping_ok12(value):
++    return value * 2
+--- a/test_shipping_ok12_beta.py
++++ b/test_shipping_ok12_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from shipping_ok12_beta import beta_shipping_ok12
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_shipping_ok12(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()

@@ -1,0 +1,8 @@
+diff --git a/identity_066.py b/identity_066.py
+index 8f7df98..8d2cd22 100644
+--- a/identity_066.py
++++ b/identity_066.py
+@@ -1,2 +1,2 @@
+ def same_code_066(left: str, right: str) -> bool:
+-    return left == right
++    return left.casefold() == right.casefold()

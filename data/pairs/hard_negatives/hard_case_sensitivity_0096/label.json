@@ -1,0 +1,24 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "records1_semantic_conflict",
+  "conflict_type": "case_sensitivity",
+  "difficulty": "hard",
+  "record_id": "15843987-7b55-4a28-b864-6573c17dd681",
+  "notes": "Convenience normalization weakens the new security-sensitive caller.",
+  "hidden_invariant": "Authorization codes are case-sensitive.",
+  "surface_characteristics": [
+    "compilation_passes",
+    "public_tests_pass",
+    "textual_merge_is_clean",
+    "diff_is_small"
+  ],
+  "validation": {
+    "compile": "pass",
+    "public_tests": "pass",
+    "semantic_oracle": "fail",
+    "final": "negative",
+    "oracle_command": "python -m unittest oracle_semantic",
+    "oracle_exit_code": 1
+  }
+}

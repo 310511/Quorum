@@ -1,0 +1,28 @@
+diff --git a/parser_059.py b/parser_059.py
+index 9cca5eb..6d3f81f 100644
+--- a/parser_059.py
++++ b/parser_059.py
+@@ -1,2 +1,10 @@
+ def parse_count_059(raw: str) -> int:
+     return int(raw)
++
++
++def valid_count_059(raw: str) -> bool:
++    try:
++        parse_count_059(raw)
++        return True
++    except ValueError:
++        return False
+diff --git a/test_parser.py b/test_parser.py
+new file mode 100644
+index 0000000..ff5074d
+--- /dev/null
++++ b/test_parser.py
+@@ -0,0 +1,7 @@
++import unittest
++from parser_059 import parse_count_059, valid_count_059
++
++class ParserTests(unittest.TestCase):
++    def test_valid_number(self):
++        self.assertEqual(parse_count_059("69"), 69)
++        self.assertTrue(valid_count_059("69"))

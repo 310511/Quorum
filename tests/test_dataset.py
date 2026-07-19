@@ -56,6 +56,31 @@ def test_synthetic_failure_is_kept_as_single_patch_example():
     assert audit.candidate_agent_pairs == 0
 
 
+def test_semantic_conflict_record_is_usable():
+    record = {
+        "kind": "semantic_conflict",
+        "repository": "C:/tmp/repo",
+        "merge_base": "abc123",
+        "parents": {
+            "left": {"patch": "diff --git a/a.py b/a.py\n"},
+            "right": {"patch": "diff --git a/b.py b/b.py\n"},
+        },
+        "conflict": {"family": "boundary_contract"},
+        "candidate": {"patch": "oracle"},
+        "labels": {
+            "compile": "pass",
+            "test": "pass",
+            "semantic_oracle": "fail",
+            "final": "negative",
+            "manual": "pending",
+        },
+    }
+    audit = audit_records([record])
+    assert audit.usable_semantic_conflicts == 1
+    assert audit.conflict_families == {"boundary_contract": 1}
+    assert audit.rejected_records == 0
+
+
 def test_generate_verified_rename_pair(tmp_path):
     source = tmp_path / "fixture"
     source.mkdir()

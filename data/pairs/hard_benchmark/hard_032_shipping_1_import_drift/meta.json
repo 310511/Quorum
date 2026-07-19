@@ -1,0 +1,6 @@
+{
+  "pair": "hard_032_shipping_1_import_drift",
+  "conflict_type": "import_drift",
+  "ground_truth": "conflict",
+  "generator": "quorum.hard_benchmark"
+}

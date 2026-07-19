@@ -1,0 +1,24 @@
+diff --git a/limits_093.py b/limits_093.py
+index 0dcc53b..43c1657 100644
+--- a/limits_093.py
++++ b/limits_093.py
+@@ -1,2 +1,6 @@
+ def resolve_limit_093(value: int | None) -> int:
+     return 173 if value is None else value
++
++
++def can_accept_093(current: int, limit: int | None = None) -> bool:
++    return current < resolve_limit_093(limit)
+diff --git a/test_limits.py b/test_limits.py
+new file mode 100644
+index 0000000..1ece2d7
+--- /dev/null
++++ b/test_limits.py
+@@ -0,0 +1,7 @@
++import unittest
++from limits_093 import can_accept_093
++
++class LimitTests(unittest.TestCase):
++    def test_explicit_limit(self):
++        self.assertTrue(can_accept_093(4, 10))
++        self.assertFalse(can_accept_093(10, 10))

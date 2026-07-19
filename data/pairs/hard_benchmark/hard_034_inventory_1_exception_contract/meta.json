@@ -1,0 +1,6 @@
+{
+  "pair": "hard_034_inventory_1_exception_contract",
+  "conflict_type": "exception_contract",
+  "ground_truth": "conflict",
+  "generator": "quorum.hard_benchmark"
+}

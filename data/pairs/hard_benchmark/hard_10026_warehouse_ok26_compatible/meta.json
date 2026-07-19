@@ -1,0 +1,6 @@
+{
+  "pair": "hard_10026_warehouse_ok26_compatible",
+  "conflict_type": "orthogonal_features",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_benchmark"
+}

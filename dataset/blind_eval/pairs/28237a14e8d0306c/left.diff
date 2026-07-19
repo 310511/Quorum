@@ -1,0 +1,8 @@
+diff --git a/records_076.py b/records_076.py
+index 0691220..f99a381 100644
+--- a/records_076.py
++++ b/records_076.py
+@@ -1,2 +1,2 @@
+ def select_076(values: list[int]) -> list[int]:
+-    return list(values)
++    return values

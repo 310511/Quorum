@@ -1,0 +1,7 @@
+{
+  "pair": "twin_case_sensitivity_0005",
+  "family": "case_sensitivity",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_compatible",
+  "twin_of_family": "case_sensitivity"
+}

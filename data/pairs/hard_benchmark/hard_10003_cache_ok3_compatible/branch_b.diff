@@ -1,0 +1,17 @@
+--- a/cache_ok3_beta.py
++++ b/cache_ok3_beta.py
+@@ -0,0 +1,2 @@
++def beta_cache_ok3(value):
++    return value * 2
+--- a/test_cache_ok3_beta.py
++++ b/test_cache_ok3_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from cache_ok3_beta import beta_cache_ok3
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_cache_ok3(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()

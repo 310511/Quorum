@@ -1,0 +1,17 @@
+--- a/billing_ok18_alpha.py
++++ b/billing_ok18_alpha.py
+@@ -0,0 +1,2 @@
++def alpha_billing_ok18(value):
++    return value + 1
+--- a/test_billing_ok18_alpha.py
++++ b/test_billing_ok18_alpha.py
+@@ -0,0 +1,9 @@
++import unittest
++from billing_ok18_alpha import alpha_billing_ok18
++
++class AlphaTests(unittest.TestCase):
++    def test_alpha(self):
++        self.assertEqual(alpha_billing_ok18(1), 2)
++
++if __name__ == "__main__":
++    unittest.main()

@@ -1,0 +1,17 @@
+--- a/checkout_ok22_beta.py
++++ b/checkout_ok22_beta.py
+@@ -0,0 +1,2 @@
++def beta_checkout_ok22(value):
++    return value * 2
+--- a/test_checkout_ok22_beta.py
++++ b/test_checkout_ok22_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from checkout_ok22_beta import beta_checkout_ok22
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_checkout_ok22(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()

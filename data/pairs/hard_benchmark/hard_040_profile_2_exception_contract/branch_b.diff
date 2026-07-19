@@ -1,0 +1,23 @@
+--- a/profile_2_handler.py
++++ b/profile_2_handler.py
+@@ -0,0 +1,7 @@
++from profile_2_guard import ensure_profile_2_positive, Profile_2Error
++
++def safe_profile_2(value):
++    try:
++        return ensure_profile_2_positive(value)
++    except Profile_2Error:
++        return 0
+--- a/test_profile_2_handler.py
++++ b/test_profile_2_handler.py
+@@ -0,0 +1,10 @@
++import unittest
++from profile_2_handler import safe_profile_2
++
++class HandlerTests(unittest.TestCase):
++    def test_safe(self):
++        self.assertEqual(safe_profile_2(0), 0)
++        self.assertEqual(safe_profile_2(4), 4)
++
++if __name__ == "__main__":
++    unittest.main()

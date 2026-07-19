@@ -1,0 +1,20 @@
+--- a/search_client.py
++++ b/search_client.py
+@@ -0,0 +1,5 @@
++from search_api import build_search_payload
++
++def client_order(name):
++    # Relies on old positional/default signature.
++    return build_search_payload(name, 5)
+--- a/test_search_client.py
++++ b/test_search_client.py
+@@ -0,0 +1,9 @@
++import unittest
++from search_client import client_order
++
++class ClientTests(unittest.TestCase):
++    def test_order(self):
++        self.assertEqual(client_order("sku")["quantity"], 5)
++
++if __name__ == "__main__":
++    unittest.main()

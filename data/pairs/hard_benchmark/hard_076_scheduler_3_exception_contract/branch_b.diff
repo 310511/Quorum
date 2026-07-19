@@ -1,0 +1,23 @@
+--- a/scheduler_3_handler.py
++++ b/scheduler_3_handler.py
+@@ -0,0 +1,7 @@
++from scheduler_3_guard import ensure_scheduler_3_positive, Scheduler_3Error
++
++def safe_scheduler_3(value):
++    try:
++        return ensure_scheduler_3_positive(value)
++    except Scheduler_3Error:
++        return 0
+--- a/test_scheduler_3_handler.py
++++ b/test_scheduler_3_handler.py
+@@ -0,0 +1,10 @@
++import unittest
++from scheduler_3_handler import safe_scheduler_3
++
++class HandlerTests(unittest.TestCase):
++    def test_safe(self):
++        self.assertEqual(safe_scheduler_3(0), 0)
++        self.assertEqual(safe_scheduler_3(4), 4)
++
++if __name__ == "__main__":
++    unittest.main()

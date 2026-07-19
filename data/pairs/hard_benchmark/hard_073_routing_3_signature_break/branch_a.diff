@@ -1,0 +1,28 @@
+--- a/routing_3_api.py
++++ b/routing_3_api.py
+@@ -1,5 +1,10 @@
+-def build_routing_3_payload(name, quantity=1):
+-    return {"name": name, "quantity": quantity, "kind": "routing_3"}
++def build_routing_3_payload(name, *, quantity, priority):
++    return {
++        "name": name,
++        "quantity": quantity,
++        "priority": priority,
++        "kind": "routing_3",
++    }
+ 
+ def summarize(name):
+-    return build_routing_3_payload(name)["quantity"]
++    return build_routing_3_payload(name, quantity=1, priority="normal")["quantity"]
+--- a/test_routing_3_api.py
++++ b/test_routing_3_api.py
+@@ -3,7 +3,9 @@
+ 
+ class ApiTests(unittest.TestCase):
+     def test_payload(self):
+-        self.assertEqual(build_routing_3_payload("x")["quantity"], 1)
++        payload = build_routing_3_payload("x", quantity=2, priority="high")
++        self.assertEqual(payload["quantity"], 2)
++        self.assertEqual(payload["priority"], "high")
+     def test_summarize(self):
+         self.assertEqual(summarize("x"), 1)

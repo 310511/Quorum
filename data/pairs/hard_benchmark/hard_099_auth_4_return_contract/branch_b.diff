@@ -1,0 +1,19 @@
+--- a/auth_4_scorecard.py
++++ b/auth_4_scorecard.py
+@@ -0,0 +1,4 @@
++from auth_4_service import fetch_auth_4_record
++
++def score_for(item_id):
++    return fetch_auth_4_record(item_id)["score"] + 10
+--- a/test_auth_4_scorecard.py
++++ b/test_auth_4_scorecard.py
+@@ -0,0 +1,9 @@
++import unittest
++from auth_4_scorecard import score_for
++
++class ScorecardTests(unittest.TestCase):
++    def test_score(self):
++        self.assertEqual(score_for(3), 11)
++
++if __name__ == "__main__":
++    unittest.main()

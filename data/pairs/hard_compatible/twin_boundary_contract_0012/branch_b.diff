@@ -1,0 +1,32 @@
+--- a/oracle_semantic.py
++++ b/oracle_semantic.py
+@@ -0,0 +1,6 @@
++import unittest
++from policy_012 import route_12
++
++class SemanticOracle(unittest.TestCase):
++    def test_boundary_remains_standard(self):
++        self.assertEqual(route_12(107), "standard")
+--- a/policy_012.py
++++ b/policy_012.py
+@@ -1,2 +1,6 @@
+ def eligible_12(score, cutoff):
+     return score > cutoff
++
++
++def route_12(score):
++    return "priority" if eligible_12(score, 107) else "standard"
+--- a/test_public.py
++++ b/test_public.py
+@@ -0,0 +1,11 @@
++import unittest
++from policy_012 import route_12
++
++class PolicyTests(unittest.TestCase):
++    def test_clear_priority(self):
++        self.assertEqual(route_12(112), "priority")
++    def test_clear_standard(self):
++        self.assertEqual(route_12(102), "standard")
++
++if __name__ == "__main__":
++    unittest.main()

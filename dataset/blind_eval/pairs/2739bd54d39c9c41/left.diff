@@ -1,0 +1,11 @@
+diff --git a/policy_022.py b/policy_022.py
+index 0bce5d9..3b11609 100644
+--- a/policy_022.py
++++ b/policy_022.py
+@@ -1,2 +1,6 @@
+ def eligible_022(score: int, cutoff: int) -> bool:
+     return score > cutoff
++
++
++def eligible_inclusive_022(score: int, cutoff: int) -> bool:
++    return score >= cutoff

@@ -1,0 +1,11 @@
+diff --git a/parser_011.py b/parser_011.py
+index 748d131..79cada9 100644
+--- a/parser_011.py
++++ b/parser_011.py
+@@ -1,2 +1,5 @@
+ def parse_count_011(raw: str) -> int:
+-    return int(raw)
++    try:
++        return int(raw)
++    except ValueError:
++        return 4

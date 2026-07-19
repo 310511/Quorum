@@ -1,0 +1,14 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "hard_benchmark_verified",
+  "conflict_type": "rename_stale_reference",
+  "notes": "Branch A renames compute_profile_3_total->compute_profile_3_total_v2; Branch B adds caller of compute_profile_3_total",
+  "validation": {
+    "branch_a_tests": "pass",
+    "branch_b_tests": "pass",
+    "merged_tests": "fail",
+    "compilation": "pass",
+    "merged_test_output": "test_format (test_profile_3_core.CoreTests) ... ok\ntest_total (test_profile_3_core.CoreTests) ... ok\ntest_profile_3_report (unittest.loader._FailedTest) ... ERROR\n\n======================================================================\nERROR: test_profile_3_report (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_profile_3_report\nTraceback (most recent call last):\n  File \"C:\\Users\\punya mittal\\AppData\\Local\\Programs\\Python\\Python310\\lib\\unittest\\loader.py\", line 436, in _find_test_path\n    module = self._get_module_from_name(name)\n  File \"C:\\Users\\punya mittal\\AppData\\Local\\Programs\\Python\\Python310\\lib\\unittest\\loader.py\", line 377, in _get_module_from_name\n    __import__(name)\n  File \"C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-1763xeve\\repo\\test_profile_3_report.py\", line 2, in <module>\n    from profile_3_report import report_line\n  File \"C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-1763xeve\\repo\\profile_3_report.py\", line 1, in <module>\n    from profile_3_core import compute_profile_3_total\nImportError: cannot import name 'compute_profile_3_total' from 'profile_3_core' (C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-1763xeve\\repo\\profile_3_core.py)\n\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (errors=1)"
+  }
+}

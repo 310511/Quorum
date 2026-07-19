@@ -1,0 +1,32 @@
+--- a/oracle_semantic.py
++++ b/oracle_semantic.py
+@@ -0,0 +1,6 @@
++import unittest
++from ordering_002 import first_2
++
++class SemanticOracle(unittest.TestCase):
++    def test_first_means_smallest(self):
++        self.assertEqual(first_2([11, 8]), 8)
+--- a/ordering_002.py
++++ b/ordering_002.py
+@@ -1,2 +1,6 @@
+ def normalize_2(items, reverse=False):
+     return sorted(items, reverse=reverse)
++
++
++def first_2(items):
++    return normalize_2(items)[0]
+--- a/test_public.py
++++ b/test_public.py
+@@ -0,0 +1,11 @@
++import unittest
++from ordering_002 import first_2, normalize_2
++
++class OrderingTests(unittest.TestCase):
++    def test_single_item(self):
++        self.assertEqual(first_2([8]), 8)
++    def test_equal_items(self):
++        self.assertEqual(normalize_2([8, 8]), [8, 8])
++
++if __name__ == "__main__":
++    unittest.main()

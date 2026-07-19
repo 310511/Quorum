@@ -1,0 +1,28 @@
+--- a/parser_1_guard.py
++++ b/parser_1_guard.py
+@@ -1,7 +1,7 @@
+-class Parser_1Error(ValueError):
++class Parser_1Gone(LookupError):
+     pass
+ 
+ def ensure_parser_1_positive(value):
+     if value <= 0:
+-        raise Parser_1Error("non-positive")
++        raise Parser_1Gone("non-positive")
+     return value
+--- a/test_parser_1_guard.py
++++ b/test_parser_1_guard.py
+@@ -1,11 +1,11 @@
+ import unittest
+-from parser_1_guard import ensure_parser_1_positive, Parser_1Error
++from parser_1_guard import ensure_parser_1_positive, Parser_1Gone
+ 
+ class GuardTests(unittest.TestCase):
+     def test_ok(self):
+         self.assertEqual(ensure_parser_1_positive(2), 2)
+     def test_bad(self):
+-        with self.assertRaises(Parser_1Error):
++        with self.assertRaises(Parser_1Gone):
+             ensure_parser_1_positive(0)
+ 
+ if __name__ == "__main__":

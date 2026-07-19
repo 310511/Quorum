@@ -1,0 +1,6 @@
+{
+  "pair": "hard_079_auth_3_signature_break",
+  "conflict_type": "signature_break",
+  "ground_truth": "conflict",
+  "generator": "quorum.hard_benchmark"
+}

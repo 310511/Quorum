@@ -1,0 +1,24 @@
+diff --git a/limits_024.py b/limits_024.py
+index 219051e..d682f96 100644
+--- a/limits_024.py
++++ b/limits_024.py
+@@ -1,2 +1,6 @@
+ def resolve_limit_024(value: int | None) -> int:
+     return 104 if value is None else value
++
++
++def can_accept_024(current: int, limit: int | None = None) -> bool:
++    return current < resolve_limit_024(limit)
+diff --git a/test_limits.py b/test_limits.py
+new file mode 100644
+index 0000000..8ab6d37
+--- /dev/null
++++ b/test_limits.py
+@@ -0,0 +1,7 @@
++import unittest
++from limits_024 import can_accept_024
++
++class LimitTests(unittest.TestCase):
++    def test_explicit_limit(self):
++        self.assertTrue(can_accept_024(4, 10))
++        self.assertFalse(can_accept_024(10, 10))

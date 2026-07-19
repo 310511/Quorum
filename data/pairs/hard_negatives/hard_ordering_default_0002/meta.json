@@ -1,0 +1,19 @@
+{
+  "record_id": "b5342605-a650-4d92-a8b4-b703fcff1771",
+  "repository": "C:\\Users\\punya mittal\\data\\examples\\hard_negatives\\ordering_default_0002",
+  "merge_base": "276aeeb49ceeb81bbf211546f1527965522b34b8",
+  "parents": {
+    "left": {
+      "commit": "9e2ab6c6dd293f2abe649c947fc7f55b5cf0e19e",
+      "intent": "Make descending order the new presentation default.",
+      "patch_sha256": "a22f7d1e4219f1613b67f722a5af030cadd697c245c785b9896ea93adf4a638a"
+    },
+    "right": {
+      "commit": "c10287035e60118a8528c0ab96a4bbd1a2b1e238",
+      "intent": "Add a helper that treats the default first item as the minimum.",
+      "patch_sha256": "9cdebb4ce6f8e9487754f8e994fb31006e3929193848ed0d950abb21195d043e"
+    }
+  },
+  "kind": "semantic_conflict",
+  "schema_version": 2
+}

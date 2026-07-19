@@ -1,0 +1,20 @@
+--- a/search_2_ui.py
++++ b/search_2_ui.py
+@@ -0,0 +1,5 @@
++from search_2_config import page_search_2
++
++def preview_search_2():
++    # Depends on historical default of 10.
++    return page_search_2(range(20))
+--- a/test_search_2_ui.py
++++ b/test_search_2_ui.py
+@@ -0,0 +1,9 @@
++import unittest
++from search_2_ui import preview_search_2
++
++class UiTests(unittest.TestCase):
++    def test_preview(self):
++        self.assertEqual(len(preview_search_2()), 10)
++
++if __name__ == "__main__":
++    unittest.main()

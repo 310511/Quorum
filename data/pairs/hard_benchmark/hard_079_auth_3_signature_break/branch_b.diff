@@ -1,0 +1,20 @@
+--- a/auth_3_client.py
++++ b/auth_3_client.py
+@@ -0,0 +1,5 @@
++from auth_3_api import build_auth_3_payload
++
++def client_order(name):
++    # Relies on old positional/default signature.
++    return build_auth_3_payload(name, 5)
+--- a/test_auth_3_client.py
++++ b/test_auth_3_client.py
+@@ -0,0 +1,9 @@
++import unittest
++from auth_3_client import client_order
++
++class ClientTests(unittest.TestCase):
++    def test_order(self):
++        self.assertEqual(client_order("sku")["quantity"], 5)
++
++if __name__ == "__main__":
++    unittest.main()

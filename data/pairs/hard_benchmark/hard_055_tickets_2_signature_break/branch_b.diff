@@ -1,0 +1,20 @@
+--- a/test_tickets_2_client.py
++++ b/test_tickets_2_client.py
+@@ -0,0 +1,9 @@
++import unittest
++from tickets_2_client import client_order
++
++class ClientTests(unittest.TestCase):
++    def test_order(self):
++        self.assertEqual(client_order("sku")["quantity"], 5)
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/tickets_2_client.py
++++ b/tickets_2_client.py
+@@ -0,0 +1,5 @@
++from tickets_2_api import build_tickets_2_payload
++
++def client_order(name):
++    # Relies on old positional/default signature.
++    return build_tickets_2_payload(name, 5)

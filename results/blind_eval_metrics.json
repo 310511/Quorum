@@ -1,0 +1,111 @@
+{
+  "run": "run_blind_eval_raw_final.json",
+  "n_scored": 200,
+  "label_balance": {
+    "no_conflict": 100,
+    "conflict": 100
+  },
+  "systems": {
+    "Baseline (single LLM)": {
+      "TP": 0,
+      "FP": 0,
+      "TN": 100,
+      "FN": 100,
+      "precision": 0.0,
+      "recall_sensitivity": 0.0,
+      "specificity": 1.0,
+      "f1": 0.0,
+      "balanced_accuracy": 0.5,
+      "mcc": 0.0,
+      "accuracy": 0.5,
+      "coverage": 1.0,
+      "escalation_rate": 0.0
+    },
+    "Majority vote": {
+      "TP": 100,
+      "FP": 100,
+      "TN": 0,
+      "FN": 0,
+      "precision": 0.5,
+      "recall_sensitivity": 1.0,
+      "specificity": 0.0,
+      "f1": 0.6666666666666666,
+      "balanced_accuracy": 0.5,
+      "mcc": 0.0,
+      "accuracy": 0.5,
+      "coverage": 1.0,
+      "escalation_rate": 0.0
+    },
+    "Evidence-weighted committee": {
+      "TP": 88,
+      "FP": 100,
+      "TN": 0,
+      "FN": 12,
+      "precision": 0.46808510638297873,
+      "recall_sensitivity": 0.88,
+      "specificity": 0.0,
+      "f1": 0.6111111111111112,
+      "balanced_accuracy": 0.44,
+      "mcc": -0.2526455763199557,
+      "accuracy": 0.44,
+      "coverage": 0.955,
+      "escalation_rate": 0.045
+    }
+  },
+  "per_family_committee": {
+    "aliasing_safe_copy": {
+      "n": 14,
+      "committee_correct": 0
+    },
+    "error_dual_api": {
+      "n": 14,
+      "committee_correct": 0
+    },
+    "case_dual_api": {
+      "n": 14,
+      "committee_correct": 0
+    },
+    "ordering_default": {
+      "n": 17,
+      "committee_correct": 14
+    },
+    "sentinel_dual_api": {
+      "n": 14,
+      "committee_correct": 0
+    },
+    "aliasing_contract": {
+      "n": 17,
+      "committee_correct": 13
+    },
+    "error_contract": {
+      "n": 16,
+      "committee_correct": 15
+    },
+    "sentinel_default": {
+      "n": 17,
+      "committee_correct": 14
+    },
+    "ordering_dual_api": {
+      "n": 15,
+      "committee_correct": 0
+    },
+    "cross_file_orthogonal": {
+      "n": 14,
+      "committee_correct": 0
+    },
+    "boundary_dual_api": {
+      "n": 15,
+      "committee_correct": 0
+    },
+    "case_sensitivity": {
+      "n": 16,
+      "committee_correct": 15
+    },
+    "boundary_contract": {
+      "n": 17,
+      "committee_correct": 17
+    }
+  },
+  "leakage_free": true,
+  "notes": "context.md omitted from all prompts; labels read only for scoring."
+}

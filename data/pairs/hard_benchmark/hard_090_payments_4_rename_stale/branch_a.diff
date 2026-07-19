@@ -1,0 +1,23 @@
+--- a/payments_4_core.py
++++ b/payments_4_core.py
+@@ -1,5 +1,5 @@
+-def compute_payments_4_total(items):
++def compute_payments_4_total_v2(items):
+     return sum(int(x) for x in items)
+ 
+ def format_total(items):
+-    return "total=" + str(compute_payments_4_total(items))
++    return "total=" + str(compute_payments_4_total_v2(items))
+--- a/test_payments_4_core.py
++++ b/test_payments_4_core.py
+@@ -1,9 +1,9 @@
+ import unittest
+-from payments_4_core import compute_payments_4_total, format_total
++from payments_4_core import compute_payments_4_total_v2, format_total
+ 
+ class CoreTests(unittest.TestCase):
+     def test_total(self):
+-        self.assertEqual(compute_payments_4_total([1, 2, 3]), 6)
++        self.assertEqual(compute_payments_4_total_v2([1, 2, 3]), 6)
+     def test_format(self):
+         self.assertIn("6", format_total([1, 2, 3]))

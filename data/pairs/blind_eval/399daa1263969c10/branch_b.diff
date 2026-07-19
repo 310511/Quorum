@@ -1,0 +1,23 @@
+diff --git a/billing_028.py b/billing_028.py
+index fca4ecb..93cf62a 100644
+--- a/billing_028.py
++++ b/billing_028.py
+@@ -2,3 +2,6 @@ from util_028 import clamp_028
+ 
+ def fee_028(amount: int) -> int:
+     return clamp_028(amount, 1, 500)
++
++def discounted_fee_028(amount: int, discount: int) -> int:
++    return clamp_028(amount - discount, 1, 500)
+diff --git a/test_cross.py b/test_cross.py
+new file mode 100644
+index 0000000..2967a90
+--- /dev/null
++++ b/test_cross.py
+@@ -0,0 +1,6 @@
++import unittest
++from billing_028 import discounted_fee_028
++
++class CrossFileTests(unittest.TestCase):
++    def test_discount(self):
++        self.assertEqual(discounted_fee_028(40, 10), 30)

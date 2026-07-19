@@ -1,0 +1,19 @@
+--- a/payments_1_report.py
++++ b/payments_1_report.py
+@@ -0,0 +1,4 @@
++from payments_1_core import compute_payments_1_total
++
++def report_line(items):
++    return compute_payments_1_total(items) * 2
+--- a/test_payments_1_report.py
++++ b/test_payments_1_report.py
+@@ -0,0 +1,9 @@
++import unittest
++from payments_1_report import report_line
++
++class ReportTests(unittest.TestCase):
++    def test_report(self):
++        self.assertEqual(report_line([1, 2, 3]), 12)
++
++if __name__ == "__main__":
++    unittest.main()

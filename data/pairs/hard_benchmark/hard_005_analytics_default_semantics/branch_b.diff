@@ -1,0 +1,20 @@
+--- a/analytics_ui.py
++++ b/analytics_ui.py
+@@ -0,0 +1,5 @@
++from analytics_config import page_analytics
++
++def preview_analytics():
++    # Depends on historical default of 10.
++    return page_analytics(range(20))
+--- a/test_analytics_ui.py
++++ b/test_analytics_ui.py
+@@ -0,0 +1,9 @@
++import unittest
++from analytics_ui import preview_analytics
++
++class UiTests(unittest.TestCase):
++    def test_preview(self):
++        self.assertEqual(len(preview_analytics()), 10)
++
++if __name__ == "__main__":
++    unittest.main()

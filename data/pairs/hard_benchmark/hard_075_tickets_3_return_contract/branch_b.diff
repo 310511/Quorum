@@ -1,0 +1,19 @@
+--- a/test_tickets_3_scorecard.py
++++ b/test_tickets_3_scorecard.py
+@@ -0,0 +1,9 @@
++import unittest
++from tickets_3_scorecard import score_for
++
++class ScorecardTests(unittest.TestCase):
++    def test_score(self):
++        self.assertEqual(score_for(3), 11)
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/tickets_3_scorecard.py
++++ b/tickets_3_scorecard.py
+@@ -0,0 +1,4 @@
++from tickets_3_service import fetch_tickets_3_record
++
++def score_for(item_id):
++    return fetch_tickets_3_record(item_id)["score"] + 10

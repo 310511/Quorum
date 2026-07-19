@@ -1,0 +1,28 @@
+--- a/analytics_4_api.py
++++ b/analytics_4_api.py
+@@ -1,5 +1,10 @@
+-def build_analytics_4_payload(name, quantity=1):
+-    return {"name": name, "quantity": quantity, "kind": "analytics_4"}
++def build_analytics_4_payload(name, *, quantity, priority):
++    return {
++        "name": name,
++        "quantity": quantity,
++        "priority": priority,
++        "kind": "analytics_4",
++    }
+ 
+ def summarize(name):
+-    return build_analytics_4_payload(name)["quantity"]
++    return build_analytics_4_payload(name, quantity=1, priority="normal")["quantity"]
+--- a/test_analytics_4_api.py
++++ b/test_analytics_4_api.py
+@@ -3,7 +3,9 @@
+ 
+ class ApiTests(unittest.TestCase):
+     def test_payload(self):
+-        self.assertEqual(build_analytics_4_payload("x")["quantity"], 1)
++        payload = build_analytics_4_payload("x", quantity=2, priority="high")
++        self.assertEqual(payload["quantity"], 2)
++        self.assertEqual(payload["priority"], "high")
+     def test_summarize(self):
+         self.assertEqual(summarize("x"), 1)

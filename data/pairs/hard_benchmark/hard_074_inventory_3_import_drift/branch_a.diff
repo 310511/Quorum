@@ -1,0 +1,20 @@
+--- a/inventory_3_tokens.py
++++ b/inventory_3_tokens.py
+@@ -0,0 +1,2 @@
++def normalize_inventory_3_token(value):
++    return str(value).strip().lower()
+--- a/inventory_3_utils.py
++++ b/inventory_3_utils.py
+@@ -1,2 +1 @@
+-def normalize_inventory_3_token(value):
+-    return str(value).strip().lower()
++# Moved to inventory_3_tokens.py
+--- a/test_inventory_3_utils.py
++++ b/test_inventory_3_utils.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from inventory_3_utils import normalize_inventory_3_token
++from inventory_3_tokens import normalize_inventory_3_token
+ 
+ class UtilsTests(unittest.TestCase):
+     def test_normalize(self):

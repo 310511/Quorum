@@ -1,0 +1,31 @@
+--- a/limits_015.py
++++ b/limits_015.py
+@@ -1,2 +1,6 @@
+ def resolve_limit_15(value):
+     return 173 if value is None else value
++
++
++def can_accept_15(current, limit=None):
++    return current < resolve_limit_15(limit)
+--- a/oracle_semantic.py
++++ b/oracle_semantic.py
+@@ -0,0 +1,6 @@
++import unittest
++from limits_015 import can_accept_15
++
++class SemanticOracle(unittest.TestCase):
++    def test_missing_limit_uses_configured_default(self):
++        self.assertTrue(can_accept_15(1))
+--- a/test_public.py
++++ b/test_public.py
+@@ -0,0 +1,10 @@
++import unittest
++from limits_015 import can_accept_15
++
++class LimitTests(unittest.TestCase):
++    def test_explicit_limit(self):
++        self.assertTrue(can_accept_15(4, 10))
++        self.assertFalse(can_accept_15(10, 10))
++
++if __name__ == "__main__":
++    unittest.main()

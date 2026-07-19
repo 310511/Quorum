@@ -1,0 +1,36 @@
+% Auto-generated Quorum publication tables
+\begin{table}[t]
+\centering
+\small
+\caption{Five-system comparison on the combined Quorum benchmark.}
+\label{tab:main-results}
+\begin{tabular}{lccccccc}
+\toprule
+System & Acc & P & R & F1 & Cov. & Esc. & Lat. \\
+\midrule
+A Baseline & 7.8% & 60.0% & 5.5% & 10.1% & 100.0% & 0.0% & 24.5s \\
+B Majority & 94.0% & 94.0% & 100.0% & 96.9% & 100.0% & 0.0% & 48.4s \\
+C Legacy esc. & 0.9% & 100.0% & 100.0% & 100.0% & 0.9% & 99.1% & 48.4s \\
+D Evid. (raw) & 7.8% & 66.7% & 88.9% & 76.2% & 12.1% & 87.9% & 48.4s \\
+E Evid.+AST & 8.6% & 62.5% & 100.0% & 76.9% & 13.8% & 86.2% & 47.0s \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\small
+\caption{Error taxonomy on incorrect decided predictions.}
+\label{tab:error-analysis}
+\begin{tabular}{lr}
+\toprule
+Category & Count \\
+\midrule
+representation error & 0 \\
+model reasoning error & 100 \\
+hallucinated evidence & 14 \\
+adjudication error & 0 \\
+dataset ambiguity & 11 \\
+\bottomrule
+\end{tabular}
+\end{table}

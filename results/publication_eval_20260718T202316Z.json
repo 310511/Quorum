@@ -1,0 +1,1906 @@
+{
+  "timestamp": "20260718T202316Z",
+  "source_runs": {
+    "cooper_raw": "results\\run_20260718T182612Z_cooper_raw.json",
+    "cooper_structured": "results\\run_20260718T182612Z_cooper_structured.json",
+    "hard_raw": null,
+    "hard_structured": null
+  },
+  "cooperbench_python": {
+    "corpus": "cooperbench_python",
+    "n_pairs": 16,
+    "label_distribution": {
+      "conflict": 9,
+      "no_conflict": 7
+    },
+    "systems": {
+      "A_baseline": {
+        "description": "Single-model baseline",
+        "n": 16,
+        "accuracy": 0.5625,
+        "decided_accuracy": 0.5625,
+        "precision": 0.6,
+        "recall": 0.6666666666666666,
+        "f1": 0.631578947368421,
+        "coverage": 1.0,
+        "escalation_rate": 0.0,
+        "escalations": 0,
+        "errors": 0,
+        "latency_mean_s": 22.610726081253233,
+        "confusion_matrix": {
+          "tp": 6,
+          "fp": 4,
+          "tn": 3,
+          "fn": 3,
+          "escalate": 0,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "precision_ci95": [
+          0.3126695474501863,
+          0.8318224187964901
+        ],
+        "recall_ci95": [
+          0.35419734749908977,
+          0.8794184013172571
+        ],
+        "f1_ci95": [
+          0.37499999999999994,
+          0.8181818181818182
+        ]
+      },
+      "B_majority_vote": {
+        "description": "Majority vote",
+        "n": 16,
+        "accuracy": 0.5625,
+        "decided_accuracy": 0.5625,
+        "precision": 0.5625,
+        "recall": 1.0,
+        "f1": 0.72,
+        "coverage": 1.0,
+        "escalation_rate": 0.0,
+        "escalations": 0,
+        "errors": 0,
+        "latency_mean_s": 58.818947143754485,
+        "confusion_matrix": {
+          "tp": 9,
+          "fp": 7,
+          "tn": 0,
+          "fn": 0,
+          "escalate": 0,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "precision_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "recall_ci95": [
+          0.7008472464490406,
+          1.0
+        ],
+        "f1_ci95": [
+          0.72,
+          0.72
+        ]
+      },
+      "C_legacy_escalation": {
+        "description": "Current escalation policy",
+        "n": 16,
+        "accuracy": 0.0625,
+        "decided_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "coverage": 0.0625,
+        "escalation_rate": 0.9375,
+        "escalations": 15,
+        "errors": 0,
+        "latency_mean_s": 58.818947143754485,
+        "confusion_matrix": {
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0,
+          "escalate": 15,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.011119057308331216,
+          0.2832926836802987
+        ],
+        "precision_ci95": [
+          0.20654329147389294,
+          1.0
+        ],
+        "recall_ci95": [
+          0.20654329147389294,
+          1.0
+        ],
+        "f1_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "D_evidence_weighted_raw": {
+        "description": "Evidence-weighted committee (raw)",
+        "n": 16,
+        "accuracy": 0.5625,
+        "decided_accuracy": 0.6428571428571429,
+        "precision": 0.6666666666666666,
+        "recall": 0.8888888888888888,
+        "f1": 0.761904761904762,
+        "coverage": 0.875,
+        "escalation_rate": 0.125,
+        "escalations": 2,
+        "errors": 0,
+        "latency_mean_s": 58.818947143754485,
+        "confusion_matrix": {
+          "tp": 8,
+          "fp": 4,
+          "tn": 1,
+          "fn": 1,
+          "escalate": 2,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "precision_ci95": [
+          0.3906175873976139,
+          0.8618821601026386
+        ],
+        "recall_ci95": [
+          0.5649937852319398,
+          0.9801096286728695
+        ],
+        "f1_ci95": [
+          0.5555555555555556,
+          0.9166666666666666
+        ]
+      },
+      "E_evidence_weighted_structured": {
+        "description": "Evidence-weighted + structured AST",
+        "n": 16,
+        "accuracy": 0.5625,
+        "decided_accuracy": 0.6,
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "coverage": 0.9375,
+        "escalation_rate": 0.0625,
+        "escalations": 1,
+        "errors": 0,
+        "latency_mean_s": 53.64575411875376,
+        "confusion_matrix": {
+          "tp": 9,
+          "fp": 6,
+          "tn": 0,
+          "fn": 0,
+          "escalate": 1,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "precision_ci95": [
+          0.357464427565077,
+          0.8017577191740534
+        ],
+        "recall_ci95": [
+          0.7008472464490406,
+          1.0
+        ],
+        "f1_ci95": [
+          0.5714285714285715,
+          0.888888888888889
+        ]
+      }
+    },
+    "significance": {
+      "A_baseline_vs_B_majority_vote": {
+        "b01": 3,
+        "b10": 3,
+        "statistic": 0.16666666666666666,
+        "p_value": 0.6830913983096087,
+        "n_discordant": 6
+      },
+      "A_baseline_vs_C_legacy_escalation": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "A_baseline_vs_D_evidence_weighted_raw": {
+        "b01": 3,
+        "b10": 2,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 5
+      },
+      "A_baseline_vs_E_evidence_weighted_structured": {
+        "b01": 3,
+        "b10": 3,
+        "statistic": 0.16666666666666666,
+        "p_value": 0.6830913983096087,
+        "n_discordant": 6
+      },
+      "B_majority_vote_vs_C_legacy_escalation": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "B_majority_vote_vs_D_evidence_weighted_raw": {
+        "b01": 1,
+        "b10": 1,
+        "statistic": 0.5,
+        "p_value": 0.4795001221869534,
+        "n_discordant": 2
+      },
+      "B_majority_vote_vs_E_evidence_weighted_structured": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "C_legacy_escalation_vs_D_evidence_weighted_raw": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "C_legacy_escalation_vs_E_evidence_weighted_structured": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "D_evidence_weighted_raw_vs_E_evidence_weighted_structured": {
+        "b01": 1,
+        "b10": 1,
+        "statistic": 0.5,
+        "p_value": 0.4795001221869534,
+        "n_discordant": 2
+      }
+    },
+    "error_analysis": {
+      "counts": {
+        "dataset_ambiguity": 11,
+        "hallucinated_evidence": 14
+      },
+      "by_system": {
+        "A_baseline": {
+          "dataset_ambiguity": 3,
+          "hallucinated_evidence": 4
+        },
+        "B_majority_vote": {
+          "dataset_ambiguity": 3,
+          "hallucinated_evidence": 4
+        },
+        "D_evidence_weighted_raw": {
+          "dataset_ambiguity": 3,
+          "hallucinated_evidence": 2
+        },
+        "E_evidence_weighted_structured": {
+          "dataset_ambiguity": 2,
+          "hallucinated_evidence": 4
+        }
+      },
+      "rows": [
+        {
+          "pair": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_04_dspy_t8563_f1v2",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_04_dspy_t8563_f1v2",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_04_dspy_t8563_f1v2",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_04_dspy_t8563_f1v2",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_07_huggingface_datasets_t6252_f3v5",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "conflict",
+          "prediction": "no_conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_08_huggingface_datasets_t6252_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_08_huggingface_datasets_t6252_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_08_huggingface_datasets_t6252_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_09_llama_index_t18813_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "conflict",
+          "prediction": "no_conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_10_llama_index_t17244_f3v4",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_10_llama_index_t17244_f3v4",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_11_openai_tiktoken_t0_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "conflict",
+          "prediction": "no_conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_13_pallets_click_t2956_f3v8",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_13_pallets_click_t2956_f3v8",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_13_pallets_click_t2956_f3v8",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_13_pallets_click_t2956_f3v8",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_14_pallets_jinja_t1621_f1v6",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "conflict",
+          "prediction": "no_conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_15_pallets_jinja_t1559_f2v7",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_15_pallets_jinja_t1559_f2v7",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_15_pallets_jinja_t1559_f2v7",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_17_pillow_t25_f1v5",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_17_pillow_t25_f1v5",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        }
+      ]
+    },
+    "per_pair": [
+      {
+        "pair": "pair_01_dottxt_ai_outlines_t1655_f9v10",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "rationale_dominance"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.62).",
+          "E": "llama3.2:3b gave the strongest grounded rationale (score 0.66 vs 0.00, margin 0.66 >= 0.12); verdict 'conflict' accepted over deepseek-coder:6.7b despite the vote split. Grounded evidence: ['braces', 'curly', 'format', 'guid', 'hash_sha256', 'style', 'windows']."
+        },
+        "errors": {}
+      },
+      {
+        "pair": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "escalate"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "ambiguous_evidence"
+        },
+        "explanations": {
+          "D": "All 2 models agree on 'conflict' (best rationale score 0.48).",
+          "E": "Contradictory verdicts with rationale scores within 0.12 (margin 0.11) and weighted evidence within 0.05 (gap 0.02); genuine ambiguity, escalating."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "D_evidence_weighted_raw": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          }
+        }
+      },
+      {
+        "pair": "pair_03_dspy_t8587_f3v5",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.81).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.65)."
+        },
+        "errors": {}
+      },
+      {
+        "pair": "pair_04_dspy_t8563_f1v2",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 2 models agree on 'conflict' (best rationale score 0.72).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.84)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "D_evidence_weighted_raw": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          }
+        }
+      },
+      {
+        "pair": "pair_07_huggingface_datasets_t6252_f3v5",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "rationale_dominance",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "llama3.2:3b gave the strongest grounded rationale (score 0.59 vs 0.00, margin 0.59 >= 0.12); verdict 'conflict' accepted over deepseek-coder:6.7b despite the vote split. Grounded evidence: ['as_array', 'decode_example', 'float32', 'image', 'max_resolution', 'parameter', 'pil', 'size'].",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.68)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "no_conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_08_huggingface_datasets_t6252_f1v3",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "rationale_dominance",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "llama3.2:3b gave the strongest grounded rationale (score 0.53 vs 0.00, margin 0.53 >= 0.12); verdict 'conflict' accepted over deepseek-coder:6.7b despite the vote split. Grounded evidence: ['exif', 'image', 'max_resolution', 'optional', 'orientation', 'parameter', 'size'].",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.65)."
+        },
+        "errors": {
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "D_evidence_weighted_raw": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_09_llama_index_t18813_f1v3",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "rationale_dominance",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "llama3.2:3b gave the strongest grounded rationale (score 0.77 vs 0.44, margin 0.33 >= 0.12); verdict 'conflict' accepted over deepseek-coder:6.7b despite the vote split. Grounded evidence: ['bytes', 'resolve_audio_with_size', 'resolve_document_with_size', 'resolve_image_with_size', 'zero'].",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.88)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "no_conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_10_llama_index_t17244_f3v4",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "no_conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "weighted_evidence_vote",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Rationale quality is comparable (margin 0.05 < 0.12); confidence-weighted evidence favors 'no_conflict' (conflict=0.57 vs no_conflict=0.62, gap 0.05).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.77)."
+        },
+        "errors": {
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_11_openai_tiktoken_t0_f1v3",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "weighted_evidence_vote",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Rationale quality is comparable (margin 0.12 < 0.12); confidence-weighted evidence favors 'conflict' (conflict=0.60 vs no_conflict=0.52, gap 0.08).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.75)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "no_conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_12_pallets_click_t2068_f2v4",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.75).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.57)."
+        },
+        "errors": {}
+      },
+      {
+        "pair": "pair_13_pallets_click_t2956_f3v8",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.80).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.85)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "D_evidence_weighted_raw": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          }
+        }
+      },
+      {
+        "pair": "pair_14_pallets_jinja_t1621_f1v6",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "no_conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "weighted_evidence_vote",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Rationale quality is comparable (margin 0.03 < 0.12); confidence-weighted evidence favors 'no_conflict' (conflict=0.49 vs no_conflict=0.59, gap 0.09).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.81)."
+        },
+        "errors": {
+          "D_evidence_weighted_raw": {
+            "prediction": "no_conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_15_pallets_jinja_t1559_f2v7",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "escalate",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "ambiguous_evidence",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Contradictory verdicts with rationale scores within 0.12 (margin 0.00) and weighted evidence within 0.05 (gap 0.04); genuine ambiguity, escalating.",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.80)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_16_pillow_t290_f1v5",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "conflict",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.66).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.69)."
+        },
+        "errors": {}
+      },
+      {
+        "pair": "pair_17_pillow_t25_f1v5",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "escalate",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "ambiguous_evidence",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Contradictory verdicts with rationale scores within 0.12 (margin 0.08) and weighted evidence within 0.05 (gap 0.03); genuine ambiguity, escalating.",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.71)."
+        },
+        "errors": {
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_19_samuelcolvin_dirty_equals_t43_f1v3",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.71).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.86)."
+        },
+        "errors": {}
+      }
+    ]
+  },
+  "combined": {
+    "corpus": "combined",
+    "n_pairs": 16,
+    "label_distribution": {
+      "conflict": 9,
+      "no_conflict": 7
+    },
+    "systems": {
+      "A_baseline": {
+        "description": "Single-model baseline",
+        "n": 16,
+        "accuracy": 0.5625,
+        "decided_accuracy": 0.5625,
+        "precision": 0.6,
+        "recall": 0.6666666666666666,
+        "f1": 0.631578947368421,
+        "coverage": 1.0,
+        "escalation_rate": 0.0,
+        "escalations": 0,
+        "errors": 0,
+        "latency_mean_s": 22.610726081253233,
+        "confusion_matrix": {
+          "tp": 6,
+          "fp": 4,
+          "tn": 3,
+          "fn": 3,
+          "escalate": 0,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "precision_ci95": [
+          0.3126695474501863,
+          0.8318224187964901
+        ],
+        "recall_ci95": [
+          0.35419734749908977,
+          0.8794184013172571
+        ],
+        "f1_ci95": [
+          0.37499999999999994,
+          0.8181818181818182
+        ]
+      },
+      "B_majority_vote": {
+        "description": "Majority vote",
+        "n": 16,
+        "accuracy": 0.5625,
+        "decided_accuracy": 0.5625,
+        "precision": 0.5625,
+        "recall": 1.0,
+        "f1": 0.72,
+        "coverage": 1.0,
+        "escalation_rate": 0.0,
+        "escalations": 0,
+        "errors": 0,
+        "latency_mean_s": 58.818947143754485,
+        "confusion_matrix": {
+          "tp": 9,
+          "fp": 7,
+          "tn": 0,
+          "fn": 0,
+          "escalate": 0,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "precision_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "recall_ci95": [
+          0.7008472464490406,
+          1.0
+        ],
+        "f1_ci95": [
+          0.72,
+          0.72
+        ]
+      },
+      "C_legacy_escalation": {
+        "description": "Current escalation policy",
+        "n": 16,
+        "accuracy": 0.0625,
+        "decided_accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "coverage": 0.0625,
+        "escalation_rate": 0.9375,
+        "escalations": 15,
+        "errors": 0,
+        "latency_mean_s": 58.818947143754485,
+        "confusion_matrix": {
+          "tp": 1,
+          "fp": 0,
+          "tn": 0,
+          "fn": 0,
+          "escalate": 15,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.011119057308331216,
+          0.2832926836802987
+        ],
+        "precision_ci95": [
+          0.20654329147389294,
+          1.0
+        ],
+        "recall_ci95": [
+          0.20654329147389294,
+          1.0
+        ],
+        "f1_ci95": [
+          1.0,
+          1.0
+        ]
+      },
+      "D_evidence_weighted_raw": {
+        "description": "Evidence-weighted committee (raw)",
+        "n": 16,
+        "accuracy": 0.5625,
+        "decided_accuracy": 0.6428571428571429,
+        "precision": 0.6666666666666666,
+        "recall": 0.8888888888888888,
+        "f1": 0.761904761904762,
+        "coverage": 0.875,
+        "escalation_rate": 0.125,
+        "escalations": 2,
+        "errors": 0,
+        "latency_mean_s": 58.818947143754485,
+        "confusion_matrix": {
+          "tp": 8,
+          "fp": 4,
+          "tn": 1,
+          "fn": 1,
+          "escalate": 2,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "precision_ci95": [
+          0.3906175873976139,
+          0.8618821601026386
+        ],
+        "recall_ci95": [
+          0.5649937852319398,
+          0.9801096286728695
+        ],
+        "f1_ci95": [
+          0.5555555555555556,
+          0.9166666666666666
+        ]
+      },
+      "E_evidence_weighted_structured": {
+        "description": "Evidence-weighted + structured AST",
+        "n": 16,
+        "accuracy": 0.5625,
+        "decided_accuracy": 0.6,
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "coverage": 0.9375,
+        "escalation_rate": 0.0625,
+        "escalations": 1,
+        "errors": 0,
+        "latency_mean_s": 53.64575411875376,
+        "confusion_matrix": {
+          "tp": 9,
+          "fp": 6,
+          "tn": 0,
+          "fn": 0,
+          "escalate": 1,
+          "error": 0
+        },
+        "accuracy_ci95": [
+          0.3317819560677652,
+          0.7690163666481449
+        ],
+        "precision_ci95": [
+          0.357464427565077,
+          0.8017577191740534
+        ],
+        "recall_ci95": [
+          0.7008472464490406,
+          1.0
+        ],
+        "f1_ci95": [
+          0.5714285714285715,
+          0.888888888888889
+        ]
+      }
+    },
+    "significance": {
+      "A_baseline_vs_B_majority_vote": {
+        "b01": 3,
+        "b10": 3,
+        "statistic": 0.16666666666666666,
+        "p_value": 0.6830913983096087,
+        "n_discordant": 6
+      },
+      "A_baseline_vs_C_legacy_escalation": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "A_baseline_vs_D_evidence_weighted_raw": {
+        "b01": 3,
+        "b10": 2,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 5
+      },
+      "A_baseline_vs_E_evidence_weighted_structured": {
+        "b01": 3,
+        "b10": 3,
+        "statistic": 0.16666666666666666,
+        "p_value": 0.6830913983096087,
+        "n_discordant": 6
+      },
+      "B_majority_vote_vs_C_legacy_escalation": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "B_majority_vote_vs_D_evidence_weighted_raw": {
+        "b01": 1,
+        "b10": 1,
+        "statistic": 0.5,
+        "p_value": 0.4795001221869534,
+        "n_discordant": 2
+      },
+      "B_majority_vote_vs_E_evidence_weighted_structured": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "C_legacy_escalation_vs_D_evidence_weighted_raw": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "C_legacy_escalation_vs_E_evidence_weighted_structured": {
+        "b01": 0,
+        "b10": 0,
+        "statistic": 0.0,
+        "p_value": 1.0,
+        "n_discordant": 0
+      },
+      "D_evidence_weighted_raw_vs_E_evidence_weighted_structured": {
+        "b01": 1,
+        "b10": 1,
+        "statistic": 0.5,
+        "p_value": 0.4795001221869534,
+        "n_discordant": 2
+      }
+    },
+    "error_analysis": {
+      "counts": {
+        "dataset_ambiguity": 11,
+        "hallucinated_evidence": 14
+      },
+      "by_system": {
+        "A_baseline": {
+          "dataset_ambiguity": 3,
+          "hallucinated_evidence": 4
+        },
+        "B_majority_vote": {
+          "dataset_ambiguity": 3,
+          "hallucinated_evidence": 4
+        },
+        "D_evidence_weighted_raw": {
+          "dataset_ambiguity": 3,
+          "hallucinated_evidence": 2
+        },
+        "E_evidence_weighted_structured": {
+          "dataset_ambiguity": 2,
+          "hallucinated_evidence": 4
+        }
+      },
+      "rows": [
+        {
+          "pair": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_04_dspy_t8563_f1v2",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_04_dspy_t8563_f1v2",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_04_dspy_t8563_f1v2",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_04_dspy_t8563_f1v2",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_07_huggingface_datasets_t6252_f3v5",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "conflict",
+          "prediction": "no_conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_08_huggingface_datasets_t6252_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_08_huggingface_datasets_t6252_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_08_huggingface_datasets_t6252_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_09_llama_index_t18813_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "conflict",
+          "prediction": "no_conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_10_llama_index_t17244_f3v4",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_10_llama_index_t17244_f3v4",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_11_openai_tiktoken_t0_f1v3",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "conflict",
+          "prediction": "no_conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_13_pallets_click_t2956_f3v8",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_13_pallets_click_t2956_f3v8",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_13_pallets_click_t2956_f3v8",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_13_pallets_click_t2956_f3v8",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "dataset_ambiguity"
+        },
+        {
+          "pair": "pair_14_pallets_jinja_t1621_f1v6",
+          "corpus": "cooperbench_python",
+          "system": "D_evidence_weighted_raw",
+          "truth": "conflict",
+          "prediction": "no_conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_15_pallets_jinja_t1559_f2v7",
+          "corpus": "cooperbench_python",
+          "system": "A_baseline",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_15_pallets_jinja_t1559_f2v7",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_15_pallets_jinja_t1559_f2v7",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_17_pillow_t25_f1v5",
+          "corpus": "cooperbench_python",
+          "system": "B_majority_vote",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        },
+        {
+          "pair": "pair_17_pillow_t25_f1v5",
+          "corpus": "cooperbench_python",
+          "system": "E_evidence_weighted_structured",
+          "truth": "no_conflict",
+          "prediction": "conflict",
+          "category": "hallucinated_evidence"
+        }
+      ]
+    },
+    "per_pair": [
+      {
+        "pair": "pair_01_dottxt_ai_outlines_t1655_f9v10",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "rationale_dominance"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.62).",
+          "E": "llama3.2:3b gave the strongest grounded rationale (score 0.66 vs 0.00, margin 0.66 >= 0.12); verdict 'conflict' accepted over deepseek-coder:6.7b despite the vote split. Grounded evidence: ['braces', 'curly', 'format', 'guid', 'hash_sha256', 'style', 'windows']."
+        },
+        "errors": {}
+      },
+      {
+        "pair": "pair_02_dottxt_ai_outlines_t1655_f3v9",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "escalate"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "ambiguous_evidence"
+        },
+        "explanations": {
+          "D": "All 2 models agree on 'conflict' (best rationale score 0.48).",
+          "E": "Contradictory verdicts with rationale scores within 0.12 (margin 0.11) and weighted evidence within 0.05 (gap 0.02); genuine ambiguity, escalating."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "D_evidence_weighted_raw": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          }
+        }
+      },
+      {
+        "pair": "pair_03_dspy_t8587_f3v5",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.81).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.65)."
+        },
+        "errors": {}
+      },
+      {
+        "pair": "pair_04_dspy_t8563_f1v2",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 2 models agree on 'conflict' (best rationale score 0.72).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.84)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "D_evidence_weighted_raw": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          }
+        }
+      },
+      {
+        "pair": "pair_07_huggingface_datasets_t6252_f3v5",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "rationale_dominance",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "llama3.2:3b gave the strongest grounded rationale (score 0.59 vs 0.00, margin 0.59 >= 0.12); verdict 'conflict' accepted over deepseek-coder:6.7b despite the vote split. Grounded evidence: ['as_array', 'decode_example', 'float32', 'image', 'max_resolution', 'parameter', 'pil', 'size'].",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.68)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "no_conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_08_huggingface_datasets_t6252_f1v3",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "rationale_dominance",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "llama3.2:3b gave the strongest grounded rationale (score 0.53 vs 0.00, margin 0.53 >= 0.12); verdict 'conflict' accepted over deepseek-coder:6.7b despite the vote split. Grounded evidence: ['exif', 'image', 'max_resolution', 'optional', 'orientation', 'parameter', 'size'].",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.65)."
+        },
+        "errors": {
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "D_evidence_weighted_raw": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_09_llama_index_t18813_f1v3",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "rationale_dominance",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "llama3.2:3b gave the strongest grounded rationale (score 0.77 vs 0.44, margin 0.33 >= 0.12); verdict 'conflict' accepted over deepseek-coder:6.7b despite the vote split. Grounded evidence: ['bytes', 'resolve_audio_with_size', 'resolve_document_with_size', 'resolve_image_with_size', 'zero'].",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.88)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "no_conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_10_llama_index_t17244_f3v4",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "no_conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "weighted_evidence_vote",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Rationale quality is comparable (margin 0.05 < 0.12); confidence-weighted evidence favors 'no_conflict' (conflict=0.57 vs no_conflict=0.62, gap 0.05).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.77)."
+        },
+        "errors": {
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_11_openai_tiktoken_t0_f1v3",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "weighted_evidence_vote",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Rationale quality is comparable (margin 0.12 < 0.12); confidence-weighted evidence favors 'conflict' (conflict=0.60 vs no_conflict=0.52, gap 0.08).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.75)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "no_conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_12_pallets_click_t2068_f2v4",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.75).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.57)."
+        },
+        "errors": {}
+      },
+      {
+        "pair": "pair_13_pallets_click_t2956_f3v8",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.80).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.85)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "D_evidence_weighted_raw": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "dataset_ambiguity"
+          }
+        }
+      },
+      {
+        "pair": "pair_14_pallets_jinja_t1621_f1v6",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "no_conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "weighted_evidence_vote",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Rationale quality is comparable (margin 0.03 < 0.12); confidence-weighted evidence favors 'no_conflict' (conflict=0.49 vs no_conflict=0.59, gap 0.09).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.81)."
+        },
+        "errors": {
+          "D_evidence_weighted_raw": {
+            "prediction": "no_conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_15_pallets_jinja_t1559_f2v7",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "escalate",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "ambiguous_evidence",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Contradictory verdicts with rationale scores within 0.12 (margin 0.00) and weighted evidence within 0.05 (gap 0.04); genuine ambiguity, escalating.",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.80)."
+        },
+        "errors": {
+          "A_baseline": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_16_pillow_t290_f1v5",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "conflict",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.66).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.69)."
+        },
+        "errors": {}
+      },
+      {
+        "pair": "pair_17_pillow_t25_f1v5",
+        "ground_truth": "no_conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "no_conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "escalate",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "ambiguous_evidence",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "Contradictory verdicts with rationale scores within 0.12 (margin 0.08) and weighted evidence within 0.05 (gap 0.03); genuine ambiguity, escalating.",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.71)."
+        },
+        "errors": {
+          "B_majority_vote": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          },
+          "E_evidence_weighted_structured": {
+            "prediction": "conflict",
+            "category": "hallucinated_evidence"
+          }
+        }
+      },
+      {
+        "pair": "pair_19_samuelcolvin_dirty_equals_t43_f1v3",
+        "ground_truth": "conflict",
+        "corpus": "cooperbench_python",
+        "predictions": {
+          "A_baseline": "conflict",
+          "B_majority_vote": "conflict",
+          "C_legacy_escalation": "escalate",
+          "D_evidence_weighted_raw": "conflict",
+          "E_evidence_weighted_structured": "conflict"
+        },
+        "decision_rules": {
+          "D": "unanimous",
+          "E": "unanimous"
+        },
+        "explanations": {
+          "D": "All 3 models agree on 'conflict' (best rationale score 0.71).",
+          "E": "All 3 models agree on 'conflict' (best rationale score 0.86)."
+        },
+        "errors": {}
+      }
+    ],
+    "parts": [
+      "cooperbench_python"
+    ]
+  }
+}

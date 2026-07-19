@@ -1,0 +1,24 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "records1_semantic_conflict",
+  "conflict_type": "aliasing_contract",
+  "difficulty": "hard",
+  "record_id": "e7109785-c51f-4332-b42d-a787856b9dc9",
+  "notes": "The optimization turns a local mutation into external state corruption.",
+  "hidden_invariant": "Read-style helpers never mutate caller-owned input.",
+  "surface_characteristics": [
+    "compilation_passes",
+    "public_tests_pass",
+    "textual_merge_is_clean",
+    "diff_is_small"
+  ],
+  "validation": {
+    "compile": "pass",
+    "public_tests": "pass",
+    "semantic_oracle": "fail",
+    "final": "negative",
+    "oracle_command": "python -m unittest oracle_semantic",
+    "oracle_exit_code": 1
+  }
+}

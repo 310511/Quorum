@@ -1,0 +1,27 @@
+{
+  "ground_truth": "no_conflict",
+  "language": "python",
+  "source": "hard_compatible_twin_verified",
+  "conflict_type": "boundary_contract",
+  "difficulty": "hard",
+  "notes": "Left adds a docstring only (comparison operator unchanged); right's new routing still sees strict '>' semantics, so a score exactly at the cutoff stays 'standard' after merge.",
+  "hidden_invariant": "A score exactly at the cutoff remains 'standard'.",
+  "surface_characteristics": [
+    "compilation_passes",
+    "public_tests_pass",
+    "textual_merge_is_clean",
+    "diff_is_small",
+    "same_function_touched_by_both_branches",
+    "left_change_is_behavior_preserving_refactor"
+  ],
+  "validation": {
+    "compile": "pass",
+    "public_tests": "pass",
+    "semantic_oracle": "pass",
+    "final": "compatible",
+    "oracle_command": "python -m unittest oracle_semantic",
+    "oracle_exit_code": 0,
+    "merged_test_output": "test_clear_priority (test_public.PolicyTests) ... ok\ntest_clear_standard (test_public.PolicyTests) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 0.000s\n\nOK",
+    "merged_oracle_output": "test_boundary_remains_standard (oracle_semantic.SemanticOracle) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK"
+  }
+}

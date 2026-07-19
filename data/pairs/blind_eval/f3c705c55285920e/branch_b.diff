@@ -1,0 +1,23 @@
+diff --git a/ordering_093.py b/ordering_093.py
+index cca42d3..dc75ef0 100644
+--- a/ordering_093.py
++++ b/ordering_093.py
+@@ -1,2 +1,6 @@
+ def normalize_093(items: list[int], reverse: bool = False) -> list[int]:
+     return sorted(items, reverse=reverse)
++
++
++def first_093(items: list[int]) -> int:
++    return normalize_093(items)[0]
+diff --git a/test_ordering.py b/test_ordering.py
+new file mode 100644
+index 0000000..00fc474
+--- /dev/null
++++ b/test_ordering.py
+@@ -0,0 +1,6 @@
++import unittest
++from ordering_093 import first_093
++
++class OrderingTests(unittest.TestCase):
++    def test_single_item(self):
++        self.assertEqual(first_093([93]), 93)

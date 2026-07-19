@@ -1,0 +1,27 @@
+{
+  "ground_truth": "no_conflict",
+  "language": "python",
+  "source": "hard_compatible_twin_verified",
+  "conflict_type": "sentinel_default",
+  "difficulty": "hard",
+  "notes": "Left adds a docstring only (default stays 143); right's admission check still resolves a missing limit to the original default.",
+  "hidden_invariant": "An omitted limit still resolves to the original non-zero default.",
+  "surface_characteristics": [
+    "compilation_passes",
+    "public_tests_pass",
+    "textual_merge_is_clean",
+    "diff_is_small",
+    "same_function_touched_by_both_branches",
+    "left_change_is_behavior_preserving_refactor"
+  ],
+  "validation": {
+    "compile": "pass",
+    "public_tests": "pass",
+    "semantic_oracle": "pass",
+    "final": "compatible",
+    "oracle_command": "python -m unittest oracle_semantic",
+    "oracle_exit_code": 0,
+    "merged_test_output": "test_explicit_limit (test_public.LimitTests) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK",
+    "merged_oracle_output": "test_missing_limit_uses_configured_default (oracle_semantic.SemanticOracle) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK"
+  }
+}

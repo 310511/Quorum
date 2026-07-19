@@ -1,0 +1,288 @@
+{
+  "n": 20,
+  "seed": 42,
+  "agreement": 1.0,
+  "agreements": 20,
+  "samples": [
+    {
+      "id": "hard_028_parser_1_exception_contract",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_028_parser_1_exception_contract",
+      "merge_base_files": [
+        "parser_1_guard.py",
+        "test_parser_1_guard.py"
+      ],
+      "branch_a_diff_preview": "--- a/parser_1_guard.py\n+++ b/parser_1_guard.py\n@@ -1,7 +1,7 @@\n-class Parser_1Error(ValueError):\n+class Parser_1Gone(LookupError):\n     pass\n \n def ensure_parser_1_positive(value):\n     if value <= 0:\n-        raise Parser_1Error(\"non-positive\")\n+        raise Parser_1Gone(\"non-positive\")\n     return value\n--- a/test_parser_1_guard.py\n+++ b/test_parser_1_guard.py\n@@ -1,11 +1,11 @@\n import unittes",
+      "branch_b_diff_preview": "--- a/parser_1_handler.py\n+++ b/parser_1_handler.py\n@@ -0,0 +1,7 @@\n+from parser_1_guard import ensure_parser_1_positive, Parser_1Error\n+\n+def safe_parser_1(value):\n+    try:\n+        return ensure_parser_1_positive(value)\n+    except Parser_1Error:\n+        return 0\n--- a/test_parser_1_handler.py\n+++ b/test_parser_1_handler.py\n@@ -0,0 +1,10 @@\n+import unittest\n+from parser_1_handler import safe_p",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Contract/signature/exception/default semantics drift signals",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_006_warehouse_rename_stale",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_006_warehouse_rename_stale",
+      "merge_base_files": [
+        "test_warehouse_core.py",
+        "warehouse_core.py"
+      ],
+      "branch_a_diff_preview": "--- a/test_warehouse_core.py\n+++ b/test_warehouse_core.py\n@@ -1,9 +1,9 @@\n import unittest\n-from warehouse_core import compute_warehouse_total, format_total\n+from warehouse_core import compute_warehouse_total_v2, format_total\n \n class CoreTests(unittest.TestCase):\n     def test_total(self):\n-        self.assertEqual(compute_warehouse_total([1, 2, 3]), 6)\n+        self.assertEqual(compute_warehouse",
+      "branch_b_diff_preview": "--- a/test_warehouse_report.py\n+++ b/test_warehouse_report.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from warehouse_report import report_line\n+\n+class ReportTests(unittest.TestCase):\n+    def test_report(self):\n+        self.assertEqual(report_line([1, 2, 3]), 12)\n+\n+if __name__ == \"__main__\":\n+    unittest.main()\n--- a/warehouse_report.py\n+++ b/warehouse_report.py\n@@ -0,0 +1,4 @@\n+from warehouse_core ",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Rename/removal with likely stale reference across branches",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_070_payments_3_exception_contract",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_070_payments_3_exception_contract",
+      "merge_base_files": [
+        "payments_3_guard.py",
+        "test_payments_3_guard.py"
+      ],
+      "branch_a_diff_preview": "--- a/payments_3_guard.py\n+++ b/payments_3_guard.py\n@@ -1,7 +1,7 @@\n-class Payments_3Error(ValueError):\n+class Payments_3Gone(LookupError):\n     pass\n \n def ensure_payments_3_positive(value):\n     if value <= 0:\n-        raise Payments_3Error(\"non-positive\")\n+        raise Payments_3Gone(\"non-positive\")\n     return value\n--- a/test_payments_3_guard.py\n+++ b/test_payments_3_guard.py\n@@ -1,11 +1,11 ",
+      "branch_b_diff_preview": "--- a/payments_3_handler.py\n+++ b/payments_3_handler.py\n@@ -0,0 +1,7 @@\n+from payments_3_guard import ensure_payments_3_positive, Payments_3Error\n+\n+def safe_payments_3(value):\n+    try:\n+        return ensure_payments_3_positive(value)\n+    except Payments_3Error:\n+        return 0\n--- a/test_payments_3_handler.py\n+++ b/test_payments_3_handler.py\n@@ -0,0 +1,10 @@\n+import unittest\n+from payments_3",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Contract/signature/exception/default semantics drift signals",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_062_checkout_3_import_drift",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_062_checkout_3_import_drift",
+      "merge_base_files": [
+        "checkout_3_utils.py",
+        "test_checkout_3_utils.py"
+      ],
+      "branch_a_diff_preview": "--- a/checkout_3_tokens.py\n+++ b/checkout_3_tokens.py\n@@ -0,0 +1,2 @@\n+def normalize_checkout_3_token(value):\n+    return str(value).strip().lower()\n--- a/checkout_3_utils.py\n+++ b/checkout_3_utils.py\n@@ -1,2 +1 @@\n-def normalize_checkout_3_token(value):\n-    return str(value).strip().lower()\n+# Moved to checkout_3_tokens.py\n--- a/test_checkout_3_utils.py\n+++ b/test_checkout_3_utils.py\n@@ -1,5 +1,",
+      "branch_b_diff_preview": "--- a/checkout_3_pipeline.py\n+++ b/checkout_3_pipeline.py\n@@ -0,0 +1,4 @@\n+from checkout_3_utils import normalize_checkout_3_token\n+\n+def pipeline_key(value):\n+    return \"key:\" + normalize_checkout_3_token(value)\n--- a/test_checkout_3_pipeline.py\n+++ b/test_checkout_3_pipeline.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from checkout_3_pipeline import pipeline_key\n+\n+class PipelineTests(unittest.TestCas",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Rename/removal with likely stale reference across branches",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_057_notifier_2_return_contract",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_057_notifier_2_return_contract",
+      "merge_base_files": [
+        "notifier_2_service.py",
+        "test_notifier_2_service.py"
+      ],
+      "branch_a_diff_preview": "--- a/notifier_2_service.py\n+++ b/notifier_2_service.py\n@@ -1,5 +1,6 @@\n def fetch_notifier_2_record(item_id):\n-    return {\"id\": item_id, \"status\": \"ok\", \"score\": 1}\n+    # New contract: nested payload, no top-level score.\n+    return {\"id\": item_id, \"status\": \"ok\", \"meta\": {\"score\": 1}}\n \n def status_of(item_id):\n     return fetch_notifier_2_record(item_id)[\"status\"]\n--- a/test_notifier_2_servic",
+      "branch_b_diff_preview": "--- a/notifier_2_scorecard.py\n+++ b/notifier_2_scorecard.py\n@@ -0,0 +1,4 @@\n+from notifier_2_service import fetch_notifier_2_record\n+\n+def score_for(item_id):\n+    return fetch_notifier_2_record(item_id)[\"score\"] + 10\n--- a/test_notifier_2_scorecard.py\n+++ b/test_notifier_2_scorecard.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from notifier_2_scorecard import score_for\n+\n+class ScorecardTests(unittest.Te",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Contract/signature/exception/default semantics drift signals",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_035_tickets_1_default_semantics",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_035_tickets_1_default_semantics",
+      "merge_base_files": [
+        "test_tickets_1_config.py",
+        "tickets_1_config.py"
+      ],
+      "branch_a_diff_preview": "--- a/test_tickets_1_config.py\n+++ b/test_tickets_1_config.py\n@@ -3,7 +3,7 @@\n \n class ConfigTests(unittest.TestCase):\n     def test_page(self):\n-        self.assertEqual(page_tickets_1(range(20)), list(range(10)))\n+        self.assertEqual(page_tickets_1(range(20)), list(range(3)))\n \n if __name__ == \"__main__\":\n     unittest.main()\n--- a/tickets_1_config.py\n+++ b/tickets_1_config.py\n@@ -1,4 +1,4 ",
+      "branch_b_diff_preview": "--- a/test_tickets_1_ui.py\n+++ b/test_tickets_1_ui.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from tickets_1_ui import preview_tickets_1\n+\n+class UiTests(unittest.TestCase):\n+    def test_preview(self):\n+        self.assertEqual(len(preview_tickets_1()), 10)\n+\n+if __name__ == \"__main__\":\n+    unittest.main()\n--- a/tickets_1_ui.py\n+++ b/tickets_1_ui.py\n@@ -0,0 +1,5 @@\n+from tickets_1_config import page_t",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Contract/signature/exception/default semantics drift signals",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_026_warehouse_1_import_drift",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_026_warehouse_1_import_drift",
+      "merge_base_files": [
+        "test_warehouse_1_utils.py",
+        "warehouse_1_utils.py"
+      ],
+      "branch_a_diff_preview": "--- a/test_warehouse_1_utils.py\n+++ b/test_warehouse_1_utils.py\n@@ -1,5 +1,5 @@\n import unittest\n-from warehouse_1_utils import normalize_warehouse_1_token\n+from warehouse_1_tokens import normalize_warehouse_1_token\n \n class UtilsTests(unittest.TestCase):\n     def test_normalize(self):\n--- a/warehouse_1_tokens.py\n+++ b/warehouse_1_tokens.py\n@@ -0,0 +1,2 @@\n+def normalize_warehouse_1_token(value):\n",
+      "branch_b_diff_preview": "--- a/test_warehouse_1_pipeline.py\n+++ b/test_warehouse_1_pipeline.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from warehouse_1_pipeline import pipeline_key\n+\n+class PipelineTests(unittest.TestCase):\n+    def test_key(self):\n+        self.assertEqual(pipeline_key(\" X \"), \"key:x\")\n+\n+if __name__ == \"__main__\":\n+    unittest.main()\n--- a/warehouse_1_pipeline.py\n+++ b/warehouse_1_pipeline.py\n@@ -0,0 +1,4 @@",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Rename/removal with likely stale reference across branches",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_022_checkout_1_exception_contract",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_022_checkout_1_exception_contract",
+      "merge_base_files": [
+        "checkout_1_guard.py",
+        "test_checkout_1_guard.py"
+      ],
+      "branch_a_diff_preview": "--- a/checkout_1_guard.py\n+++ b/checkout_1_guard.py\n@@ -1,7 +1,7 @@\n-class Checkout_1Error(ValueError):\n+class Checkout_1Gone(LookupError):\n     pass\n \n def ensure_checkout_1_positive(value):\n     if value <= 0:\n-        raise Checkout_1Error(\"non-positive\")\n+        raise Checkout_1Gone(\"non-positive\")\n     return value\n--- a/test_checkout_1_guard.py\n+++ b/test_checkout_1_guard.py\n@@ -1,11 +1,11 ",
+      "branch_b_diff_preview": "--- a/checkout_1_handler.py\n+++ b/checkout_1_handler.py\n@@ -0,0 +1,7 @@\n+from checkout_1_guard import ensure_checkout_1_positive, Checkout_1Error\n+\n+def safe_checkout_1(value):\n+    try:\n+        return ensure_checkout_1_positive(value)\n+    except Checkout_1Error:\n+        return 0\n--- a/test_checkout_1_handler.py\n+++ b/test_checkout_1_handler.py\n@@ -0,0 +1,10 @@\n+import unittest\n+from checkout_1",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Contract/signature/exception/default semantics drift signals",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_10008_parser_ok8_compatible",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_10008_parser_ok8_compatible",
+      "merge_base_files": [
+        "parser_ok8_base.py",
+        "test_parser_ok8_base.py"
+      ],
+      "branch_a_diff_preview": "--- a/parser_ok8_alpha.py\n+++ b/parser_ok8_alpha.py\n@@ -0,0 +1,2 @@\n+def alpha_parser_ok8(value):\n+    return value + 1\n--- a/test_parser_ok8_alpha.py\n+++ b/test_parser_ok8_alpha.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from parser_ok8_alpha import alpha_parser_ok8\n+\n+class AlphaTests(unittest.TestCase):\n+    def test_alpha(self):\n+        self.assertEqual(alpha_parser_ok8(1), 2)\n+\n+if __name__ == \"__",
+      "branch_b_diff_preview": "--- a/parser_ok8_beta.py\n+++ b/parser_ok8_beta.py\n@@ -0,0 +1,2 @@\n+def beta_parser_ok8(value):\n+    return value * 2\n--- a/test_parser_ok8_beta.py\n+++ b/test_parser_ok8_beta.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from parser_ok8_beta import beta_parser_ok8\n+\n+class BetaTests(unittest.TestCase):\n+    def test_beta(self):\n+        self.assertEqual(beta_parser_ok8(3), 6)\n+\n+if __name__ == \"__main__\":\n+",
+      "blind_prediction": "Compatible",
+      "blind_rationale": "Disjoint new modules with no removed symbols",
+      "ground_truth_revealed_after": "Compatible",
+      "agree": true
+    },
+    {
+      "id": "hard_008_parser_import_drift",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_008_parser_import_drift",
+      "merge_base_files": [
+        "parser_utils.py",
+        "test_parser_utils.py"
+      ],
+      "branch_a_diff_preview": "--- a/parser_tokens.py\n+++ b/parser_tokens.py\n@@ -0,0 +1,2 @@\n+def normalize_parser_token(value):\n+    return str(value).strip().lower()\n--- a/parser_utils.py\n+++ b/parser_utils.py\n@@ -1,2 +1 @@\n-def normalize_parser_token(value):\n-    return str(value).strip().lower()\n+# Moved to parser_tokens.py\n--- a/test_parser_utils.py\n+++ b/test_parser_utils.py\n@@ -1,5 +1,5 @@\n import unittest\n-from parser_u",
+      "branch_b_diff_preview": "--- a/parser_pipeline.py\n+++ b/parser_pipeline.py\n@@ -0,0 +1,4 @@\n+from parser_utils import normalize_parser_token\n+\n+def pipeline_key(value):\n+    return \"key:\" + normalize_parser_token(value)\n--- a/test_parser_pipeline.py\n+++ b/test_parser_pipeline.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from parser_pipeline import pipeline_key\n+\n+class PipelineTests(unittest.TestCase):\n+    def test_key(self):\n+  ",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Rename/removal with likely stale reference across branches",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_007_search_signature_break",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_007_search_signature_break",
+      "merge_base_files": [
+        "search_api.py",
+        "test_search_api.py"
+      ],
+      "branch_a_diff_preview": "--- a/search_api.py\n+++ b/search_api.py\n@@ -1,5 +1,10 @@\n-def build_search_payload(name, quantity=1):\n-    return {\"name\": name, \"quantity\": quantity, \"kind\": \"search\"}\n+def build_search_payload(name, *, quantity, priority):\n+    return {\n+        \"name\": name,\n+        \"quantity\": quantity,\n+        \"priority\": priority,\n+        \"kind\": \"search\",\n+    }\n \n def summarize(name):\n-    return build_",
+      "branch_b_diff_preview": "--- a/search_client.py\n+++ b/search_client.py\n@@ -0,0 +1,5 @@\n+from search_api import build_search_payload\n+\n+def client_order(name):\n+    # Relies on old positional/default signature.\n+    return build_search_payload(name, 5)\n--- a/test_search_client.py\n+++ b/test_search_client.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from search_client import client_order\n+\n+class ClientTests(unittest.TestCase):\n+  ",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Rename/removal with likely stale reference across branches",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_023_cache_1_default_semantics",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_023_cache_1_default_semantics",
+      "merge_base_files": [
+        "cache_1_config.py",
+        "test_cache_1_config.py"
+      ],
+      "branch_a_diff_preview": "--- a/cache_1_config.py\n+++ b/cache_1_config.py\n@@ -1,4 +1,4 @@\n-DEFAULT_LIMIT = 10\n+DEFAULT_LIMIT = 3\n \n def page_cache_1(items, limit=DEFAULT_LIMIT):\n     return list(items)[:limit]\n--- a/test_cache_1_config.py\n+++ b/test_cache_1_config.py\n@@ -3,7 +3,7 @@\n \n class ConfigTests(unittest.TestCase):\n     def test_page(self):\n-        self.assertEqual(page_cache_1(range(20)), list(range(10)))\n+      ",
+      "branch_b_diff_preview": "--- a/cache_1_ui.py\n+++ b/cache_1_ui.py\n@@ -0,0 +1,5 @@\n+from cache_1_config import page_cache_1\n+\n+def preview_cache_1():\n+    # Depends on historical default of 10.\n+    return page_cache_1(range(20))\n--- a/test_cache_1_ui.py\n+++ b/test_cache_1_ui.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from cache_1_ui import preview_cache_1\n+\n+class UiTests(unittest.TestCase):\n+    def test_preview(self):\n+       ",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Contract/signature/exception/default semantics drift signals",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_055_tickets_2_signature_break",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_055_tickets_2_signature_break",
+      "merge_base_files": [
+        "test_tickets_2_api.py",
+        "tickets_2_api.py"
+      ],
+      "branch_a_diff_preview": "--- a/test_tickets_2_api.py\n+++ b/test_tickets_2_api.py\n@@ -3,7 +3,9 @@\n \n class ApiTests(unittest.TestCase):\n     def test_payload(self):\n-        self.assertEqual(build_tickets_2_payload(\"x\")[\"quantity\"], 1)\n+        payload = build_tickets_2_payload(\"x\", quantity=2, priority=\"high\")\n+        self.assertEqual(payload[\"quantity\"], 2)\n+        self.assertEqual(payload[\"priority\"], \"high\")\n     def",
+      "branch_b_diff_preview": "--- a/test_tickets_2_client.py\n+++ b/test_tickets_2_client.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from tickets_2_client import client_order\n+\n+class ClientTests(unittest.TestCase):\n+    def test_order(self):\n+        self.assertEqual(client_order(\"sku\")[\"quantity\"], 5)\n+\n+if __name__ == \"__main__\":\n+    unittest.main()\n--- a/tickets_2_client.py\n+++ b/tickets_2_client.py\n@@ -0,0 +1,5 @@\n+from tickets",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Rename/removal with likely stale reference across branches",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_059_auth_2_default_semantics",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_059_auth_2_default_semantics",
+      "merge_base_files": [
+        "auth_2_config.py",
+        "test_auth_2_config.py"
+      ],
+      "branch_a_diff_preview": "--- a/auth_2_config.py\n+++ b/auth_2_config.py\n@@ -1,4 +1,4 @@\n-DEFAULT_LIMIT = 10\n+DEFAULT_LIMIT = 3\n \n def page_auth_2(items, limit=DEFAULT_LIMIT):\n     return list(items)[:limit]\n--- a/test_auth_2_config.py\n+++ b/test_auth_2_config.py\n@@ -3,7 +3,7 @@\n \n class ConfigTests(unittest.TestCase):\n     def test_page(self):\n-        self.assertEqual(page_auth_2(range(20)), list(range(10)))\n+        self",
+      "branch_b_diff_preview": "--- a/auth_2_ui.py\n+++ b/auth_2_ui.py\n@@ -0,0 +1,5 @@\n+from auth_2_config import page_auth_2\n+\n+def preview_auth_2():\n+    # Depends on historical default of 10.\n+    return page_auth_2(range(20))\n--- a/test_auth_2_ui.py\n+++ b/test_auth_2_ui.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from auth_2_ui import preview_auth_2\n+\n+class UiTests(unittest.TestCase):\n+    def test_preview(self):\n+        self.asse",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Contract/signature/exception/default semantics drift signals",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_10029_pricing_ok29_compatible",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_10029_pricing_ok29_compatible",
+      "merge_base_files": [
+        "pricing_ok29_base.py",
+        "test_pricing_ok29_base.py"
+      ],
+      "branch_a_diff_preview": "--- a/pricing_ok29_alpha.py\n+++ b/pricing_ok29_alpha.py\n@@ -0,0 +1,2 @@\n+def alpha_pricing_ok29(value):\n+    return value + 1\n--- a/test_pricing_ok29_alpha.py\n+++ b/test_pricing_ok29_alpha.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from pricing_ok29_alpha import alpha_pricing_ok29\n+\n+class AlphaTests(unittest.TestCase):\n+    def test_alpha(self):\n+        self.assertEqual(alpha_pricing_ok29(1), 2)\n+\n+if",
+      "branch_b_diff_preview": "--- a/pricing_ok29_beta.py\n+++ b/pricing_ok29_beta.py\n@@ -0,0 +1,2 @@\n+def beta_pricing_ok29(value):\n+    return value * 2\n--- a/test_pricing_ok29_beta.py\n+++ b/test_pricing_ok29_beta.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from pricing_ok29_beta import beta_pricing_ok29\n+\n+class BetaTests(unittest.TestCase):\n+    def test_beta(self):\n+        self.assertEqual(beta_pricing_ok29(3), 6)\n+\n+if __name__ ",
+      "blind_prediction": "Compatible",
+      "blind_rationale": "Disjoint new modules with no removed symbols",
+      "ground_truth_revealed_after": "Compatible",
+      "agree": true
+    },
+    {
+      "id": "hard_050_payments_2_import_drift",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_050_payments_2_import_drift",
+      "merge_base_files": [
+        "payments_2_utils.py",
+        "test_payments_2_utils.py"
+      ],
+      "branch_a_diff_preview": "--- a/payments_2_tokens.py\n+++ b/payments_2_tokens.py\n@@ -0,0 +1,2 @@\n+def normalize_payments_2_token(value):\n+    return str(value).strip().lower()\n--- a/payments_2_utils.py\n+++ b/payments_2_utils.py\n@@ -1,2 +1 @@\n-def normalize_payments_2_token(value):\n-    return str(value).strip().lower()\n+# Moved to payments_2_tokens.py\n--- a/test_payments_2_utils.py\n+++ b/test_payments_2_utils.py\n@@ -1,5 +1,",
+      "branch_b_diff_preview": "--- a/payments_2_pipeline.py\n+++ b/payments_2_pipeline.py\n@@ -0,0 +1,4 @@\n+from payments_2_utils import normalize_payments_2_token\n+\n+def pipeline_key(value):\n+    return \"key:\" + normalize_payments_2_token(value)\n--- a/test_payments_2_pipeline.py\n+++ b/test_payments_2_pipeline.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from payments_2_pipeline import pipeline_key\n+\n+class PipelineTests(unittest.TestCas",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Rename/removal with likely stale reference across branches",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_10007_search_ok7_compatible",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_10007_search_ok7_compatible",
+      "merge_base_files": [
+        "search_ok7_base.py",
+        "test_search_ok7_base.py"
+      ],
+      "branch_a_diff_preview": "--- a/search_ok7_alpha.py\n+++ b/search_ok7_alpha.py\n@@ -0,0 +1,2 @@\n+def alpha_search_ok7(value):\n+    return value + 1\n--- a/test_search_ok7_alpha.py\n+++ b/test_search_ok7_alpha.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from search_ok7_alpha import alpha_search_ok7\n+\n+class AlphaTests(unittest.TestCase):\n+    def test_alpha(self):\n+        self.assertEqual(alpha_search_ok7(1), 2)\n+\n+if __name__ == \"__",
+      "branch_b_diff_preview": "--- a/search_ok7_beta.py\n+++ b/search_ok7_beta.py\n@@ -0,0 +1,2 @@\n+def beta_search_ok7(value):\n+    return value * 2\n--- a/test_search_ok7_beta.py\n+++ b/test_search_ok7_beta.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from search_ok7_beta import beta_search_ok7\n+\n+class BetaTests(unittest.TestCase):\n+    def test_beta(self):\n+        self.assertEqual(beta_search_ok7(3), 6)\n+\n+if __name__ == \"__main__\":\n+",
+      "blind_prediction": "Compatible",
+      "blind_rationale": "Disjoint new modules with no removed symbols",
+      "ground_truth_revealed_after": "Compatible",
+      "agree": true
+    },
+    {
+      "id": "hard_056_scheduler_2_import_drift",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_056_scheduler_2_import_drift",
+      "merge_base_files": [
+        "scheduler_2_utils.py",
+        "test_scheduler_2_utils.py"
+      ],
+      "branch_a_diff_preview": "--- a/scheduler_2_tokens.py\n+++ b/scheduler_2_tokens.py\n@@ -0,0 +1,2 @@\n+def normalize_scheduler_2_token(value):\n+    return str(value).strip().lower()\n--- a/scheduler_2_utils.py\n+++ b/scheduler_2_utils.py\n@@ -1,2 +1 @@\n-def normalize_scheduler_2_token(value):\n-    return str(value).strip().lower()\n+# Moved to scheduler_2_tokens.py\n--- a/test_scheduler_2_utils.py\n+++ b/test_scheduler_2_utils.py\n@@",
+      "branch_b_diff_preview": "--- a/scheduler_2_pipeline.py\n+++ b/scheduler_2_pipeline.py\n@@ -0,0 +1,4 @@\n+from scheduler_2_utils import normalize_scheduler_2_token\n+\n+def pipeline_key(value):\n+    return \"key:\" + normalize_scheduler_2_token(value)\n--- a/test_scheduler_2_pipeline.py\n+++ b/test_scheduler_2_pipeline.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from scheduler_2_pipeline import pipeline_key\n+\n+class PipelineTests(unittest",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Rename/removal with likely stale reference across branches",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    },
+    {
+      "id": "hard_10014_inventory_ok14_compatible",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_10014_inventory_ok14_compatible",
+      "merge_base_files": [
+        "inventory_ok14_base.py",
+        "test_inventory_ok14_base.py"
+      ],
+      "branch_a_diff_preview": "--- a/inventory_ok14_alpha.py\n+++ b/inventory_ok14_alpha.py\n@@ -0,0 +1,2 @@\n+def alpha_inventory_ok14(value):\n+    return value + 1\n--- a/test_inventory_ok14_alpha.py\n+++ b/test_inventory_ok14_alpha.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from inventory_ok14_alpha import alpha_inventory_ok14\n+\n+class AlphaTests(unittest.TestCase):\n+    def test_alpha(self):\n+        self.assertEqual(alpha_inventory_o",
+      "branch_b_diff_preview": "--- a/inventory_ok14_beta.py\n+++ b/inventory_ok14_beta.py\n@@ -0,0 +1,2 @@\n+def beta_inventory_ok14(value):\n+    return value * 2\n--- a/test_inventory_ok14_beta.py\n+++ b/test_inventory_ok14_beta.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from inventory_ok14_beta import beta_inventory_ok14\n+\n+class BetaTests(unittest.TestCase):\n+    def test_beta(self):\n+        self.assertEqual(beta_inventory_ok14(3), 6)",
+      "blind_prediction": "Compatible",
+      "blind_rationale": "Disjoint new modules with no removed symbols",
+      "ground_truth_revealed_after": "Compatible",
+      "agree": true
+    },
+    {
+      "id": "hard_071_catalog_3_default_semantics",
+      "repository": "C:\\Users\\punya mittal\\software-elakiya\\Quorum\\data\\pairs\\hard_benchmark\\hard_071_catalog_3_default_semantics",
+      "merge_base_files": [
+        "catalog_3_config.py",
+        "test_catalog_3_config.py"
+      ],
+      "branch_a_diff_preview": "--- a/catalog_3_config.py\n+++ b/catalog_3_config.py\n@@ -1,4 +1,4 @@\n-DEFAULT_LIMIT = 10\n+DEFAULT_LIMIT = 3\n \n def page_catalog_3(items, limit=DEFAULT_LIMIT):\n     return list(items)[:limit]\n--- a/test_catalog_3_config.py\n+++ b/test_catalog_3_config.py\n@@ -3,7 +3,7 @@\n \n class ConfigTests(unittest.TestCase):\n     def test_page(self):\n-        self.assertEqual(page_catalog_3(range(20)), list(range(1",
+      "branch_b_diff_preview": "--- a/catalog_3_ui.py\n+++ b/catalog_3_ui.py\n@@ -0,0 +1,5 @@\n+from catalog_3_config import page_catalog_3\n+\n+def preview_catalog_3():\n+    # Depends on historical default of 10.\n+    return page_catalog_3(range(20))\n--- a/test_catalog_3_ui.py\n+++ b/test_catalog_3_ui.py\n@@ -0,0 +1,9 @@\n+import unittest\n+from catalog_3_ui import preview_catalog_3\n+\n+class UiTests(unittest.TestCase):\n+    def test_pre",
+      "blind_prediction": "Conflict",
+      "blind_rationale": "Contract/signature/exception/default semantics drift signals",
+      "ground_truth_revealed_after": "Conflict",
+      "agree": true
+    }
+  ]
+}

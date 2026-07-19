@@ -1,0 +1,19 @@
+--- a/shipping_1_pipeline.py
++++ b/shipping_1_pipeline.py
+@@ -0,0 +1,4 @@
++from shipping_1_utils import normalize_shipping_1_token
++
++def pipeline_key(value):
++    return "key:" + normalize_shipping_1_token(value)
+--- a/test_shipping_1_pipeline.py
++++ b/test_shipping_1_pipeline.py
+@@ -0,0 +1,9 @@
++import unittest
++from shipping_1_pipeline import pipeline_key
++
++class PipelineTests(unittest.TestCase):
++    def test_key(self):
++        self.assertEqual(pipeline_key(" X "), "key:x")
++
++if __name__ == "__main__":
++    unittest.main()

@@ -1,0 +1,6 @@
+--- a/identity_011.py
++++ b/identity_011.py
+@@ -1,2 +1,3 @@
+ def same_code_11(left, right):
++    """Return True if left equals right exactly (case-sensitive)."""
+     return left == right

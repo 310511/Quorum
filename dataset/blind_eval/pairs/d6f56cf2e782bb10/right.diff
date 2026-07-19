@@ -1,0 +1,26 @@
+diff --git a/records_100.py b/records_100.py
+index 9f3b770..cfedcb4 100644
+--- a/records_100.py
++++ b/records_100.py
+@@ -1,2 +1,9 @@
+ def select_100(values: list[int]) -> list[int]:
+     return list(values)
++
++
++def without_last_100(values: list[int]) -> list[int]:
++    selected = select_100(values)
++    if selected:
++        selected.pop()
++    return selected
+diff --git a/test_records.py b/test_records.py
+new file mode 100644
+index 0000000..0d32f1e
+--- /dev/null
++++ b/test_records.py
+@@ -0,0 +1,6 @@
++import unittest
++from records_100 import without_last_100
++
++class RecordTests(unittest.TestCase):
++    def test_result_drops_last(self):
++        self.assertEqual(without_last_100([100, 101, 102]), [100, 101])

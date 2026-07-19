@@ -1,0 +1,20 @@
+--- a/auth_2_ui.py
++++ b/auth_2_ui.py
+@@ -0,0 +1,5 @@
++from auth_2_config import page_auth_2
++
++def preview_auth_2():
++    # Depends on historical default of 10.
++    return page_auth_2(range(20))
+--- a/test_auth_2_ui.py
++++ b/test_auth_2_ui.py
+@@ -0,0 +1,9 @@
++import unittest
++from auth_2_ui import preview_auth_2
++
++class UiTests(unittest.TestCase):
++    def test_preview(self):
++        self.assertEqual(len(preview_auth_2()), 10)
++
++if __name__ == "__main__":
++    unittest.main()

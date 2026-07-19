@@ -1,0 +1,8 @@
+diff --git a/limits_099.py b/limits_099.py
+index 8677b32..2d760aa 100644
+--- a/limits_099.py
++++ b/limits_099.py
+@@ -1,2 +1,2 @@
+ def resolve_limit_099(value: int | None) -> int:
+-    return 179 if value is None else value
++    return 0 if value is None else value

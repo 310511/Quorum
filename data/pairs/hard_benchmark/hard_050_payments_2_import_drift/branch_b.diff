@@ -1,0 +1,19 @@
+--- a/payments_2_pipeline.py
++++ b/payments_2_pipeline.py
+@@ -0,0 +1,4 @@
++from payments_2_utils import normalize_payments_2_token
++
++def pipeline_key(value):
++    return "key:" + normalize_payments_2_token(value)
+--- a/test_payments_2_pipeline.py
++++ b/test_payments_2_pipeline.py
+@@ -0,0 +1,9 @@
++import unittest
++from payments_2_pipeline import pipeline_key
++
++class PipelineTests(unittest.TestCase):
++    def test_key(self):
++        self.assertEqual(pipeline_key(" X "), "key:x")
++
++if __name__ == "__main__":
++    unittest.main()

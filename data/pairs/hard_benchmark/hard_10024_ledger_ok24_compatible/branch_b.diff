@@ -1,0 +1,17 @@
+--- a/ledger_ok24_beta.py
++++ b/ledger_ok24_beta.py
+@@ -0,0 +1,2 @@
++def beta_ledger_ok24(value):
++    return value * 2
+--- a/test_ledger_ok24_beta.py
++++ b/test_ledger_ok24_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from ledger_ok24_beta import beta_ledger_ok24
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_ledger_ok24(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()

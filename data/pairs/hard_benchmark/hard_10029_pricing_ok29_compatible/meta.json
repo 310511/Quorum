@@ -1,0 +1,6 @@
+{
+  "pair": "hard_10029_pricing_ok29_compatible",
+  "conflict_type": "orthogonal_features",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_benchmark"
+}

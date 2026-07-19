@@ -1,0 +1,11 @@
+diff --git a/records_039.py b/records_039.py
+index 5aedc95..86a2100 100644
+--- a/records_039.py
++++ b/records_039.py
+@@ -1,2 +1,6 @@
+ def select_039(values: list[int]) -> list[int]:
+     return list(values)
++
++
++def select_view_039(values: list[int]) -> list[int]:
++    return values

@@ -1,0 +1,6 @@
+{
+  "pair": "hard_074_inventory_3_import_drift",
+  "conflict_type": "import_drift",
+  "ground_truth": "conflict",
+  "generator": "quorum.hard_benchmark"
+}

@@ -1,0 +1,6 @@
+{
+  "pair": "hard_10004_ledger_ok4_compatible",
+  "conflict_type": "orthogonal_features",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_benchmark"
+}

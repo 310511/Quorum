@@ -1,0 +1,7 @@
+{
+  "pair": "twin_boundary_contract_0014",
+  "family": "boundary_contract",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_compatible",
+  "twin_of_family": "boundary_contract"
+}

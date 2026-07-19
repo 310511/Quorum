@@ -1,0 +1,19 @@
+--- a/test_warehouse_report.py
++++ b/test_warehouse_report.py
+@@ -0,0 +1,9 @@
++import unittest
++from warehouse_report import report_line
++
++class ReportTests(unittest.TestCase):
++    def test_report(self):
++        self.assertEqual(report_line([1, 2, 3]), 12)
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/warehouse_report.py
++++ b/warehouse_report.py
+@@ -0,0 +1,4 @@
++from warehouse_core import compute_warehouse_total
++
++def report_line(items):
++    return compute_warehouse_total(items) * 2

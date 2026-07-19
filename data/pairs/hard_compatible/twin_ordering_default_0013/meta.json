@@ -1,0 +1,7 @@
+{
+  "pair": "twin_ordering_default_0013",
+  "family": "ordering_default",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_compatible",
+  "twin_of_family": "ordering_default"
+}

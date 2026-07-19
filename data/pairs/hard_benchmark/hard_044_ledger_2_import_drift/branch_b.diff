@@ -1,0 +1,19 @@
+--- a/ledger_2_pipeline.py
++++ b/ledger_2_pipeline.py
+@@ -0,0 +1,4 @@
++from ledger_2_utils import normalize_ledger_2_token
++
++def pipeline_key(value):
++    return "key:" + normalize_ledger_2_token(value)
+--- a/test_ledger_2_pipeline.py
++++ b/test_ledger_2_pipeline.py
+@@ -0,0 +1,9 @@
++import unittest
++from ledger_2_pipeline import pipeline_key
++
++class PipelineTests(unittest.TestCase):
++    def test_key(self):
++        self.assertEqual(pipeline_key(" X "), "key:x")
++
++if __name__ == "__main__":
++    unittest.main()

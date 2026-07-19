@@ -1,0 +1,28 @@
+--- a/inventory_4_guard.py
++++ b/inventory_4_guard.py
+@@ -1,7 +1,7 @@
+-class Inventory_4Error(ValueError):
++class Inventory_4Gone(LookupError):
+     pass
+ 
+ def ensure_inventory_4_positive(value):
+     if value <= 0:
+-        raise Inventory_4Error("non-positive")
++        raise Inventory_4Gone("non-positive")
+     return value
+--- a/test_inventory_4_guard.py
++++ b/test_inventory_4_guard.py
+@@ -1,11 +1,11 @@
+ import unittest
+-from inventory_4_guard import ensure_inventory_4_positive, Inventory_4Error
++from inventory_4_guard import ensure_inventory_4_positive, Inventory_4Gone
+ 
+ class GuardTests(unittest.TestCase):
+     def test_ok(self):
+         self.assertEqual(ensure_inventory_4_positive(2), 2)
+     def test_bad(self):
+-        with self.assertRaises(Inventory_4Error):
++        with self.assertRaises(Inventory_4Gone):
+             ensure_inventory_4_positive(0)
+ 
+ if __name__ == "__main__":

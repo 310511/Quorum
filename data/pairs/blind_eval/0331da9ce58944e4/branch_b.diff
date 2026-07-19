@@ -1,0 +1,23 @@
+diff --git a/identity_006.py b/identity_006.py
+index 06c137c..f663464 100644
+--- a/identity_006.py
++++ b/identity_006.py
+@@ -1,2 +1,6 @@
+ def same_code_006(left: str, right: str) -> bool:
+     return left == right
++
++
++def authorized_006(presented: str, required: str) -> bool:
++    return same_code_006(presented, required)
+diff --git a/test_identity.py b/test_identity.py
+new file mode 100644
+index 0000000..4070ca3
+--- /dev/null
++++ b/test_identity.py
+@@ -0,0 +1,6 @@
++import unittest
++from identity_006 import authorized_006
++
++class IdentityTests(unittest.TestCase):
++    def test_exact_identity(self):
++        self.assertTrue(authorized_006("Admin6", "Admin6"))

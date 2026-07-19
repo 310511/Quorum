@@ -1,0 +1,27 @@
+{
+  "ground_truth": "no_conflict",
+  "language": "python",
+  "source": "hard_compatible_twin_verified",
+  "conflict_type": "aliasing_contract",
+  "difficulty": "hard",
+  "notes": "Left adds a docstring only (select still returns list(values), a real copy); right's mutation of the returned list never touches caller input.",
+  "hidden_invariant": "Read-style helpers never mutate caller-owned input.",
+  "surface_characteristics": [
+    "compilation_passes",
+    "public_tests_pass",
+    "textual_merge_is_clean",
+    "diff_is_small",
+    "same_function_touched_by_both_branches",
+    "left_change_is_behavior_preserving_refactor"
+  ],
+  "validation": {
+    "compile": "pass",
+    "public_tests": "pass",
+    "semantic_oracle": "pass",
+    "final": "compatible",
+    "oracle_command": "python -m unittest oracle_semantic",
+    "oracle_exit_code": 0,
+    "merged_test_output": "test_result_drops_last (test_public.RecordTests) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK",
+    "merged_oracle_output": "test_input_is_not_mutated (oracle_semantic.SemanticOracle) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK"
+  }
+}

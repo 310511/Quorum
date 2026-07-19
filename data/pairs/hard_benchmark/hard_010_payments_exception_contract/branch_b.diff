@@ -1,0 +1,23 @@
+--- a/payments_handler.py
++++ b/payments_handler.py
+@@ -0,0 +1,7 @@
++from payments_guard import ensure_payments_positive, PaymentsError
++
++def safe_payments(value):
++    try:
++        return ensure_payments_positive(value)
++    except PaymentsError:
++        return 0
+--- a/test_payments_handler.py
++++ b/test_payments_handler.py
+@@ -0,0 +1,10 @@
++import unittest
++from payments_handler import safe_payments
++
++class HandlerTests(unittest.TestCase):
++    def test_safe(self):
++        self.assertEqual(safe_payments(0), 0)
++        self.assertEqual(safe_payments(4), 4)
++
++if __name__ == "__main__":
++    unittest.main()

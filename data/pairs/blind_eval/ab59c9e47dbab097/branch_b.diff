@@ -1,0 +1,23 @@
+diff --git a/ordering_100.py b/ordering_100.py
+index 0939359..16be7f7 100644
+--- a/ordering_100.py
++++ b/ordering_100.py
+@@ -1,2 +1,6 @@
+ def normalize_100(items: list[int], reverse: bool = False) -> list[int]:
+     return sorted(items, reverse=reverse)
++
++
++def first_100(items: list[int]) -> int:
++    return normalize_100(items)[0]
+diff --git a/test_ordering.py b/test_ordering.py
+new file mode 100644
+index 0000000..7c95ede
+--- /dev/null
++++ b/test_ordering.py
+@@ -0,0 +1,6 @@
++import unittest
++from ordering_100 import first_100
++
++class OrderingTests(unittest.TestCase):
++    def test_single_item(self):
++        self.assertEqual(first_100([100]), 100)

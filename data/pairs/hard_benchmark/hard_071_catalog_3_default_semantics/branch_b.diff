@@ -1,0 +1,20 @@
+--- a/catalog_3_ui.py
++++ b/catalog_3_ui.py
+@@ -0,0 +1,5 @@
++from catalog_3_config import page_catalog_3
++
++def preview_catalog_3():
++    # Depends on historical default of 10.
++    return page_catalog_3(range(20))
+--- a/test_catalog_3_ui.py
++++ b/test_catalog_3_ui.py
+@@ -0,0 +1,9 @@
++import unittest
++from catalog_3_ui import preview_catalog_3
++
++class UiTests(unittest.TestCase):
++    def test_preview(self):
++        self.assertEqual(len(preview_catalog_3()), 10)
++
++if __name__ == "__main__":
++    unittest.main()

@@ -1,0 +1,17 @@
+--- a/auth_ok19_beta.py
++++ b/auth_ok19_beta.py
+@@ -0,0 +1,2 @@
++def beta_auth_ok19(value):
++    return value * 2
+--- a/test_auth_ok19_beta.py
++++ b/test_auth_ok19_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from auth_ok19_beta import beta_auth_ok19
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_auth_ok19(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()

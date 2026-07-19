@@ -1,0 +1,65 @@
+{
+  "baseline_has_handcrafted_heuristics": false,
+  "baseline_mechanism": "Single LLM (deepseek-coder:6.7b) via build_prompt(); no rule engine",
+  "baseline_accuracy_full": 1.0,
+  "committee_accuracy_full": 0.7846153846153846,
+  "leakage_channel_ablations": {
+    "remove_context_validation_citation": {
+      "accuracy_after_ablation": 0.8461538461538461,
+      "accuracy_drop": 0.15384615384615385,
+      "dependency": "MODERATE",
+      "n_predictions_retained": 110
+    },
+    "remove_ground_truth_citation": {
+      "accuracy_after_ablation": 1.0,
+      "accuracy_drop": 0.0,
+      "dependency": "LOW",
+      "n_predictions_retained": 130
+    },
+    "remove_conflict_type_citation": {
+      "accuracy_after_ablation": 0.9384615384615385,
+      "accuracy_drop": 0.06153846153846154,
+      "dependency": "LOW",
+      "n_predictions_retained": 122
+    },
+    "remove_all_explicit_leak_citations": {
+      "accuracy_after_ablation": 0.7846153846153846,
+      "accuracy_drop": 0.2153846153846154,
+      "dependency": "MODERATE",
+      "n_predictions_retained": 102
+    }
+  },
+  "filename_oracle_accuracy": 1.0,
+  "adjudicator_rule_ablations": {
+    "unanimous": {
+      "rows_using_rule": 100,
+      "accuracy_after_ablation": 0.015384615384615385,
+      "accuracy_drop": 0.7692307692307692,
+      "dependency": "HIGH DEPENDENCY"
+    },
+    "rationale_dominance": {
+      "rows_using_rule": 27,
+      "accuracy_after_ablation": 0.7769230769230769,
+      "accuracy_drop": 0.007692307692307665,
+      "dependency": "LOW"
+    },
+    "ambiguous_evidence": {
+      "rows_using_rule": 1,
+      "accuracy_after_ablation": 0.7846153846153846,
+      "accuracy_drop": 0.0,
+      "dependency": "LOW"
+    },
+    "weighted_evidence_vote": {
+      "rows_using_rule": 2,
+      "accuracy_after_ablation": 0.7769230769230769,
+      "accuracy_drop": 0.007692307692307665,
+      "dependency": "LOW"
+    }
+  },
+  "critical_finding": "Baseline 100% is not from heuristics; it is from reading leaked context.md (Ground truth + merged-tests validation). Ablating validation citations collapses usable non-leaking predictions.",
+  "notes": {
+    "unanimous_high_dependency": "HIGH DEPENDENCY on adjudicator rule 'unanimous' is structural: 100/130 rows (all conflicts) resolved unanimously. Ablating it forces escalate and is not evidence of a secret scoring oracle.",
+    "baseline_citations": "Only 20/130 baseline rows explicitly quote the validation line; 0 quote 'ground truth'. Perfect accuracy still implies the leaked context is available and often used implicitly, especially on compatible controls (15/30 cite validation).",
+    "filename_oracle": "Filename contains '_compatible' alone yields 100% accuracy without opening any file — directory names encode labels."
+  }
+}

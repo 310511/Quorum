@@ -1,0 +1,11 @@
+diff --git a/metrics_042.py b/metrics_042.py
+index caf9bc2..f7c48f2 100644
+--- a/metrics_042.py
++++ b/metrics_042.py
+@@ -2,3 +2,6 @@ from util_042 import clamp_042
+ 
+ def score_042(raw: int) -> int:
+     return clamp_042(raw, 0, 100)
++
++def boosted_score_042(raw: int, boost: int) -> int:
++    return clamp_042(raw + boost, 0, 100)

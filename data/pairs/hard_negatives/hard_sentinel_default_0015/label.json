@@ -1,0 +1,24 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "records1_semantic_conflict",
+  "conflict_type": "sentinel_default",
+  "difficulty": "hard",
+  "record_id": "a8817621-f751-4e7b-8a69-da9db58f6f2a",
+  "notes": "The new consumer compiles but receives a different sentinel meaning.",
+  "hidden_invariant": "An omitted limit permits values below the configured default.",
+  "surface_characteristics": [
+    "compilation_passes",
+    "public_tests_pass",
+    "textual_merge_is_clean",
+    "diff_is_small"
+  ],
+  "validation": {
+    "compile": "pass",
+    "public_tests": "pass",
+    "semantic_oracle": "fail",
+    "final": "negative",
+    "oracle_command": "python -m unittest oracle_semantic",
+    "oracle_exit_code": 1
+  }
+}

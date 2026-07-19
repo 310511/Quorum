@@ -1,0 +1,14 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "hard_benchmark_verified",
+  "conflict_type": "signature_break",
+  "notes": "Branch A makes quantity/priority keyword-only; Branch B still calls positionally",
+  "validation": {
+    "branch_a_tests": "pass",
+    "branch_b_tests": "pass",
+    "merged_tests": "fail",
+    "compilation": "pass",
+    "merged_test_output": "test_payload (test_search_api.ApiTests) ... ok\ntest_summarize (test_search_api.ApiTests) ... ok\ntest_order (test_search_client.ClientTests) ... ERROR\n\n======================================================================\nERROR: test_order (test_search_client.ClientTests)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-p84lhn3u\\repo\\test_search_client.py\", line 6, in test_order\n    self.assertEqual(client_order(\"sku\")[\"quantity\"], 5)\n  File \"C:\\Users\\PUNYAM~1\\AppData\\Local\\Temp\\quorum-hard-p84lhn3u\\repo\\search_client.py\", line 5, in client_order\n    return build_search_payload(name, 5)\nTypeError: build_search_payload() takes 1 positional argument but 2 were given\n\n----------------------------------------------------------------------\nRan 3 tests in 0.001s\n\nFAILED (errors=1)"
+  }
+}

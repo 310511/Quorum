@@ -1,0 +1,20 @@
+--- a/catalog_4_client.py
++++ b/catalog_4_client.py
+@@ -0,0 +1,5 @@
++from catalog_4_api import build_catalog_4_payload
++
++def client_order(name):
++    # Relies on old positional/default signature.
++    return build_catalog_4_payload(name, 5)
+--- a/test_catalog_4_client.py
++++ b/test_catalog_4_client.py
+@@ -0,0 +1,9 @@
++import unittest
++from catalog_4_client import client_order
++
++class ClientTests(unittest.TestCase):
++    def test_order(self):
++        self.assertEqual(client_order("sku")["quantity"], 5)
++
++if __name__ == "__main__":
++    unittest.main()

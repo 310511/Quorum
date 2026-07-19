@@ -1,0 +1,20 @@
+--- a/routing_client.py
++++ b/routing_client.py
+@@ -0,0 +1,5 @@
++from routing_api import build_routing_payload
++
++def client_order(name):
++    # Relies on old positional/default signature.
++    return build_routing_payload(name, 5)
+--- a/test_routing_client.py
++++ b/test_routing_client.py
+@@ -0,0 +1,9 @@
++import unittest
++from routing_client import client_order
++
++class ClientTests(unittest.TestCase):
++    def test_order(self):
++        self.assertEqual(client_order("sku")["quantity"], 5)
++
++if __name__ == "__main__":
++    unittest.main()

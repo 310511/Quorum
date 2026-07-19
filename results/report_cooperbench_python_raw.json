@@ -1,0 +1,59 @@
+{
+  "corpus": "cooperbench_python_raw",
+  "run": "run_20260718T182612Z_cooper_raw.json",
+  "n": 16,
+  "labels": {
+    "conflict": 9,
+    "no_conflict": 7
+  },
+  "systems": {
+    "Baseline": {
+      "TP": 6,
+      "FP": 4,
+      "TN": 3,
+      "FN": 3,
+      "escalate": 0,
+      "accuracy": 0.5625,
+      "precision": 0.6,
+      "recall": 0.6666666666666666,
+      "specificity": 0.42857142857142855,
+      "f1": 0.631578947368421,
+      "balanced_accuracy": 0.5476190476190476,
+      "mcc": 0.09759000729485331,
+      "coverage": 1.0,
+      "escalation_rate": 0.0
+    },
+    "Majority": {
+      "TP": 9,
+      "FP": 7,
+      "TN": 0,
+      "FN": 0,
+      "escalate": 0,
+      "accuracy": 0.5625,
+      "precision": 0.5625,
+      "recall": 1.0,
+      "specificity": 0.0,
+      "f1": 0.72,
+      "balanced_accuracy": 0.5,
+      "mcc": 0,
+      "coverage": 1.0,
+      "escalation_rate": 0.0
+    },
+    "Committee": {
+      "TP": 1,
+      "FP": 7,
+      "TN": 0,
+      "FN": 8,
+      "escalate": 15,
+      "accuracy": 0.0625,
+      "precision": 0.125,
+      "recall": 0.1111111111111111,
+      "specificity": 0.0,
+      "f1": 0.11764705882352941,
+      "balanced_accuracy": 0.05555555555555555,
+      "mcc": -0.8819171036881969,
+      "coverage": 0.0625,
+      "escalation_rate": 0.9375
+    }
+  }
+}

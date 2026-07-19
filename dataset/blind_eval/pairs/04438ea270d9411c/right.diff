@@ -1,0 +1,26 @@
+diff --git a/records_018.py b/records_018.py
+index f726af1..356deb4 100644
+--- a/records_018.py
++++ b/records_018.py
+@@ -1,2 +1,9 @@
+ def select_018(values: list[int]) -> list[int]:
+     return list(values)
++
++
++def without_last_018(values: list[int]) -> list[int]:
++    selected = select_018(values)
++    if selected:
++        selected.pop()
++    return selected
+diff --git a/test_records.py b/test_records.py
+new file mode 100644
+index 0000000..6705398
+--- /dev/null
++++ b/test_records.py
+@@ -0,0 +1,6 @@
++import unittest
++from records_018 import without_last_018
++
++class RecordTests(unittest.TestCase):
++    def test_result_drops_last(self):
++        self.assertEqual(without_last_018([18, 19, 20]), [18, 19])

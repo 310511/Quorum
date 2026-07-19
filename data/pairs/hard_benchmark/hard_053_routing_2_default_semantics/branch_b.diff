@@ -1,0 +1,20 @@
+--- a/routing_2_ui.py
++++ b/routing_2_ui.py
+@@ -0,0 +1,5 @@
++from routing_2_config import page_routing_2
++
++def preview_routing_2():
++    # Depends on historical default of 10.
++    return page_routing_2(range(20))
+--- a/test_routing_2_ui.py
++++ b/test_routing_2_ui.py
+@@ -0,0 +1,9 @@
++import unittest
++from routing_2_ui import preview_routing_2
++
++class UiTests(unittest.TestCase):
++    def test_preview(self):
++        self.assertEqual(len(preview_routing_2()), 10)
++
++if __name__ == "__main__":
++    unittest.main()

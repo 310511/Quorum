@@ -1,0 +1,19 @@
+--- a/metrics_2_config.py
++++ b/metrics_2_config.py
+@@ -1,4 +1,4 @@
+-DEFAULT_LIMIT = 10
++DEFAULT_LIMIT = 3
+ 
+ def page_metrics_2(items, limit=DEFAULT_LIMIT):
+     return list(items)[:limit]
+--- a/test_metrics_2_config.py
++++ b/test_metrics_2_config.py
+@@ -3,7 +3,7 @@
+ 
+ class ConfigTests(unittest.TestCase):
+     def test_page(self):
+-        self.assertEqual(page_metrics_2(range(20)), list(range(10)))
++        self.assertEqual(page_metrics_2(range(20)), list(range(3)))
+ 
+ if __name__ == "__main__":
+     unittest.main()

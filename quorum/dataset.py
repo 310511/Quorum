@@ -15,11 +15,13 @@ class DatasetAudit:
     usable_baselines: int = 0
     usable_synthetic_records: int = 0
     usable_agent_records: int = 0
+    usable_semantic_conflicts: int = 0
     candidate_agent_pairs: int = 0
     rejected_records: int = 0
     pending_manual_review: int = 0
     kinds: dict[str, int] = field(default_factory=dict)
     mutation_types: dict[str, int] = field(default_factory=dict)
+    conflict_families: dict[str, int] = field(default_factory=dict)
     rejection_reasons: dict[str, int] = field(default_factory=dict)
     warnings: list[str] = field(default_factory=list)
 
@@ -30,12 +32,14 @@ class DatasetAudit:
                 "baselines": self.usable_baselines,
                 "synthetic_single_patch": self.usable_synthetic_records,
                 "agent_records": self.usable_agent_records,
+                "semantic_conflicts": self.usable_semantic_conflicts,
                 "candidate_agent_pairs": self.candidate_agent_pairs,
             },
             "rejected_records": self.rejected_records,
             "pending_manual_review": self.pending_manual_review,
             "kinds": self.kinds,
             "mutation_types": self.mutation_types,
+            "conflict_families": self.conflict_families,
             "rejection_reasons": self.rejection_reasons,
             "warnings": self.warnings,
         }
@@ -63,6 +67,7 @@ def audit_records(records: list[dict[str, Any]]) -> DatasetAudit:
     audit = DatasetAudit(total_records=len(records))
     kinds: Counter[str] = Counter()
     mutations: Counter[str] = Counter()
+    families: Counter[str] = Counter()
     rejection_reasons: Counter[str] = Counter()
     pair_groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
 
@@ -120,6 +125,28 @@ def audit_records(records: list[dict[str, Any]]) -> DatasetAudit:
                 rejection_reasons["agent_missing_pair_id"] += 1
             continue
 
+        if kind == "semantic_conflict":
+            parents = record.get("parents") or {}
+            left_patch = str((parents.get("left") or {}).get("patch") or "")
+            right_patch = str((parents.get("right") or {}).get("patch") or "")
+            family = str((record.get("conflict") or {}).get("family") or "unknown")
+            families[family] += 1
+            if not left_patch or not right_patch:
+                rejection_reasons["semantic_missing_parent_patches"] += 1
+            elif not record.get("repository") or not record.get("merge_base"):
+                rejection_reasons["semantic_missing_repo_or_base"] += 1
+            elif labels.get("compile") != "pass":
+                rejection_reasons["semantic_compile_failed"] += 1
+            elif labels.get("test") != "pass":
+                rejection_reasons["semantic_public_tests_failed"] += 1
+            elif labels.get("semantic_oracle") != "fail":
+                rejection_reasons["semantic_oracle_did_not_fail"] += 1
+            elif final_label != "negative":
+                rejection_reasons["semantic_final_not_negative"] += 1
+            else:
+                audit.usable_semantic_conflicts += 1
+            continue
+
         rejection_reasons["unknown_kind"] += 1
 
     for group in pair_groups.values():
@@ -135,6 +162,7 @@ def audit_records(records: list[dict[str, Any]]) -> DatasetAudit:
 
     audit.kinds = dict(sorted(kinds.items()))
     audit.mutation_types = dict(sorted(mutations.items()))
+    audit.conflict_families = dict(sorted(families.items()))
     audit.rejection_reasons = dict(sorted(rejection_reasons.items()))
     audit.rejected_records = sum(rejection_reasons.values())
     audit.warnings = [
@@ -142,6 +170,8 @@ def audit_records(records: list[dict[str, Any]]) -> DatasetAudit:
         "semantic merge-conflict pairs.",
         "Agent records become Quorum evaluation pairs only after two non-empty "
         "branches share a merge base and the merged result is test/manual labeled.",
+        "semantic_conflict records are verified two-branch hard negatives "
+        "(public tests pass; semantic oracle fails).",
     ]
     return audit
 

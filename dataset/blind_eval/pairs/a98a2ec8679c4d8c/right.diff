@@ -1,0 +1,26 @@
+diff --git a/policy_067.py b/policy_067.py
+index 1c3b90e..ead83e2 100644
+--- a/policy_067.py
++++ b/policy_067.py
+@@ -1,2 +1,6 @@
+ def eligible_067(score: int, cutoff: int) -> bool:
+     return score > cutoff
++
++
++def route_067(score: int) -> str:
++    return "priority" if eligible_067(score, 107) else "standard"
+diff --git a/test_policy.py b/test_policy.py
+new file mode 100644
+index 0000000..15c7875
+--- /dev/null
++++ b/test_policy.py
+@@ -0,0 +1,9 @@
++import unittest
++from policy_067 import route_067
++
++class PolicyTests(unittest.TestCase):
++    def test_clear_priority(self):
++        self.assertEqual(route_067(112), "priority")
++
++    def test_clear_standard(self):
++        self.assertEqual(route_067(102), "standard")

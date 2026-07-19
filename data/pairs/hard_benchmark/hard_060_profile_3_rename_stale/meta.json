@@ -1,0 +1,6 @@
+{
+  "pair": "hard_060_profile_3_rename_stale",
+  "conflict_type": "rename_stale_reference",
+  "ground_truth": "conflict",
+  "generator": "quorum.hard_benchmark"
+}

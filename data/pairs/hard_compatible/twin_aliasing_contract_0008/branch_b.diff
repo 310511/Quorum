@@ -1,0 +1,35 @@
+--- a/oracle_semantic.py
++++ b/oracle_semantic.py
+@@ -0,0 +1,8 @@
++import unittest
++from records_008 import without_last_8
++
++class SemanticOracle(unittest.TestCase):
++    def test_input_is_not_mutated(self):
++        values = [49, 50, 51]
++        without_last_8(values)
++        self.assertEqual(values, [49, 50, 51])
+--- a/records_008.py
++++ b/records_008.py
+@@ -1,2 +1,9 @@
+ def select_8(values):
+     return list(values)
++
++
++def without_last_8(values):
++    selected = select_8(values)
++    if selected:
++        selected.pop()
++    return selected
+--- a/test_public.py
++++ b/test_public.py
+@@ -0,0 +1,9 @@
++import unittest
++from records_008 import without_last_8
++
++class RecordTests(unittest.TestCase):
++    def test_result_drops_last(self):
++        self.assertEqual(without_last_8([49, 50, 51]), [49, 50])
++
++if __name__ == "__main__":
++    unittest.main()

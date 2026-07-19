@@ -1,0 +1,20 @@
+--- a/cache_2_client.py
++++ b/cache_2_client.py
+@@ -0,0 +1,5 @@
++from cache_2_api import build_cache_2_payload
++
++def client_order(name):
++    # Relies on old positional/default signature.
++    return build_cache_2_payload(name, 5)
+--- a/test_cache_2_client.py
++++ b/test_cache_2_client.py
+@@ -0,0 +1,9 @@
++import unittest
++from cache_2_client import client_order
++
++class ClientTests(unittest.TestCase):
++    def test_order(self):
++        self.assertEqual(client_order("sku")["quantity"], 5)
++
++if __name__ == "__main__":
++    unittest.main()

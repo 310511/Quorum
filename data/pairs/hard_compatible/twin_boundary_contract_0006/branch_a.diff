@@ -1,0 +1,6 @@
+--- a/policy_006.py
++++ b/policy_006.py
+@@ -1,2 +1,3 @@
+ def eligible_6(score, cutoff):
++    """Return True if score exceeds the cutoff."""
+     return score > cutoff

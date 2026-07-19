@@ -1,0 +1,26 @@
+diff --git a/records_094.py b/records_094.py
+index 50202e9..bbc1195 100644
+--- a/records_094.py
++++ b/records_094.py
+@@ -1,2 +1,9 @@
+ def select_094(values: list[int]) -> list[int]:
+     return list(values)
++
++
++def without_last_094(values: list[int]) -> list[int]:
++    selected = select_094(values)
++    if selected:
++        selected.pop()
++    return selected
+diff --git a/test_records.py b/test_records.py
+new file mode 100644
+index 0000000..aa08cb7
+--- /dev/null
++++ b/test_records.py
+@@ -0,0 +1,6 @@
++import unittest
++from records_094 import without_last_094
++
++class RecordTests(unittest.TestCase):
++    def test_result_drops_last(self):
++        self.assertEqual(without_last_094([94, 95, 96]), [94, 95])

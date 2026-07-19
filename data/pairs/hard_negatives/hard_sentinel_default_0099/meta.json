@@ -1,0 +1,19 @@
+{
+  "record_id": "642116e1-52db-4755-9be3-497a0a2fe712",
+  "repository": "C:\\Users\\punya mittal\\data\\examples\\hard_negatives\\sentinel_default_0099",
+  "merge_base": "3dd20d0c5d4c2e7c9e819d8daad531227d39604b",
+  "parents": {
+    "left": {
+      "commit": "8dd6c8ec9dcd7d9997f3c7f487fdecdadd1348a4",
+      "intent": "Use zero as the neutral value for an omitted limit.",
+      "patch_sha256": "eed3f53b9c21e2af45b080441546faa43118d582bf523a651d4f602aeae4c912"
+    },
+    "right": {
+      "commit": "46d267696f48f75aa417af9f3df1b6b78893bbe5",
+      "intent": "Add admission logic that relies on the configured missing-value default.",
+      "patch_sha256": "c322a7b49a77bc3b1492d5f6d0552ac233a9ff6a08488fe821d3021b92e1bab4"
+    }
+  },
+  "kind": "semantic_conflict",
+  "schema_version": 2
+}

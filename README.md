@@ -35,6 +35,49 @@ Each case lives in `data/pairs/<name>/`:
 
 See `data/pairs/example_1/` for a worked semantic conflict (function rename vs. stale import).
 
+## Hard semantic benchmark (publication)
+
+Preferred source: `dataset/records1.json` (100 verified `semantic_conflict`
+hard negatives with left/right parent patches and a semantic oracle).
+
+```bash
+python -m quorum audit-dataset dataset/records1.json
+python -m quorum import-semantic-records dataset/records1.json --dest data/pairs/hard_negatives
+```
+
+Pairs land in `data/pairs/hard_negatives/`. Families include boundary contract,
+ordering/sentinel defaults, aliasing, error contracts, and case sensitivity.
+
+Evaluate (resumable; writes incremental checkpoints):
+
+```bash
+python -m quorum --config config_hard.yaml eval data/pairs/hard_negatives --input-mode raw --checkpoint results/hard_negatives_raw_checkpoint.json
+python -m quorum --config config_hard.yaml eval data/pairs/hard_negatives --input-mode structured --checkpoint results/hard_negatives_structured_checkpoint.json
+```
+
+Optional synthetic generator (rename/signature/import templates):
+
+```bash
+python -m quorum generate-hard-benchmark --conflicts 100 --compatible 30
+```
+
+Build publication tables, figures, CIs, McNemar tests, and error taxonomy:
+
+```bash
+python -m quorum publication-eval ^
+  --cooper-raw results/run_<ts>_cooper_raw.json ^
+  --cooper-structured results/run_<ts>_cooper_structured.json ^
+  --hard-raw results/run_<hard_raw>.json ^
+  --hard-structured results/run_<hard_struct>.json
+```
+
+Outputs:
+
+- `results/publication_eval_<ts>.json`
+- `results/publication_report_<ts>.md`
+- `results/publication_tables_<ts>.tex`
+- `results/publication_figures_<ts>/` (SVG)
+
 ## CooperBench dataset
 
 Import the bundled zip (already done once if you see `pair_*` folders under `data/pairs/`):

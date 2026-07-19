@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360">
+<rect width="100%" height="100%" fill="white"/>
+<text x="24" y="28" font-family="Georgia, serif" font-size="16">Quorum five-system comparison</text>
+<text x="90" y="330" font-family="Helvetica, sans-serif" font-size="11" text-anchor="middle">Accuracy</text>
+<rect x="50" y="282.9310344827586" width="22" height="17.06896551724138" fill="#1f4e5f"/>
+<rect x="74" y="93.2758620689655" width="22" height="206.7241379310345" fill="#079187"/>
+<rect x="98" y="298.1034482758621" width="22" height="1.896551724137931" fill="#c45c26"/>
+<rect x="122" y="282.9310344827586" width="22" height="17.06896551724138" fill="#3d5a80"/>
+<rect x="146" y="281.0344827586207" width="22" height="18.965517241379313" fill="#9b2226"/>
+<text x="230" y="330" font-family="Helvetica, sans-serif" font-size="11" text-anchor="middle">F1</text>
+<rect x="190" y="277.8151260504202" width="22" height="22.18487394957983" fill="#1f4e5f"/>
+<rect x="214" y="86.84444444444443" width="22" height="213.15555555555557" fill="#079187"/>
+<rect x="238" y="80.0" width="22" height="220.0" fill="#c45c26"/>
+<rect x="262" y="132.38095238095238" width="22" height="167.61904761904762" fill="#3d5a80"/>
+<rect x="286" y="130.76923076923077" width="22" height="169.23076923076923" fill="#9b2226"/>
+<text x="370" y="330" font-family="Helvetica, sans-serif" font-size="11" text-anchor="middle">Coverage</text>
+<rect x="330" y="80.0" width="22" height="220.0" fill="#1f4e5f"/>
+<rect x="354" y="80.0" width="22" height="220.0" fill="#079187"/>
+<rect x="378" y="298.1034482758621" width="22" height="1.896551724137931" fill="#c45c26"/>
+<rect x="402" y="273.44827586206895" width="22" height="26.551724137931036" fill="#3d5a80"/>
+<rect x="426" y="269.6551724137931" width="22" height="30.344827586206897" fill="#9b2226"/>
+<text x="510" y="330" font-family="Helvetica, sans-serif" font-size="11" text-anchor="middle">Escalation</text>
+<rect x="470" y="300.0" width="22" height="0.0" fill="#1f4e5f"/>
+<rect x="494" y="300.0" width="22" height="0.0" fill="#079187"/>
+<rect x="518" y="81.89655172413794" width="22" height="218.10344827586206" fill="#c45c26"/>
+<rect x="542" y="106.55172413793105" width="22" height="193.44827586206895" fill="#3d5a80"/>
+<rect x="566" y="110.34482758620692" width="22" height="189.65517241379308" fill="#9b2226"/>
+<rect x="50" y="345" width="12" height="12" fill="#1f4e5f"/><text x="66" y="355" font-family="Helvetica, sans-serif" font-size="11">A</text>
+<rect x="100" y="345" width="12" height="12" fill="#079187"/><text x="116" y="355" font-family="Helvetica, sans-serif" font-size="11">B</text>
+<rect x="150" y="345" width="12" height="12" fill="#c45c26"/><text x="166" y="355" font-family="Helvetica, sans-serif" font-size="11">C</text>
+<rect x="200" y="345" width="12" height="12" fill="#3d5a80"/><text x="216" y="355" font-family="Helvetica, sans-serif" font-size="11">D</text>
+<rect x="250" y="345" width="12" height="12" fill="#9b2226"/><text x="266" y="355" font-family="Helvetica, sans-serif" font-size="11">E</text>
+</svg>

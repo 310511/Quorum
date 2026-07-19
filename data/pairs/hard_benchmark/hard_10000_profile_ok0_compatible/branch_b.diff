@@ -1,0 +1,17 @@
+--- a/profile_ok0_beta.py
++++ b/profile_ok0_beta.py
+@@ -0,0 +1,2 @@
++def beta_profile_ok0(value):
++    return value * 2
+--- a/test_profile_ok0_beta.py
++++ b/test_profile_ok0_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from profile_ok0_beta import beta_profile_ok0
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_profile_ok0(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()

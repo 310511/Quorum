@@ -1,0 +1,17 @@
+--- a/test_tickets_ok15_beta.py
++++ b/test_tickets_ok15_beta.py
+@@ -0,0 +1,9 @@
++import unittest
++from tickets_ok15_beta import beta_tickets_ok15
++
++class BetaTests(unittest.TestCase):
++    def test_beta(self):
++        self.assertEqual(beta_tickets_ok15(3), 6)
++
++if __name__ == "__main__":
++    unittest.main()
+--- a/tickets_ok15_beta.py
++++ b/tickets_ok15_beta.py
+@@ -0,0 +1,2 @@
++def beta_tickets_ok15(value):
++    return value * 2

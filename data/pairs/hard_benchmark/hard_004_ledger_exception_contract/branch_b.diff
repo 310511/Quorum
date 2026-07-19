@@ -1,0 +1,23 @@
+--- a/ledger_handler.py
++++ b/ledger_handler.py
+@@ -0,0 +1,7 @@
++from ledger_guard import ensure_ledger_positive, LedgerError
++
++def safe_ledger(value):
++    try:
++        return ensure_ledger_positive(value)
++    except LedgerError:
++        return 0
+--- a/test_ledger_handler.py
++++ b/test_ledger_handler.py
+@@ -0,0 +1,10 @@
++import unittest
++from ledger_handler import safe_ledger
++
++class HandlerTests(unittest.TestCase):
++    def test_safe(self):
++        self.assertEqual(safe_ledger(0), 0)
++        self.assertEqual(safe_ledger(4), 4)
++
++if __name__ == "__main__":
++    unittest.main()

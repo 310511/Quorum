@@ -1,0 +1,17 @@
+--- a/parser_ok28_alpha.py
++++ b/parser_ok28_alpha.py
+@@ -0,0 +1,2 @@
++def alpha_parser_ok28(value):
++    return value + 1
+--- a/test_parser_ok28_alpha.py
++++ b/test_parser_ok28_alpha.py
+@@ -0,0 +1,9 @@
++import unittest
++from parser_ok28_alpha import alpha_parser_ok28
++
++class AlphaTests(unittest.TestCase):
++    def test_alpha(self):
++        self.assertEqual(alpha_parser_ok28(1), 2)
++
++if __name__ == "__main__":
++    unittest.main()

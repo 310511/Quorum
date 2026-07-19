@@ -1,0 +1,19 @@
+{
+  "record_id": "b65c15af-88af-4243-b583-3bba7376f8b9",
+  "repository": "C:\\Users\\punya mittal\\data\\examples\\hard_negatives\\error_contract_0077",
+  "merge_base": "f9578055b533715f02a11888db448d8d867a0ec4",
+  "parents": {
+    "left": {
+      "commit": "ffb306498b5521a4c969dc45be34336515ac58af",
+      "intent": "Make parsing tolerant by returning a numeric fallback.",
+      "patch_sha256": "2ec1fd3fc6deaacb2e88ca3e490654d55c9380cb758a747008fead67edc114b5"
+    },
+    "right": {
+      "commit": "4bbd0de475701ec01928f67adf64610e5a270170",
+      "intent": "Add validation that detects invalid input through parse failures.",
+      "patch_sha256": "f48a6e900a29b14b0c6fc5ab9b2b8918d6947a2e592ef52665dc2b25c75d9c34"
+    }
+  },
+  "kind": "semantic_conflict",
+  "schema_version": 2
+}

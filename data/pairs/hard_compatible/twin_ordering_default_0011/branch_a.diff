@@ -1,0 +1,6 @@
+--- a/ordering_011.py
++++ b/ordering_011.py
+@@ -1,2 +1,3 @@
+ def normalize_11(items, reverse=False):
++    """Return items sorted according to `reverse`."""
+     return sorted(items, reverse=reverse)

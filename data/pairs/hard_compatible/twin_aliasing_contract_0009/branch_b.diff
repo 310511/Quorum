@@ -1,0 +1,35 @@
+--- a/oracle_semantic.py
++++ b/oracle_semantic.py
+@@ -0,0 +1,8 @@
++import unittest
++from records_009 import without_last_9
++
++class SemanticOracle(unittest.TestCase):
++    def test_input_is_not_mutated(self):
++        values = [55, 56, 57]
++        without_last_9(values)
++        self.assertEqual(values, [55, 56, 57])
+--- a/records_009.py
++++ b/records_009.py
+@@ -1,2 +1,9 @@
+ def select_9(values):
+     return list(values)
++
++
++def without_last_9(values):
++    selected = select_9(values)
++    if selected:
++        selected.pop()
++    return selected
+--- a/test_public.py
++++ b/test_public.py
+@@ -0,0 +1,9 @@
++import unittest
++from records_009 import without_last_9
++
++class RecordTests(unittest.TestCase):
++    def test_result_drops_last(self):
++        self.assertEqual(without_last_9([55, 56, 57]), [55, 56])
++
++if __name__ == "__main__":
++    unittest.main()

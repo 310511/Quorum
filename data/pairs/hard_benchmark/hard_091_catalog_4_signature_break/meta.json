@@ -1,0 +1,6 @@
+{
+  "pair": "hard_091_catalog_4_signature_break",
+  "conflict_type": "signature_break",
+  "ground_truth": "conflict",
+  "generator": "quorum.hard_benchmark"
+}

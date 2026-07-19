@@ -1,0 +1,28 @@
+--- a/scheduler_guard.py
++++ b/scheduler_guard.py
+@@ -1,7 +1,7 @@
+-class SchedulerError(ValueError):
++class SchedulerGone(LookupError):
+     pass
+ 
+ def ensure_scheduler_positive(value):
+     if value <= 0:
+-        raise SchedulerError("non-positive")
++        raise SchedulerGone("non-positive")
+     return value
+--- a/test_scheduler_guard.py
++++ b/test_scheduler_guard.py
+@@ -1,11 +1,11 @@
+ import unittest
+-from scheduler_guard import ensure_scheduler_positive, SchedulerError
++from scheduler_guard import ensure_scheduler_positive, SchedulerGone
+ 
+ class GuardTests(unittest.TestCase):
+     def test_ok(self):
+         self.assertEqual(ensure_scheduler_positive(2), 2)
+     def test_bad(self):
+-        with self.assertRaises(SchedulerError):
++        with self.assertRaises(SchedulerGone):
+             ensure_scheduler_positive(0)
+ 
+ if __name__ == "__main__":

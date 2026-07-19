@@ -1,0 +1,20 @@
+--- a/test_warehouse_1_utils.py
++++ b/test_warehouse_1_utils.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from warehouse_1_utils import normalize_warehouse_1_token
++from warehouse_1_tokens import normalize_warehouse_1_token
+ 
+ class UtilsTests(unittest.TestCase):
+     def test_normalize(self):
+--- a/warehouse_1_tokens.py
++++ b/warehouse_1_tokens.py
+@@ -0,0 +1,2 @@
++def normalize_warehouse_1_token(value):
++    return str(value).strip().lower()
+--- a/warehouse_1_utils.py
++++ b/warehouse_1_utils.py
+@@ -1,2 +1 @@
+-def normalize_warehouse_1_token(value):
+-    return str(value).strip().lower()
++# Moved to warehouse_1_tokens.py

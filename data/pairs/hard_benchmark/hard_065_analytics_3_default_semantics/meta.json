@@ -1,0 +1,6 @@
+{
+  "pair": "hard_065_analytics_3_default_semantics",
+  "conflict_type": "default_semantics",
+  "ground_truth": "conflict",
+  "generator": "quorum.hard_benchmark"
+}

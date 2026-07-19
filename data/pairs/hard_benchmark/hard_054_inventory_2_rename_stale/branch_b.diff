@@ -1,0 +1,19 @@
+--- a/inventory_2_report.py
++++ b/inventory_2_report.py
+@@ -0,0 +1,4 @@
++from inventory_2_core import compute_inventory_2_total
++
++def report_line(items):
++    return compute_inventory_2_total(items) * 2
+--- a/test_inventory_2_report.py
++++ b/test_inventory_2_report.py
+@@ -0,0 +1,9 @@
++import unittest
++from inventory_2_report import report_line
++
++class ReportTests(unittest.TestCase):
++    def test_report(self):
++        self.assertEqual(report_line([1, 2, 3]), 12)
++
++if __name__ == "__main__":
++    unittest.main()

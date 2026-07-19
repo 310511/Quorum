@@ -1,0 +1,11 @@
+{
+  "inputs": [
+    "left.diff",
+    "right.diff",
+    "base/"
+  ],
+  "instructions": "Decide whether composing left.diff and right.diff on the same merge-base is semantically safe. Use only the provided diffs and optional base context. Answer with SAFE or UNSAFE.",
+  "language": "python",
+  "pair_id": "2029789bdd8d8e53",
+  "schema": "blind_two_branch_v1"
+}

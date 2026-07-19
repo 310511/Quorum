@@ -1,0 +1,6 @@
+--- a/limits_011.py
++++ b/limits_011.py
+@@ -1,2 +1,3 @@
+ def resolve_limit_11(value):
++    """Resolve a limit, defaulting when unset."""
+     return 149 if value is None else value

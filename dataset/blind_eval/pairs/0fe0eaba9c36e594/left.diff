@@ -1,0 +1,8 @@
+diff --git a/limits_075.py b/limits_075.py
+index 184204c..7f1bf95 100644
+--- a/limits_075.py
++++ b/limits_075.py
+@@ -1,2 +1,2 @@
+ def resolve_limit_075(value: int | None) -> int:
+-    return 155 if value is None else value
++    return 0 if value is None else value

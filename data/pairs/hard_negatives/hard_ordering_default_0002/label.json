@@ -1,0 +1,24 @@
+{
+  "ground_truth": "conflict",
+  "language": "python",
+  "source": "records1_semantic_conflict",
+  "conflict_type": "ordering_default",
+  "difficulty": "hard",
+  "record_id": "b5342605-a650-4d92-a8b4-b703fcff1771",
+  "notes": "A harmless-looking default flip changes the new caller's meaning.",
+  "hidden_invariant": "first(items) returns the smallest item for mixed inputs.",
+  "surface_characteristics": [
+    "compilation_passes",
+    "public_tests_pass",
+    "textual_merge_is_clean",
+    "diff_is_small"
+  ],
+  "validation": {
+    "compile": "pass",
+    "public_tests": "pass",
+    "semantic_oracle": "fail",
+    "final": "negative",
+    "oracle_command": "python -m unittest oracle_semantic",
+    "oracle_exit_code": 1
+  }
+}

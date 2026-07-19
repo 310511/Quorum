@@ -1,0 +1,6 @@
+{
+  "pair": "hard_10018_billing_ok18_compatible",
+  "conflict_type": "orthogonal_features",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_benchmark"
+}

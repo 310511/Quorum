@@ -1,0 +1,19 @@
+--- a/parser_3_pipeline.py
++++ b/parser_3_pipeline.py
+@@ -0,0 +1,4 @@
++from parser_3_utils import normalize_parser_3_token
++
++def pipeline_key(value):
++    return "key:" + normalize_parser_3_token(value)
+--- a/test_parser_3_pipeline.py
++++ b/test_parser_3_pipeline.py
+@@ -0,0 +1,9 @@
++import unittest
++from parser_3_pipeline import pipeline_key
++
++class PipelineTests(unittest.TestCase):
++    def test_key(self):
++        self.assertEqual(pipeline_key(" X "), "key:x")
++
++if __name__ == "__main__":
++    unittest.main()

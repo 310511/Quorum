@@ -1,0 +1,6 @@
+{
+  "pair": "hard_10019_auth_ok19_compatible",
+  "conflict_type": "orthogonal_features",
+  "ground_truth": "no_conflict",
+  "generator": "quorum.hard_benchmark"
+}

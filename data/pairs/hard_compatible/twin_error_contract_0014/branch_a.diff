@@ -1,0 +1,6 @@
+--- a/parser_014.py
++++ b/parser_014.py
+@@ -1,2 +1,3 @@
+ def parse_count_14(raw):
++    """Parse a count, raising ValueError for invalid input."""
+     return int(raw)

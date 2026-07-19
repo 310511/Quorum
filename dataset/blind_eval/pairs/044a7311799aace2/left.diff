@@ -1,0 +1,11 @@
+diff --git a/limits_094.py b/limits_094.py
+index e47ffb0..534bc2e 100644
+--- a/limits_094.py
++++ b/limits_094.py
+@@ -1,2 +1,6 @@
+ def resolve_limit_094(value: int | None) -> int:
+     return 174 if value is None else value
++
++
++def resolve_limit_or_zero_094(value: int | None) -> int:
++    return 0 if value is None else value

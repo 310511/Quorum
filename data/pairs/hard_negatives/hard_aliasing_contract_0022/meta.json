@@ -1,0 +1,19 @@
+{
+  "record_id": "00fa768a-a4e9-4340-896f-4dac4abe3e28",
+  "repository": "C:\\Users\\punya mittal\\data\\examples\\hard_negatives\\aliasing_contract_0022",
+  "merge_base": "b244247292b5569347b7ae66794cb7e5fc73f790",
+  "parents": {
+    "left": {
+      "commit": "281e0053a33eafd38ab92786baf12578d4e76a4f",
+      "intent": "Avoid an unnecessary list copy.",
+      "patch_sha256": "c314e5b397bdb412d3774aae2bf950ce7f3f12edba9391e7e294cb83a7b53c42"
+    },
+    "right": {
+      "commit": "17b7b277a7bd9a8d150b95155fab44598ba3db5b",
+      "intent": "Add a convenience helper that edits its selected working set.",
+      "patch_sha256": "e4bc652a25e7f236f5da17d8a549203a4051f05c26aa315f3dbce8d06e07bc43"
+    }
+  },
+  "kind": "semantic_conflict",
+  "schema_version": 2
+}

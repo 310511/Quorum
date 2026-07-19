@@ -1,0 +1,20 @@
+--- a/parser_tokens.py
++++ b/parser_tokens.py
+@@ -0,0 +1,2 @@
++def normalize_parser_token(value):
++    return str(value).strip().lower()
+--- a/parser_utils.py
++++ b/parser_utils.py
+@@ -1,2 +1 @@
+-def normalize_parser_token(value):
+-    return str(value).strip().lower()
++# Moved to parser_tokens.py
+--- a/test_parser_utils.py
++++ b/test_parser_utils.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from parser_utils import normalize_parser_token
++from parser_tokens import normalize_parser_token
+ 
+ class UtilsTests(unittest.TestCase):
+     def test_normalize(self):

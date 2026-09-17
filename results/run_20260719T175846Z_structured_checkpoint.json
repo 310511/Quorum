@@ -1,0 +1,228 @@
+{
+  "timestamp": "20260719T175846Z",
+  "config_path": "config.yaml",
+  "pairs_dir": "dataset/real_world/examples",
+  "input_mode": "structured",
+  "results": [
+    {
+      "pair": "6f3a97baf3b394db",
+      "input_mode": "structured",
+      "ground_truth": null,
+      "baseline_verdict": "error",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 0.20352962499600835,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "error",
+          "verdict": null,
+          "error": "HTTP error: Client error '404 Not Found' for url 'http://localhost:11434/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+          "elapsed_seconds": 0.20352300000377,
+          "raw_content": null
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 47.02654716699908,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "error",
+            "verdict": null,
+            "error": "HTTP error: Client error '404 Not Found' for url 'http://localhost:11434/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+            "elapsed_seconds": 0.03589250000368338,
+            "raw_content": null
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "error",
+            "verdict": null,
+            "error": "HTTP error: Client error '404 Not Found' for url 'http://localhost:11434/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+            "elapsed_seconds": 0.03006137500051409,
+            "raw_content": null
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'removed_but_referenced' links suggest that a function was removed from branch A but its identifier is still used in branch B. This inconsistency suggests a semantic conflict.",
+              "evidence": [
+                "cross_branch_links: [\"removed_but_referenced\"]",
+                "renamed_stale_reference: []"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 47.00524158400367,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"The presence of cross_branch_links indicates that symbols were removed/renamed on one branch but still referenced/called on the other. Specifically, 'removed_but_referenced' links suggest that a function was removed from branch A but its identifier is still used in branch B. This inconsistency suggests a semantic conflict.\",\n  \"evidence\": [\n    \"cross_branch_links: [\\\"removed_but_referenced\\\"]\",\n    \"renamed_stale_reference: []\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [],
+        "dissenting_models": [
+          "llama3.2:3b"
+        ],
+        "failed_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b"
+        ],
+        "weak_evidence_models": [
+          "llama3.2:3b"
+        ],
+        "shared_evidence": [],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.045,
+            "grounding": 0.0,
+            "api_alignment": 0.0,
+            "completeness": 0.5,
+            "specificity": 0.0,
+            "break_evidence": 0.0,
+            "causal_chain": 0.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [],
+            "hallucinated_identifiers": [
+              "cross_branch_links",
+              "identifier",
+              "inconsistency",
+              "indicates",
+              "its",
+              "presence",
+              "removed_but_referenced",
+              "renamed_stale_reference",
+              "specifically",
+              "suggests",
+              "symbols",
+              "used"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    },
+    {
+      "pair": "e6b080910355fc6b",
+      "input_mode": "structured",
+      "ground_truth": null,
+      "baseline_verdict": "error",
+      "committee_verdict": "no_conflict",
+      "baseline": {
+        "model_name": "deepseek-coder:6.7b",
+        "wall_clock_seconds": 0.23056879099749494,
+        "result": {
+          "model_name": "deepseek-coder:6.7b",
+          "role": "coder",
+          "outcome": "error",
+          "verdict": null,
+          "error": "HTTP error: Client error '404 Not Found' for url 'http://localhost:11434/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+          "elapsed_seconds": 0.2305594580102479,
+          "raw_content": null
+        }
+      },
+      "committee": {
+        "wall_clock_seconds": 21.93674358300632,
+        "model_results": [
+          {
+            "model_name": "gemma3:4b",
+            "role": "general-reasoning",
+            "outcome": "error",
+            "verdict": null,
+            "error": "HTTP error: Client error '404 Not Found' for url 'http://localhost:11434/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+            "elapsed_seconds": 0.037900417009950615,
+            "raw_content": null
+          },
+          {
+            "model_name": "deepseek-coder:6.7b",
+            "role": "coder",
+            "outcome": "error",
+            "verdict": null,
+            "error": "HTTP error: Client error '404 Not Found' for url 'http://localhost:11434/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+            "elapsed_seconds": 0.029787791005219333,
+            "raw_content": null
+          },
+          {
+            "model_name": "llama3.2:3b",
+            "role": "general-reasoning",
+            "outcome": "ok",
+            "verdict": {
+              "verdict": "conflict",
+              "original_verdict": "conflict",
+              "confidence": 0.8,
+              "reasoning": "Semantic conflict due to cross-branch links: 'removed_but_referenced' (e.g., 'RequestsJSONDecodeError' is removed on Branch A but still referenced/called on Branch B), and renames with similar body hashes but different function names (e.g., 'json' -> 'new_json')",
+              "evidence": [
+                "cross_branch_links:removed_but_referenced",
+                "renames:similar_body_hash_different_function_name"
+              ]
+            },
+            "error": null,
+            "elapsed_seconds": 21.922578124998836,
+            "raw_content": "{\n  \"verdict\": \"conflict\",\n  \"confidence\": 0.8,\n  \"reasoning\": \"Semantic conflict due to cross-branch links: 'removed_but_referenced' (e.g., 'RequestsJSONDecodeError' is removed on Branch A but still referenced/called on Branch B), and renames with similar body hashes but different function names (e.g., 'json' -> 'new_json')\",\n  \"evidence\": [\n    \"cross_branch_links:removed_but_referenced\",\n    \"renames:similar_body_hash_different_function_name\"\n  ]\n}"
+          }
+        ]
+      },
+      "adjudication": {
+        "final_verdict": "no_conflict",
+        "explanation": "Conflict rejected: no rationale demonstrated a grounded cross-branch behavior break with a causal chain. Static risk symbols: [].",
+        "agreeing_models": [],
+        "dissenting_models": [
+          "llama3.2:3b"
+        ],
+        "failed_models": [
+          "gemma3:4b",
+          "deepseek-coder:6.7b"
+        ],
+        "weak_evidence_models": [],
+        "shared_evidence": [
+          "requestsjsondecodeerror"
+        ],
+        "evidence_overlap_score": 0.0,
+        "decision_rule": "conflict_evidence_gate",
+        "rationale_scores": [
+          {
+            "model": "llama3.2:3b",
+            "verdict": "conflict",
+            "confidence": 0.8,
+            "total": 0.0833,
+            "grounding": 0.1,
+            "api_alignment": 0.0,
+            "completeness": 0.5,
+            "specificity": 0.25,
+            "break_evidence": 0.0,
+            "causal_chain": 1.0,
+            "speculation_penalty": 0.0,
+            "grounded_identifiers": [
+              "requestsjsondecodeerror"
+            ],
+            "hallucinated_identifiers": [
+              "body",
+              "cross",
+              "cross_branch_links",
+              "due",
+              "hashes",
+              "links",
+              "new_json",
+              "removed_but_referenced",
+              "similar_body_hash_different_function_name"
+            ]
+          }
+        ],
+        "model_summaries": []
+      }
+    }
+  ],
+  "partial": true
+}

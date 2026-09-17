@@ -1,0 +1,3 @@
+id,repository,category,estimated_label,confidence,files,symbols,reason
+6f3a97baf3b394db,requests,Return value,uncertain,0.350,src/requests/models.py,,Insufficient heuristic evidence for automatic estimate
+e6b080910355fc6b,requests,Caching,uncertain,0.350,src/requests/models.py,,Insufficient heuristic evidence for automatic estimate

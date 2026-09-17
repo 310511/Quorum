@@ -1,0 +1,43 @@
+{
+  "id": "e6b080910355fc6b",
+  "repository": "requests",
+  "repository_url": "https://github.com/psf/requests",
+  "merge_commit": "b25f2b5ec2a113d4b3a1e6311f617a015f4155f3",
+  "merge_base": "23540c93cac97c763fe59e843a08fa2825aa80fd",
+  "parent_a": "b653d80ded3680dc3780557ded01e23074f7e6a4",
+  "parent_b": "f761e74a4d50d2e88d9e30e660494b36c9d630f8",
+  "files_modified": [
+    "docs/api.rst",
+    "github/workflows/codeql-analysis.yml",
+    "github/workflows/lint.yml",
+    "github/workflows/run-tests.yml",
+    "src/requests/models.py"
+  ],
+  "executable_python_files": [
+    "src/requests/models.py"
+  ],
+  "affected_symbols": [],
+  "semantic_category": "Caching",
+  "intersection": {
+    "intersects": true,
+    "shared_files": [],
+    "shared_symbols": [],
+    "caller_callee_links": [],
+    "shared_classes": [
+      "PreparedRequest",
+      "Request",
+      "RequestEncodingMixin",
+      "RequestHooksMixin",
+      "Response"
+    ],
+    "reasons": [
+      "shared_class_or_method"
+    ]
+  },
+  "heuristic": {
+    "estimated_label": "uncertain",
+    "confidence": 0.35,
+    "reason": "Insufficient heuristic evidence for automatic estimate",
+    "indicators": []
+  }
+}

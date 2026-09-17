@@ -1,0 +1,13 @@
+{
+  "language": "python",
+  "semantic_category": "Caching",
+  "repository": "requests",
+  "merge_commit": "b25f2b5ec2a113d4b3a1e6311f617a015f4155f3",
+  "merge_base": "23540c93cac97c763fe59e843a08fa2825aa80fd",
+  "parent_a": "b653d80ded3680dc3780557ded01e23074f7e6a4",
+  "parent_b": "f761e74a4d50d2e88d9e30e660494b36c9d630f8",
+  "notes": "Insufficient heuristic evidence for automatic estimate",
+  "ground_truth": null,
+  "review_status": "pending",
+  "heuristic_estimate": "uncertain"
+}

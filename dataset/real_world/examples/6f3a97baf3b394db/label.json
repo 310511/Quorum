@@ -1,0 +1,13 @@
+{
+  "language": "python",
+  "semantic_category": "Return value",
+  "repository": "requests",
+  "merge_commit": "1b7c37ef4e3db003cc52f09da9ab6b947054e245",
+  "merge_base": "f761e74a4d50d2e88d9e30e660494b36c9d630f8",
+  "parent_a": "f761e74a4d50d2e88d9e30e660494b36c9d630f8",
+  "parent_b": "5d31ddbf7b3f512dd3c61952d2c16e980a2b7dc1",
+  "notes": "Insufficient heuristic evidence for automatic estimate",
+  "ground_truth": null,
+  "review_status": "pending",
+  "heuristic_estimate": "uncertain"
+}

@@ -1,2 +1,3 @@
 [console_scripts]
 quorum = quorum.cli:main
+real-world-pipeline = real_world.cli:main

@@ -1,0 +1,11 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Cloned upstream repositories (recreated by the miner)
+dataset/repos/
+
+# Intermediate JSONL with embedded symbol graphs (~13GB)
+dataset/real_world/candidates.jsonl

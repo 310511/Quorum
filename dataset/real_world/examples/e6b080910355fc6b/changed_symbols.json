@@ -1,0 +1,21 @@
+{
+  "affected_symbols": [],
+  "left_changed_symbols": [],
+  "right_changed_symbols": [],
+  "intersection": {
+    "intersects": true,
+    "shared_files": [],
+    "shared_symbols": [],
+    "caller_callee_links": [],
+    "shared_classes": [
+      "PreparedRequest",
+      "Request",
+      "RequestEncodingMixin",
+      "RequestHooksMixin",
+      "Response"
+    ],
+    "reasons": [
+      "shared_class_or_method"
+    ]
+  }
+}

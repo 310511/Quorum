@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quorum — Semantic Conflict Detector</title>
+<style>
+/* ── tokens ──────────────────────────────────────────────────────── */
+:root {
+  --bg:       #0d1117;
+  --surf:     #161b22;
+  --surf2:    #1c2128;
+  --border:   #30363d;
+  --muted:    #8b949e;
+  --text:     #e6edf3;
+  --accent:   #58a6ff;
+  --green:    #3fb950;
+  --red:      #f85149;
+  --yellow:   #d29922;
+  --purple:   #bc8cff;
+  --orange:   #ffa657;
+  --mono:     'JetBrains Mono','Fira Code','Courier New',monospace;
+  --sans:     -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --r:        8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6;min-height:100vh}
+
+/* ── layout ──────────────────────────────────────────────────────── */
+.shell{display:grid;grid-template-columns:300px 1fr;min-height:100vh}
+@media(max-width:860px){.shell{grid-template-columns:1fr}}
+
+/* ── sidebar ─────────────────────────────────────────────────────── */
+.sidebar{
+  background:var(--surf);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.sidebar-header{
+  padding:20px 20px 14px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.logo-mark{font-size:22px}
+.logo-text{font-size:16px;font-weight:700}
+.logo-text span{color:var(--accent)}
+.sidebar-section{padding:16px 20px;border-bottom:1px solid var(--border)}
+.sidebar-section label{
+  display:block;font-size:11px;font-weight:700;
+  letter-spacing:.7px;text-transform:uppercase;color:var(--muted);
+  margin-bottom:8px;
+}
+.model-list{display:flex;flex-direction:column;gap:6px}
+.model-pill{
+  display:flex;align-items:center;gap:8px;
+  background:var(--surf2);border:1px solid var(--border);
+  border-radius:6px;padding:7px 10px;
+  font-size:12px;
+}
+.model-pill .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-coder{background:var(--accent)}
+.dot-general{background:var(--purple)}
+.dot-base{background:var(--orange)}
+.model-pill .name{font-weight:600;color:var(--text)}
+.model-pill .role{color:var(--muted);margin-left:auto;font-size:11px}
+.sidebar-footer{padding:16px 20px;margin-top:auto;color:var(--muted);font-size:11px}
+.sidebar-footer a{color:var(--accent);text-decoration:none}
+
+/* ── main ────────────────────────────────────────────────────────── */
+.main{display:flex;flex-direction:column;min-height:100vh}
+
+/* ── topbar ──────────────────────────────────────────────────────── */
+.topbar{
+  padding:14px 28px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;
+  background:rgba(13,17,23,.85);
+  backdrop-filter:blur(10px);
+  position:sticky;top:0;z-index:50;
+  flex-wrap:wrap;
+}
+.topbar h1{font-size:15px;font-weight:600}
+.topbar .subtitle{color:var(--muted);font-size:13px;margin-left:4px}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+#statusBadge{
+  display:none;align-items:center;gap:6px;
+  background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);
+  color:var(--accent);border-radius:6px;padding:4px 10px;
+  font-size:12px;font-weight:600;
+}
+#statusBadge.visible{display:flex}
+
+/* ── content ─────────────────────────────────────────────────────── */
+.content{flex:1;padding:28px;display:flex;flex-direction:column;gap:24px}
+
+/* ── input panel ─────────────────────────────────────────────────── */
+.input-panel{display:flex;flex-direction:column;gap:16px}
+.diff-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:680px){.diff-row{grid-template-columns:1fr}}
+
+.field-group{display:flex;flex-direction:column;gap:6px}
+.field-label{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);
+}
+.branch-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;
+}
+.tag-a{background:rgba(88,166,255,.12);color:var(--accent);border:1px solid rgba(88,166,255,.25)}
+.tag-b{background:rgba(255,166,87,.12);color:var(--orange);border:1px solid rgba(255,166,87,.25)}
+
+textarea{
+  width:100%;background:var(--surf2);
+  border:1px solid var(--border);border-radius:var(--r);
+  color:var(--text);font-family:var(--mono);font-size:12px;
+  line-height:1.7;padding:12px 14px;resize:vertical;
+  outline:none;transition:border-color .2s;
+}
+textarea:focus{border-color:var(--accent)}
+textarea::placeholder{color:var(--muted);opacity:.6}
+
+.options-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.field-inline{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.field-inline label{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+select{
+  background:var(--surf2);border:1px solid var(--border);border-radius:6px;
+  color:var(--text);font-size:12px;padding:5px 10px;outline:none;cursor:pointer;
+}
+select:focus{border-color:var(--accent)}
+
+input[type=text]{
+  background:var(--surf2);border:1px solid var(--border);border-radius:6px;
+  color:var(--text);font-size:12px;padding:5px 10px;outline:none;width:180px;
+}
+input[type=text]:focus{border-color:var(--accent)}
+
+.run-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 22px;background:var(--accent);color:#0d1117;
+  border:none;border-radius:var(--r);font-size:13px;font-weight:700;
+  cursor:pointer;transition:background .2s;flex-shrink:0;
+}
+.run-btn:hover{background:#79b8ff}
+.run-btn:disabled{opacity:.45;cursor:not-allowed}
+.run-btn .spinner{
+  width:13px;height:13px;border:2px solid rgba(0,0,0,.25);
+  border-top-color:#0d1117;border-radius:50%;
+  animation:spin .55s linear infinite;display:none;
+}
+.run-btn.running .spinner{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.clear-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 16px;background:transparent;
+  color:var(--muted);border:1px solid var(--border);
+  border-radius:var(--r);font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .2s;
+}
+.clear-btn:hover{border-color:var(--muted);color:var(--text)}
+
+/* ── divider ─────────────────────────────────────────────────────── */
+.divider{
+  border:none;border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;
+  font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;
+  color:var(--muted);
+}
+.divider::before,.divider::after{content:'';flex:1;border-top:1px solid var(--border)}
+
+/* ── results ─────────────────────────────────────────────────────── */
+#results{display:none}
+#results.visible{display:block}
+
+/* log strip */
+.log-strip{
+  background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);
+  padding:10px 14px;font-family:var(--mono);font-size:11.5px;
+  line-height:1.9;max-height:120px;overflow-y:auto;
+}
+.log-info{color:var(--muted)}
+.log-ok{color:var(--green)}
+.log-warn{color:var(--yellow)}
+.log-err{color:var(--red)}
+
+/* model grid */
+.results-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:14px;
+  margin-top:16px;
+}
+
+/* model card */
+.model-card{
+  background:var(--surf2);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+  transition:border-color .3s;
+}
+.model-card.conflict{border-color:rgba(248,81,73,.45)}
+.model-card.no_conflict{border-color:rgba(63,185,80,.45)}
+.model-card.escalate,
+.model-card.error{border-color:rgba(210,153,34,.45)}
+
+.card-stripe{height:3px;background:var(--border)}
+.model-card.conflict   .card-stripe{background:var(--red)}
+.model-card.no_conflict .card-stripe{background:var(--green)}
+.model-card.escalate   .card-stripe{background:var(--yellow)}
+.model-card.error      .card-stripe{background:var(--muted)}
+
+.card-body{padding:14px 16px}
+.card-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.card-model-name{font-size:12px;font-weight:700;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-role{font-size:10px;color:var(--muted);background:rgba(255,255,255,.06);border-radius:4px;padding:2px 6px;flex-shrink:0}
+.card-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  border-radius:5px;padding:3px 9px;font-size:12px;font-weight:700;
+  margin-bottom:10px;
+}
+.badge-conflict{background:rgba(248,81,73,.12);color:var(--red);border:1px solid rgba(248,81,73,.3)}
+.badge-no_conflict{background:rgba(63,185,80,.1);color:var(--green);border:1px solid rgba(63,185,80,.25)}
+.badge-escalate{background:rgba(210,153,34,.1);color:var(--yellow);border:1px solid rgba(210,153,34,.25)}
+.badge-error{background:rgba(139,148,158,.1);color:var(--muted);border:1px solid rgba(139,148,158,.2)}
+.badge-pending{background:rgba(88,166,255,.08);color:var(--accent);border:1px solid rgba(88,166,255,.2)}
+
+.conf-row{font-size:11px;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.conf-bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.conf-fill{height:100%;border-radius:2px;transition:width .7s ease}
+.conflict .conf-fill{background:var(--red)}
+.no_conflict .conf-fill{background:var(--green)}
+.escalate .conf-fill,.error .conf-fill{background:var(--muted)}
+
+.card-reasoning{
+  font-size:12px;color:var(--muted);
+  max-height:100px;overflow-y:auto;
+  line-height:1.55;
+}
+.card-evidence{margin-top:8px}
+.ev-label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.ev-chips{display:flex;flex-wrap:wrap;gap:5px}
+.ev-chip{
+  background:rgba(88,166,255,.08);border:1px solid rgba(88,166,255,.2);
+  color:var(--accent);border-radius:4px;padding:1px 7px;
+  font-family:var(--mono);font-size:10.5px;
+}
+.card-time{font-size:10px;color:var(--muted);margin-top:8px;text-align:right}
+
+/* baseline card (full width) */
+.baseline-row{margin-top:16px}
+.baseline-card{
+  background:var(--surf2);border:1px solid var(--border);
+  border-radius:var(--r);padding:16px 20px;
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:start;
+}
+.baseline-card .bl-label{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.baseline-card .bl-model{font-size:13px;font-weight:600;color:var(--text)}
+.baseline-card .bl-reasoning{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.55}
+
+/* adjudication block */
+.adj-block{
+  margin-top:16px;
+  border-radius:var(--r);
+  border:2px solid var(--border);
+  background:var(--surf2);
+  overflow:hidden;
+  transition:border-color .3s;
+}
+.adj-block.conflict{border-color:rgba(248,81,73,.5)}
+.adj-block.no_conflict{border-color:rgba(63,185,80,.5)}
+.adj-block.escalate{border-color:rgba(210,153,34,.5)}
+
+.adj-header{
+  padding:16px 20px;display:flex;align-items:center;gap:14px;
+  border-bottom:1px solid var(--border);
+}
+.adj-icon{font-size:24px}
+.adj-title{font-size:20px;font-weight:800}
+.adj-title.conflict{color:var(--red)}
+.adj-title.no_conflict{color:var(--green)}
+.adj-title.escalate{color:var(--yellow)}
+.adj-models{margin-left:auto;font-size:12px;color:var(--muted)}
+
+.adj-body{padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.adj-explanation{font-size:13px;color:var(--muted);line-height:1.6}
+.adj-explanation strong{color:var(--text)}
+
+.adj-row{display:flex;align-items:flex-start;gap:10px;font-size:12px}
+.adj-row-label{color:var(--muted);font-weight:600;min-width:120px;flex-shrink:0;text-transform:uppercase;letter-spacing:.5px;font-size:11px;padding-top:2px}
+.adj-row-val{color:var(--text);flex:1}
+.shared-chips{display:flex;flex-wrap:wrap;gap:5px}
+.shared-chip{
+  background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);
+  color:var(--accent);border-radius:4px;padding:2px 8px;
+  font-family:var(--mono);font-size:11px;
+}
+
+.rule-chip{
+  display:inline-block;
+  background:rgba(188,140,255,.1);border:1px solid rgba(188,140,255,.25);
+  color:var(--purple);border-radius:4px;padding:2px 8px;font-family:var(--mono);font-size:11px;
+}
+
+/* score table */
+.score-table{width:100%;border-collapse:collapse;font-size:12px}
+.score-table th{
+  text-align:left;padding:6px 10px;color:var(--muted);font-weight:600;
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;
+  border-bottom:1px solid var(--border);
+}
+.score-table td{padding:6px 10px;border-bottom:1px solid rgba(48,54,61,.5)}
+.score-table tr:last-child td{border-bottom:none}
+.score-conflict{color:var(--red);font-weight:700}
+.score-no_conflict{color:var(--green);font-weight:700}
+
+/* comparison strip */
+.compare-strip{
+  margin-top:16px;
+  background:var(--surf2);border:1px solid var(--border);border-radius:var(--r);
+  padding:14px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.compare-item{display:flex;flex-direction:column;gap:3px}
+.compare-item .ci-label{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+.compare-item .ci-val{font-size:15px;font-weight:800}
+.ci-conflict{color:var(--red)}
+.ci-no_conflict{color:var(--green)}
+.ci-escalate{color:var(--yellow)}
+.ci-error{color:var(--muted)}
+.compare-sep{width:1px;height:40px;background:var(--border);flex-shrink:0}
+
+/* loading skeleton pulse */
+.skeleton{
+  background:linear-gradient(90deg,var(--surf2) 25%,rgba(48,54,61,.5) 50%,var(--surf2) 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.4s infinite;
+  border-radius:4px;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* misc */
+code{font-family:var(--mono);font-size:.88em;background:rgba(255,255,255,.07);border-radius:3px;padding:1px 5px}
+.pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.65)}}
+.error-block{
+  background:rgba(248,81,73,.07);border:1px solid rgba(248,81,73,.3);
+  border-radius:var(--r);padding:14px 16px;
+  font-family:var(--mono);font-size:12px;color:var(--red);white-space:pre-wrap;
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="logo-mark">⚖️</span>
+    <div class="logo-text"><span>Quorum</span></div>
+  </div>
+
+  <div class="sidebar-section">
+    <label>Active Models</label>
+    <div class="model-list" id="modelList">
+      <div class="model-pill" style="opacity:.4">
+        <span class="dot dot-base"></span>
+        <span class="name" style="font-size:11px">Loading config…</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <label>How it works</label>
+    <div style="font-size:12px;color:var(--muted);line-height:1.65">
+      Paste raw <code>git diff</code> output for each branch. Quorum sends
+      both diffs to a committee of structurally different LLMs, scores each
+      model's <em>reasoning trace</em> against the actual identifiers in your
+      diffs, then adjudicates on overlapping evidence — not a head count.
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <label>Verdict legend</label>
+    <div style="display:flex;flex-direction:column;gap:7px;font-size:12px">
+      <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--red);font-weight:700">● conflict</span><span style="color:var(--muted)">merged result will be logically broken</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--green);font-weight:700">● no_conflict</span><span style="color:var(--muted)">safe to merge</span></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--yellow);font-weight:700">● escalate</span><span style="color:var(--muted)">ambiguous — needs human review</span></div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    BCSE301L · VIT · <a href="https://arxiv.org/abs/2601.13295" target="_blank">CooperBench</a>
+  </div>
+</aside>
+
+<!-- ══ MAIN ══════════════════════════════════════════════════════════ -->
+<div class="main">
+  <div class="topbar">
+    <div>
+      <span style="font-weight:700;font-size:15px">Semantic Conflict Detector</span>
+      <span class="subtitle">— paste your diffs, run the committee</span>
+    </div>
+    <div class="topbar-right">
+      <div id="statusBadge">
+        <span class="pulse"></span>
+        <span id="statusText">Analyzing…</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── INPUT PANEL ──────────────────────────────────────────────── -->
+    <div class="input-panel">
+
+      <!-- pair name + mode -->
+      <div class="options-row">
+        <div class="field-inline">
+          <label>Pair Name</label>
+          <input type="text" id="pairName" placeholder="e.g. my_feature" value="demo" />
+        </div>
+        <div class="field-inline">
+          <label>Input mode</label>
+          <select id="inputMode">
+            <option value="raw">raw diff</option>
+          </select>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button class="clear-btn" onclick="clearAll()">✕ Clear</button>
+          <button class="run-btn" id="runBtn" onclick="runAnalysis()">
+            <span class="spinner"></span>
+            <span>▶ Run Quorum</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- diffs -->
+      <div class="diff-row">
+        <div class="field-group">
+          <div class="field-label">
+            <span class="branch-tag tag-a">branch-a</span>
+            diff (paste <code>git diff</code> output)
+          </div>
+          <textarea id="diffA" rows="14"
+            placeholder="diff --git a/utils.py b/utils.py
+--- a/utils.py
++++ b/utils.py
+@@ -1,5 +1,5 @@
+-def calculate_total(items):
++def compute_total(items):
+     return sum(item[&quot;price&quot;] for item in items)"></textarea>
+        </div>
+        <div class="field-group">
+          <div class="field-label">
+            <span class="branch-tag tag-b">branch-b</span>
+            diff (paste <code>git diff</code> output)
+          </div>
+          <textarea id="diffB" rows="14"
+            placeholder="diff --git a/checkout.py b/checkout.py
+--- /dev/null
++++ b/checkout.py
+@@ -0,0 +1,6 @@
++from utils import calculate_total
++
++def finalize_order(cart):
++    subtotal = calculate_total(cart)
++    return subtotal * 1.08"></textarea>
+        </div>
+      </div>
+
+      <!-- context -->
+      <div class="field-group">
+        <div class="field-label">merge-base context <span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0">(optional — describe shared code both branches depend on)</span></div>
+        <textarea id="contextText" rows="3"
+          placeholder="e.g. utils.py contains shared helpers used by checkout, reporting, and analytics modules."></textarea>
+      </div>
+
+    </div><!-- /input-panel -->
+
+    <!-- ── RESULTS ──────────────────────────────────────────────────── -->
+    <div id="results">
+      <div style="margin-bottom:12px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted)">Results</span>
+        <span id="pairNameDisplay" style="font-size:12px;color:var(--accent);font-family:var(--mono)"></span>
+      </div>
+
+      <!-- log -->
+      <div class="log-strip" id="logStrip"></div>
+
+      <!-- committee cards -->
+      <div style="margin-top:16px;font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Committee</div>
+      <div class="results-grid" id="committeeGrid"></div>
+
+      <!-- baseline -->
+      <div class="baseline-row" id="baselineRow" style="display:none">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Baseline (single model)</div>
+        <div class="baseline-card" id="baselineCard"></div>
+      </div>
+
+      <!-- adjudication -->
+      <div id="adjBlock" style="display:none"></div>
+
+      <!-- comparison -->
+      <div class="compare-strip" id="compareStrip" style="display:none"></div>
+
+    </div><!-- /results -->
+
+  </div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+// ── state ──────────────────────────────────────────────────────────
+let running = false;
+let configData = null;
+
+// When opened as file://, point at the Flask server explicitly.
+const API_BASE = (location.protocol === 'file:')
+  ? 'http://localhost:5173'
+  : '';
+
+// ── boot: load config ──────────────────────────────────────────────
+async function loadConfig() {
+  try {
+    const r = await fetch(API_BASE + '/api/config');
+    configData = await r.json();
+    renderSidebar(configData);
+  } catch {
+    document.getElementById('modelList').innerHTML =
+      `<div style="font-size:12px;color:var(--red)">⚠ Could not reach server.<br>Make sure <code>bash ui/run.sh</code> is running at <a href="http://localhost:5173" style="color:var(--accent)">localhost:5173</a>.<br><br>Or open via the server:<br><code>http://localhost:5173</code></div>`;
+  }
+}
+
+function roleDot(role) {
+  if (role.includes('coder')) return 'dot-coder';
+  if (role.includes('base'))  return 'dot-base';
+  return 'dot-general';
+}
+
+function renderSidebar(cfg) {
+  const list = document.getElementById('modelList');
+  list.innerHTML = '';
+  (cfg.models || []).forEach(m => {
+    const div = document.createElement('div');
+    div.className = 'model-pill';
+    div.innerHTML = `
+      <span class="dot ${roleDot(m.role)}"></span>
+      <span class="name">${esc(m.name)}</span>
+      <span class="role">${esc(m.role)}</span>`;
+    list.appendChild(div);
+  });
+  // add baseline label
+  if (cfg.baseline_model) {
+    const note = document.createElement('div');
+    note.style.cssText = 'font-size:11px;color:var(--muted);margin-top:6px';
+    note.textContent = `baseline: ${cfg.baseline_model}`;
+    list.appendChild(note);
+  }
+}
+
+// ── helpers ────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+function verdictIcon(v) {
+  if (v === 'conflict')    return '🚨';
+  if (v === 'no_conflict') return '✅';
+  if (v === 'escalate')    return '⚠️';
+  return '—';
+}
+
+function addLog(msg, cls='log-info') {
+  const strip = document.getElementById('logStrip');
+  const span = document.createElement('span');
+  span.className = cls;
+  span.textContent = '› ' + msg;
+  strip.appendChild(document.createTextNode('\n'));
+  strip.appendChild(span);
+  strip.scrollTop = strip.scrollHeight;
+}
+
+function setStatus(msg, visible=true) {
+  const badge = document.getElementById('statusBadge');
+  document.getElementById('statusText').textContent = msg;
+  badge.classList.toggle('visible', visible);
+}
+
+// ── clear ──────────────────────────────────────────────────────────
+function clearAll() {
+  document.getElementById('diffA').value = '';
+  document.getElementById('diffB').value = '';
+  document.getElementById('contextText').value = '';
+  document.getElementById('pairName').value = 'demo';
+  document.getElementById('results').classList.remove('visible');
+  document.getElementById('results').style.display = 'none';
+}
+
+// ── run ────────────────────────────────────────────────────────────
+async function runAnalysis() {
+  if (running) return;
+
+  const diffA = document.getElementById('diffA').value.trim();
+  const diffB = document.getElementById('diffB').value.trim();
+  if (!diffA || !diffB) {
+    alert('Please paste both branch-a and branch-b diffs before running.');
+    return;
+  }
+
+  running = true;
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  btn.classList.add('running');
+
+  // reset UI
+  const results = document.getElementById('results');
+  results.style.display = 'block';
+  results.classList.add('visible');
+  document.getElementById('logStrip').innerHTML = '';
+  document.getElementById('committeeGrid').innerHTML = '';
+  document.getElementById('baselineRow').style.display = 'none';
+  document.getElementById('adjBlock').innerHTML = '';
+  document.getElementById('adjBlock').style.display = 'none';
+  document.getElementById('compareStrip').style.display = 'none';
+
+  const pairName = document.getElementById('pairName').value.trim() || 'demo';
+  document.getElementById('pairNameDisplay').textContent = pairName;
+  setStatus('Connecting…');
+
+  const body = {
+    branch_a_diff: diffA,
+    branch_b_diff: diffB,
+    context: document.getElementById('contextText').value.trim(),
+    input_mode: document.getElementById('inputMode').value,
+    pair_name: pairName,
+  };
+
+  // model placeholder cards (from config)
+  const models = configData?.models ?? [];
+  const cardMap = {}; // model_name → card element
+  models.forEach(m => {
+    const card = makeModelCard(m.name, m.role, null);
+    document.getElementById('committeeGrid').appendChild(card);
+    cardMap[m.name] = card;
+  });
+
+  let baselineVerdict = null;
+  let committeeVerdict = null;
+
+  try {
+    const resp = await fetch(API_BASE + '/api/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({error: resp.statusText}));
+      throw new Error(err.error || resp.statusText);
+    }
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const parts = buffer.split('\n\n');
+      buffer = parts.pop(); // keep incomplete chunk
+      for (const part of parts) {
+        if (!part.trim()) continue;
+        const eventMatch = part.match(/^event:\s*(.+)/m);
+        const dataMatch  = part.match(/^data:\s*(.+)/ms);
+        if (!eventMatch || !dataMatch) continue;
+        const event = eventMatch[1].trim();
+        const data  = JSON.parse(dataMatch[1].trim());
+        handleEvent(event, data, cardMap, (v) => { baselineVerdict = v; }, (v) => { committeeVerdict = v; });
+      }
+    }
+
+  } catch (err) {
+    addLog('Error: ' + err.message, 'log-err');
+    document.getElementById('adjBlock').innerHTML =
+      `<div class="error-block">${esc(err.message)}</div>`;
+    document.getElementById('adjBlock').style.display = 'block';
+  } finally {
+    running = false;
+    btn.disabled = false;
+    btn.classList.remove('running');
+    setStatus('', false);
+  }
+}
+
+// ── SSE event handler ──────────────────────────────────────────────
+function handleEvent(event, data, cardMap, setBaseline, setCommittee) {
+  switch (event) {
+    case 'meta':
+      addLog(`Pair: ${data.pair_name} · mode: ${data.input_mode}${data.degraded_to_raw ? ' (degraded → raw)' : ''}`, 'log-info');
+      if (data.degraded_to_raw) addLog('Structured mode requires source files — using raw diff.', 'log-warn');
+      // fill in any cards not pre-created
+      (data.models || []).forEach(m => {
+        if (!cardMap[m.name]) {
+          const card = makeModelCard(m.name, m.role, null);
+          document.getElementById('committeeGrid').appendChild(card);
+          cardMap[m.name] = card;
+        }
+      });
+      break;
+
+    case 'status':
+      setStatus(data.message);
+      addLog(data.message, 'log-info');
+      break;
+
+    case 'baseline':
+      renderBaseline(data);
+      setBaseline(data.verdict);
+      break;
+
+    case 'model_result':
+      updateModelCard(cardMap, data);
+      break;
+
+    case 'adjudication':
+      renderAdjudication(data);
+      setCommittee(data.final_verdict);
+      renderCompare(data.baseline_verdict, data.final_verdict);
+      break;
+
+    case 'done':
+      addLog('Analysis complete.', 'log-ok');
+      setStatus('', false);
+      break;
+
+    case 'error':
+      addLog('Server error — see details below.', 'log-err');
+      document.getElementById('adjBlock').innerHTML =
+        `<div class="error-block">${esc(data.message)}</div>`;
+      document.getElementById('adjBlock').style.display = 'block';
+      break;
+  }
+}
+
+// ── make placeholder card ──────────────────────────────────────────
+function makeModelCard(name, role, verdict) {
+  const card = document.createElement('div');
+  card.className = 'model-card';
+  card.id = 'card-' + name.replace(/[^a-zA-Z0-9]/g, '-');
+  card.innerHTML = `
+    <div class="card-stripe"></div>
+    <div class="card-body">
+      <div class="card-header">
+        <span class="card-model-name">${esc(name)}</span>
+        <span class="card-role">${esc(role)}</span>
+      </div>
+      <div class="card-badge badge-pending skeleton" style="height:22px;width:80px"></div>
+      <div class="conf-row" style="margin-top:8px">
+        <span style="min-width:32px;font-size:10px">—</span>
+        <div class="conf-bar"><div class="conf-fill" style="width:0%"></div></div>
+      </div>
+      <div class="card-reasoning" style="margin-top:8px">
+        <div class="skeleton" style="height:12px;width:90%;margin-bottom:5px"></div>
+        <div class="skeleton" style="height:12px;width:70%"></div>
+      </div>
+    </div>`;
+  return card;
+}
+
+// ── update model card with real result ─────────────────────────────
+function updateModelCard(cardMap, data) {
+  const card = cardMap[data.model_name];
+  if (!card) return;
+
+  const v = data.verdict || (data.outcome !== 'ok' ? 'error' : 'escalate');
+  card.className = `model-card ${v}`;
+
+  const conf = data.confidence != null ? Math.round(data.confidence * 100) : null;
+  const badgeCls = `card-badge badge-${v}`;
+  const badgeText = v === 'no_conflict' ? '✅ no conflict' :
+                    v === 'conflict'    ? '🚨 conflict'    :
+                    v === 'escalate'    ? '⚠️ escalate'   : '— error';
+
+  const evHtml = (data.evidence || []).length > 0
+    ? `<div class="card-evidence">
+         <div class="ev-label">Evidence</div>
+         <div class="ev-chips">${(data.evidence || []).map(e => `<span class="ev-chip">${esc(e)}</span>`).join('')}</div>
+       </div>`
+    : '';
+
+  const errHtml = data.error
+    ? `<div style="font-size:11px;color:var(--red);margin-top:6px">${esc(data.error)}</div>`
+    : '';
+
+  card.querySelector('.card-body').innerHTML = `
+    <div class="card-header">
+      <span class="card-model-name">${esc(data.model_name)}</span>
+      <span class="card-role">${esc(data.role || '')}</span>
+    </div>
+    <div class="${badgeCls}">${badgeText}</div>
+    <div class="conf-row">
+      <span style="min-width:32px;font-size:10px">${conf != null ? conf + '%' : '—'}</span>
+      <div class="conf-bar"><div class="conf-fill" style="width:0%" data-target="${conf ?? 0}%"></div></div>
+    </div>
+    <div class="card-reasoning">${esc(data.reasoning || data.error || 'No response.')}</div>
+    ${evHtml}
+    ${errHtml}
+    <div class="card-time">${data.elapsed_seconds != null ? data.elapsed_seconds + 's' : ''}</div>`;
+
+  // animate conf bar
+  requestAnimationFrame(() => {
+    const fill = card.querySelector('.conf-fill');
+    if (fill) fill.style.width = fill.dataset.target || '0%';
+  });
+}
+
+// ── baseline ───────────────────────────────────────────────────────
+function renderBaseline(data) {
+  const row = document.getElementById('baselineRow');
+  const card = document.getElementById('baselineCard');
+  row.style.display = 'block';
+
+  const v = data.verdict || 'error';
+  const badgeCls = `card-badge badge-${v}`;
+  const badgeText = v === 'no_conflict' ? '✅ no conflict' :
+                    v === 'conflict'    ? '🚨 conflict'    :
+                    v === 'escalate'    ? '⚠️ escalate'   : '— error';
+
+  const evHtml = (data.evidence || []).length > 0
+    ? `<div style="margin-top:8px"><div class="ev-label">Evidence</div><div class="ev-chips" style="margin-top:4px">${(data.evidence || []).map(e => `<span class="ev-chip">${esc(e)}</span>`).join('')}</div></div>`
+    : '';
+
+  card.innerHTML = `
+    <div>
+      <div class="bl-label">Baseline</div>
+      <div class="bl-model">${esc(data.model_name)}</div>
+      <div style="margin-top:6px"><div class="${badgeCls}">${badgeText}</div></div>
+    </div>
+    <div>
+      <div class="bl-reasoning">${esc(data.reasoning || data.error || '—')}</div>
+      ${evHtml}
+    </div>
+    <div style="font-size:11px;color:var(--muted);text-align:right;white-space:nowrap">
+      ${data.wall_clock_seconds != null ? data.wall_clock_seconds + 's' : ''}
+    </div>`;
+}
+
+// ── adjudication ───────────────────────────────────────────────────
+function renderAdjudication(data) {
+  const block = document.getElementById('adjBlock');
+  block.style.display = 'block';
+
+  const v = data.final_verdict;
+  const icon = verdictIcon(v);
+  const titleText = v === 'no_conflict' ? 'NO CONFLICT' : v.toUpperCase();
+
+  const sharedChips = (data.shared_evidence || []).length > 0
+    ? `<div class="adj-row">
+        <span class="adj-row-label">Shared evidence</span>
+        <div class="adj-row-val"><div class="shared-chips">${(data.shared_evidence || []).map(e => `<span class="shared-chip">${esc(e)}</span>`).join('')}</div></div>
+      </div>` : '';
+
+  const agreeingHtml = data.agreeing_models?.length
+    ? `<div class="adj-row"><span class="adj-row-label">Agreeing</span><span class="adj-row-val">${data.agreeing_models.map(esc).join(', ')}</span></div>` : '';
+  const dissentHtml = data.dissenting_models?.length
+    ? `<div class="adj-row"><span class="adj-row-label">Dissenting</span><span class="adj-row-val" style="color:var(--yellow)">${data.dissenting_models.map(esc).join(', ')}</span></div>` : '';
+  const weakHtml = data.weak_evidence_models?.length
+    ? `<div class="adj-row"><span class="adj-row-label">Weak evidence</span><span class="adj-row-val" style="color:var(--muted)">${data.weak_evidence_models.map(esc).join(', ')}</span></div>` : '';
+  const failHtml = data.failed_models?.length
+    ? `<div class="adj-row"><span class="adj-row-label">Failed</span><span class="adj-row-val" style="color:var(--red)">${data.failed_models.map(esc).join(', ')}</span></div>` : '';
+
+  // rationale score table
+  let scoreTableHtml = '';
+  if (data.rationale_scores?.length) {
+    const rows = data.rationale_scores.map(s => `
+      <tr>
+        <td>${esc(s.model)}</td>
+        <td class="score-${s.verdict}">${s.verdict ?? '—'}</td>
+        <td>${(s.confidence*100).toFixed(0)}%</td>
+        <td>${s.total.toFixed(3)}</td>
+        <td>${s.grounding.toFixed(2)}</td>
+        <td>${s.break_evidence.toFixed(2)}</td>
+        <td style="font-family:var(--mono);font-size:10px">${(s.grounded_identifiers||[]).join(', ') || '—'}</td>
+      </tr>`).join('');
+    scoreTableHtml = `
+      <div style="overflow-x:auto;margin-top:4px">
+        <table class="score-table">
+          <thead><tr>
+            <th>Model</th><th>Verdict</th><th>Conf</th>
+            <th>Score</th><th>Grounding</th><th>Break ev.</th><th>Grounded ids</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+  }
+
+  block.className = `adj-block ${v}`;
+  block.innerHTML = `
+    <div class="adj-header">
+      <span class="adj-icon">${icon}</span>
+      <span class="adj-title ${v}">${titleText}</span>
+      <div class="adj-models">
+        ${data.agreeing_models?.length ? `${data.agreeing_models.length} model${data.agreeing_models.length > 1 ? 's' : ''} agree` : ''}
+        ${data.dissenting_models?.length ? ` · ${data.dissenting_models.length} dissent` : ''}
+      </div>
+    </div>
+    <div class="adj-body">
+      <div class="adj-explanation">${esc(data.explanation)}</div>
+      ${agreeingHtml}${dissentHtml}${weakHtml}${failHtml}${sharedChips}
+      <div class="adj-row">
+        <span class="adj-row-label">Decision rule</span>
+        <span class="adj-row-val"><span class="rule-chip">${esc(data.decision_rule || '—')}</span></span>
+      </div>
+      ${scoreTableHtml}
+    </div>`;
+}
+
+// ── comparison strip ───────────────────────────────────────────────
+function renderCompare(baselineV, committeeV) {
+  const strip = document.getElementById('compareStrip');
+  strip.style.display = 'flex';
+
+  function valEl(v) {
+    const label = v === 'no_conflict' ? 'no conflict' : (v || '—');
+    return `<span class="ci-val ci-${v || 'error'}">${verdictIcon(v)} ${esc(label)}</span>`;
+  }
+
+  strip.innerHTML = `
+    <div class="compare-item">
+      <span class="ci-label">Baseline verdict</span>
+      ${valEl(baselineV)}
+    </div>
+    <div class="compare-sep"></div>
+    <div class="compare-item">
+      <span class="ci-label">Committee verdict</span>
+      ${valEl(committeeV)}
+    </div>
+    <div class="compare-sep"></div>
+    <div class="compare-item">
+      <span class="ci-label">Agreement</span>
+      <span class="ci-val" style="color:${baselineV === committeeV ? 'var(--green)' : 'var(--yellow)'}">
+        ${baselineV === committeeV ? '✓ yes' : '✗ differ'}
+      </span>
+    </div>`;
+}
+
+// ── init ───────────────────────────────────────────────────────────
+loadConfig();
+</script>
+</body>
+</html>
